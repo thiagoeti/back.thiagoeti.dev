@@ -1,0 +1,86 @@
+{
+	"ecosystem": [
+		{
+			"label": "LinkedIn",
+			"link": "https://linkedin.com/in/thiagoeti",
+			"icon": "linkedin"
+		},
+		{
+			"label": "GitHub",
+			"link": "https://github.com/thiagoeti",
+			"icon": "github"
+		},
+		{
+			"label": "Thiago ETI",
+			"type": "Currículo",
+			"link": "https://thiagoeti.dev",
+			"icon": "branch"
+		},
+		{
+			"label": "Learn",
+			"type": "Formação e Cursos",
+			"link": "https://learn.thiagoeti.dev",
+			"icon": "learn"
+		},
+		{
+			"label": "Book",
+			"type": "Leitura e Conhecimento",
+			"link": "https://book.thiagoeti.dev",
+			"icon": "book"
+		},
+		{
+			"label": "Front",
+			"type": "Front-end",
+			"link": "https://front.thiagoeti.dev",
+			"icon": "front"
+		},
+		{
+			"label": "Back",
+			"type": "Back-end",
+			"link": "https://back.thiagoeti.dev",
+			"icon": "back"
+		},
+		{
+			"label": "Stack",
+			"type": "Tecnologias",
+			"link": "https://stack.thiagoeti.dev",
+			"icon": "stack"
+		},
+		{
+			"label": "Pattern",
+			"type": "Padrões e Arquiteturas",
+			"link": "https://pattern.thiagoeti.dev",
+			"icon": "pattern"
+		},
+		{
+			"label": "AI",
+			"type": "Inteligência Artificial",
+			"link": "https://ai.thiagoeti.dev",
+			"icon": "ai"
+		},
+		{
+			"label": "Thiago Silva",
+			"type": "WebSite",
+			"link": "https://thiagosilva.dev",
+			"icon": "branch"
+		},
+		{
+			"label": "Projetos",
+			"type": "Roadmap",
+			"link": "https://thiago.eti.br",
+			"icon": "index"
+		}
+	],
+	"contacts": [
+		{
+			"label": "Email",
+			"value": "thiago.eti@gmail.com",
+			"icon": "email"
+		},
+		{
+			"label": "Whatsapp",
+			"value": "+55 (51) 9 8581.6033",
+			"icon": "whatsapp"
+		}
+	]
+}

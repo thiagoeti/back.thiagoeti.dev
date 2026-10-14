@@ -1,17 +1,88 @@
-*.FASL
-*.fasl
-*.lisp-temp
-*.dfsl
-*.pfsl
-*.d64fsl
-*.p64fsl
-*.lx64fsl
-*.lx32fsl
-*.dx64fsl
-*.dx32fsl
-*.fx64fsl
-*.fx32fsl
-*.sx64fsl
-*.sx32fsl
-*.wx64fsl
-*.wx32fsl
+### general
+
+# env
+
+.env
+**/.env
+
+.env*
+**/.env*
+
+!**/.env.example
+
+### data
+
+data
+**/data
+!src/lib/data
+
+storage
+**/storage
+
+### tmp
+
+tmp
+**/tmp
+
+### logs
+
+*.log
+**/*.log
+
+logs
+**/logs
+
+### libraries
+
+node_modules
+**/node_modules
+
+# package.json # reinstall
+# **/package.json # reinstall
+
+vendor
+**/vendor
+
+### build
+
+# runtime
+
+bun.lock
+**/bun.lock
+
+runtime
+**/runtime
+
+# build
+
+dist
+**/dist
+
+build
+**/build
+
+.astro
+**/.astro
+
+### front
+
+# next
+
+.next
+**/.next
+
+out
+**/out
+
+*.tsbuildinfo
+next-env.d.ts
+
+.vercel
+
+### others
+
+Thumbs.db
+.DS_Store
+*.pem
+
+###
