@@ -6,7 +6,7 @@ allowed-tools: Read Edit Write Glob Bash
 license: Unlicense
 metadata:
   author: thiagoeti
-  version: 1.2.1
+  version: 1.0.0
 ---
 
 # Define

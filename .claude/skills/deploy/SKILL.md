@@ -6,7 +6,7 @@ allowed-tools: Read Bash
 license: Unlicense
 metadata:
   author: thiagoeti
-  version: 1.0.1
+  version: 1.0.0
 ---
 
 # Deploy

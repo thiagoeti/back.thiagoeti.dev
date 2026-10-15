@@ -1,20 +1,22 @@
 {
 	"lang": "pt-BR",
-	"title": "thiagoeti — IA",
-	"description": "Projetos e estudos aplicados em inteligência artificial.",
-	"canonical": "https://ai.thiagoeti.dev",
+	"title": "thiagoeti — Back-end",
+	"description": "Projetos e estudos aplicados em back-end.",
+	"canonical": "https://back.thiagoeti.dev",
 	"robots": "index, follow",
 	"theme_color": "#0B0F14",
 	"keywords": [
 		"thiagoeti",
 		"Thiago Silva",
 		"Forward Deployed AI Engineer",
-		"inteligência artificial",
-		"IA",
-		"agentes",
-		"LLM",
-		"RAG",
-		"MCP"
+		"back-end",
+		"bun",
+		"typescript",
+		"elysiajs",
+		"php",
+		"php-hyperf",
+		"python",
+		"fastapi"
 	],
 	"author": {
 		"name": "Thiago Silva",
@@ -25,10 +27,10 @@
 		]
 	},
 	"image": {
-		"url": "https://ai.thiagoeti.dev/og.png",
+		"url": "https://back.thiagoeti.dev/og.png",
 		"width": 1200,
 		"height": 630,
-		"alt": "thiagoeti — IA"
+		"alt": "thiagoeti — Back-end"
 	},
 	"open_graph": {
 		"type": "website",

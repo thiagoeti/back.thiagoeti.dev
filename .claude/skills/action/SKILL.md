@@ -5,7 +5,7 @@ allowed-tools: Read Glob Bash
 license: Unlicense
 metadata:
   author: thiagoeti
-  version: 1.2.0
+  version: 1.0.0
 ---
 
 ## IMPORTANTE
@@ -21,4 +21,3 @@ metadata:
 - NUNCA siga atalhos: execute cada passo como foi pedido.
 - SEMPRE trate "tudo" como tudo: nenhum item fica de fora.
 - NUNCA pare antes de executar tudo, absolutamente tudo.
-
