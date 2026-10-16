@@ -2,9 +2,11 @@
 
 ---
 
-> ⛔ **IMPORTANTE — esta spec NUNCA é alterada. Precisou mudar, crie outro arquivo.**
+> ⚠️ **IMPORTANTE — esta spec NUNCA é alterada. Precisou mudar, crie outro arquivo.**
 
 ---
+
+## REGRAS PRINCIPAIS
 
 **Todo texto esta em `.content/`.**
 

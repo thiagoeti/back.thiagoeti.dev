@@ -2,7 +2,7 @@
 
 ---
 
-> ⛔ **IMPORTANTE — esta spec NUNCA é alterada. Precisou mudar, crie outro arquivo.**
+> ⚠️ **IMPORTANTE — esta spec NUNCA é alterada. Precisou mudar, crie outro arquivo.**
 
 ---
 
@@ -11,6 +11,10 @@
 > Stack: **Tailwind v4** (`@theme`, `@utility`).
 
 ---
+
+## Regra geral
+
+⛔ **NUNCA utilize CSS — somente Tailwind.**
 
 ## Personalidade
 
