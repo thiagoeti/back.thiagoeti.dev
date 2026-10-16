@@ -2,7 +2,7 @@
 
 ---
 
-> ⛔ **IMPORTANTE — esta spec NUNCA é alterada. Precisou mudar, crie outro arquivo.**
+> ⚠️ **IMPORTANTE — esta spec NUNCA é alterada. Precisou mudar, crie outro arquivo.**
 
 ---
 
@@ -50,10 +50,10 @@ Cada item é binário: passa ou reescreve. Quem testa é alguém de fora e não 
 
 #### Nome da marca
 
-`thiagoeti`, minúscula sempre — inclusive em título de página e começo de frase.
+`@thiagoeti`, minúscula sempre — inclusive em título de página e começo de frase.
 
-- raiz - `thiagoeti — Forward Deployed AI Engineer`
-- subdomínio - `<assunto da página> — thiagoeti`
+- raiz - `@thiagoeti | Product AI Engineer - Software Engineer - Forward Deployed Engineer`
+- subdomínio - `@thiagoeti — <page..>`
 
 ---
 

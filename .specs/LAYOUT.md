@@ -2,7 +2,7 @@
 
 ---
 
-> ⛔ **IMPORTANTE — esta spec NUNCA é alterada. Precisou mudar, crie outro arquivo.**
+> ⚠️ **IMPORTANTE — esta spec NUNCA é alterada. Precisou mudar, crie outro arquivo.**
 
 ---
 
@@ -19,5 +19,11 @@ Caso o projeto tenha exemplos de interface, fica no diretorio:
 ## Mobile
 
 - **IMPORTANTE: Sempre menu abaixo para toque com polegar**.
+
+---
+
+## Conteúdo
+
+- Nunca oculte nenhum dado na versão mobile.
 
 ---

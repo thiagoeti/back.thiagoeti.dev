@@ -2,7 +2,7 @@
 
 ---
 
-> ⛔ **IMPORTANTE — esta spec NUNCA é alterada. Precisou mudar, crie outro arquivo.**
+> ⚠️ **IMPORTANTE — esta spec NUNCA é alterada. Precisou mudar, crie outro arquivo.**
 
 ---
 
@@ -15,7 +15,7 @@
 | Campo | Valor |
 |---|---|
 | Nome | Thiago Silva |
-| Assina | `thiagoeti`, sempre em minúscula |
+| Assina | `@thiagoeti`, sempre em minúscula |
 | Profissional | `thiagoeti.dev` |
 | Currículo | `thiagosilva.dev` |
 
