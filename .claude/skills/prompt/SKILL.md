@@ -1,7 +1,6 @@
 ---
 name: prompt
 description: Use ao criar, melhorar, revisar ou depurar prompt; ao converter em instrução para IA tarefa, card, issue, ticket, user story, requisito, bug report, spec, escopo, briefing, e-mail ou anotação solta; quando o prompt devolveu resposta genérica, longa demais, fora do formato ou do escopo; "como eu peço isso pra IA", "transforma esse card em tarefa", "detalha esse requisito", "a IA não entendeu o que eu pedi". Transforma pedido vago em prompt preciso.
-model: sonnet
 allowed-tools: Read Glob Bash
 license: Unlicense
 metadata:
@@ -17,7 +16,7 @@ Transforma pedido vago em instrução precisa. Saída: **o prompt pronto, em blo
 
 1. Identifique a **tarefa real** — o que o usuário quer que a IA produza.
 2. Preencha os **6 blocos**. O que faltar, infira do contexto; não pergunte por detalhe cosmético.
-3. Escolha **framework** mais adequado pela tabela de seleção.
+3. Escolha o **framework** mais adequado pela tabela de seleção.
 4. Aplique as **técnicas** que a tarefa pedir.
 5. Varra os **recursos do projeto** e nomeie no prompt os que o executor deve usar.
 6. Entregue o prompt em bloco de código. Sem preâmbulo, sem explicação, sem alternativas.
