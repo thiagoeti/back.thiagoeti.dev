@@ -31,7 +31,7 @@ bash git.sh [beta|main|full] ["message commit"]
 ## Regras
 
 - Nunca reimplemente git em script paralelo — chame `git.sh`.
-- Nunca force após parada do script, conflito de stash ou merge, avise o usário.
+- Nunca force após parada do script, conflito de stash ou merge, avise o usuário.
 - Mensagem de commit em Conventional Commits: `feat:`, `fix:`, `chore:`, `docs:`…
 
 ---

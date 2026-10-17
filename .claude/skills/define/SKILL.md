@@ -11,7 +11,7 @@ metadata:
 
 # Define
 
-Regra de separação entre `README.md` e `CLAUDE.md` projeto.
+Regra de separação entre `README.md` e `CLAUDE.md` do projeto.
 
 ---
 
@@ -22,7 +22,7 @@ Regra de separação entre `README.md` e `CLAUDE.md` projeto.
 ## README.md — Arquivo público
 
 - **Audiência:** Qualquer pessoa que acesse o repositório (usuários, colaboradores e público em geral).
-- **Importante:** Nunca expor nenhum dado interno, material público.
+- **Importante:** Nunca exponha dado interno: o material é público.
 
 **Deve conter:**
 - O que é o projeto (descrição diretiva e objetiva).
@@ -45,7 +45,7 @@ Regra de separação entre `README.md` e `CLAUDE.md` projeto.
 
 **Deve conter:**
 - Informação de desenvolvimento que não existe em nenhuma spec ou skill.
-- Todos arquivos de especificação do projeto dentro de `.specs/`
+- Todos os arquivos de especificação do projeto dentro de `.specs/`
 - Estrutura completa SDD `.claude/`
 
 **Nunca deve conter:**
@@ -106,7 +106,7 @@ Modelo:
 | "Como um dev/agente trabalha nisso?" | ❌ | ✅ |
 | "Qual a arquitetura e as decisões de design?" | ❌ | ✅ |
 | "Onde ficam as specs (`.specs/`)?" | ❌ | ✅ |
-| "Quais skills o projeto tem e quando cada uma aplica?" | ❌ | ✅ |
+| "Quais skills o projeto tem e quando cada uma se aplica?" | ❌ | ✅ |
 | "Qual é o workflow de deploy?" | ❌ | ✅ |
 | "Regra já escrita em spec ou skill?" | ❌ | ❌ |
 
