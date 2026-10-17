@@ -16,6 +16,12 @@ Caso o projeto tenha exemplos de interface, fica no diretorio:
 
 ---
 
+## Desktop
+
+- **IMPORTANTE: Cabeçalho fixo, com logo e título.**.
+
+---
+
 ## Mobile
 
 - **IMPORTANTE: Sempre menu abaixo para toque com polegar**.

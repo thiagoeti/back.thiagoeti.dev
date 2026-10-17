@@ -79,6 +79,11 @@ next-env.d.ts
 
 .vercel
 
+### tests
+
+.playwright-mcp
+**/.playwright-mcp
+
 ### others
 
 Thumbs.db
