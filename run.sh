@@ -14,6 +14,7 @@ fi
 
 # build
 
+rm -rfv .playwright-mcp
 rm -rfv .astro
 rm -rfv dist
 

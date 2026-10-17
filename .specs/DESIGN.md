@@ -27,3 +27,13 @@
 - Mesma ordem de itens nas duas versões.
 
 ---
+
+## Glifos e Illustrations
+
+- ⚠️ Quando houver (nem todos projetos utilizam).
+- **SEJA SUPER CRIATIVO, CRIE GLIFOS ALTAMENTE RICOS E INFORMATIVOS.**
+- As iluastações devem ser de acordo com o conteúdo do projeto.
+- Os desenhos devem usar um padrão visual de acordo com `.specs/THEME.md`, mas a imagem repito deve ser relacionada ao conteúdo do projeto.
+- Todos desenhos devem ser feitos em SVGs.
+
+---
