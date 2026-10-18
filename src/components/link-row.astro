@@ -2,14 +2,18 @@
 import Icon from './icon.astro'
 import { linkHref, linkText, type Link } from '../lib/content'
 import { iconOf } from '../lib/icons'
-import { SITE, detent, focusRing } from '../lib/site'
+import { SITE, focusRing, motion } from '../lib/site'
 
-/** Linha de link do ecossistema ou contato: ícone de utilidade, nome, papel e endereço. Externo abre em nova aba. */
+/**
+ * Link do ecossistema ou contato: ícone de utilidade, nome, papel e endereço. Externo abre em nova aba.
+ * `compact`: no desktop vira item de rodapé numa linha só (nome e papel; o endereço fica no link).
+ */
 interface Props {
 	item: Link
+	compact?: boolean
 }
 
-const { item } = Astro.props
+const { item, compact = false } = Astro.props
 const href = linkHref(item)
 const here = !!item.link && new URL(item.link).host === SITE.host
 const external = /^https?:/.test(href) && !here
@@ -20,16 +24,22 @@ const external = /^https?:/.test(href) && !here
 	target={external ? '_blank' : undefined}
 	rel={external ? 'noopener' : undefined}
 	aria-current={here ? 'page' : undefined}
-	class={`group flex min-h-11 items-center gap-3 rounded-control px-2 py-1.5 hover:bg-white/[0.03] aria-[current=page]:text-brand ${detent} ${focusRing}`}
+	title={compact ? linkText(item) : undefined}
+	class:list={[`group flex min-h-11 items-center gap-3 rounded-control px-2 py-1.5 hover:bg-white/[0.04] ${motion} ${focusRing}`, compact && 'lg:min-h-9 lg:gap-2 lg:py-1']}
 >
-	<span class="grid size-8 shrink-0 place-items-center rounded-full border border-line text-fg-subtle group-hover:border-brand/40 group-hover:text-brand group-aria-[current=page]:border-brand/40 group-aria-[current=page]:text-brand">
+	<span
+		class:list={[
+			'grid size-8 shrink-0 place-items-center rounded-full border border-line text-fg-subtle group-hover:text-fg group-aria-[current=page]:border-brand/50 group-aria-[current=page]:text-brand',
+			compact && 'lg:size-6 lg:border-0',
+		]}
+	>
 		<Icon name={iconOf(item.icon)} class="size-4" />
 	</span>
 	<span class="min-w-0 flex-1">
 		<span class="flex items-baseline gap-2">
-			<span class="text-xs font-semibold text-fg group-aria-[current=page]:text-brand">{item.label}</span>
-			{item.type && <span class="truncate text-[11px] text-fg-subtle">{item.type}</span>}
+			<span class="text-sm font-medium whitespace-nowrap text-fg group-aria-[current=page]:text-brand">{item.label}</span>
+			{item.type && <span class="truncate text-xs text-fg-subtle">{item.type}</span>}
 		</span>
-		<span class="block truncate text-[11px] text-fg-subtle">{linkText(item)}</span>
+		<span class:list={['block truncate font-mono text-[11px] text-fg-subtle', compact && 'lg:hidden']}>{linkText(item)}</span>
 	</span>
 </a>

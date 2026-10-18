@@ -1,0 +1,117 @@
+---
+import Bays from './bays.astro'
+import Jack from './jack.astro'
+import Leds from './leds.astro'
+import { projects, tagOf, type Project } from '../lib/projects'
+import { slot, type Unit } from '../lib/rack'
+import { focusRing, motion } from '../lib/site'
+import { text } from '../lib/text'
+
+/**
+ * Chapa frontal do servidor (2U): o projeto inteiro de relance.
+ * - Número gravado e posição no rack (`U14–13`), LED de energia.
+ * - Nome, subtítulo, tecnologias e tags (fita de etiqueta).
+ * - LEDs de blindagem (`leds.astro`), visor com cpu, memória, porta e processos do `docker.sh`.
+ * - Baias: uma por arquivo da pasta (`bays.astro`).
+ * - Placas de rede: uma porta RJ45 por tag, com o número da porta do patch panel — é onde o cabo liga.
+ * - Alça: puxar o servidor abre a página dele.
+ * `page`: a mesma chapa no alto da página do projeto (view transition `server`), com o selo WIP.
+ */
+interface Props {
+	project: Project
+	unit: Unit
+	page?: boolean
+}
+
+const { project: p, unit, page = false } = Astro.props
+const u = text.unit
+const max = Math.max(1, ...projects.flatMap((x) => x.sources.map((f) => f.lines)))
+const readout = [
+	{ label: u.cpus, value: p.docker.cpus },
+	{ label: u.memory, value: p.docker.memory },
+	{ label: u.port, value: p.docker.port && `:${p.docker.port}` },
+	{ label: u.pids, value: p.docker.pids },
+]
+const Tag = page ? 'div' : 'a'
+---
+
+<Tag
+	href={page ? undefined : p.href}
+	data-server={p.slug}
+	data-number={p.number}
+	aria-label={page ? undefined : `${u.open} ${p.serial} — ${p.name}`}
+	class:list={[
+		'group/server relative grid h-full min-w-0 items-center gap-x-4 gap-y-3 rounded-[3px] border border-line-strong bg-linear-to-b from-surface-3 to-surface-2 p-3 data-[off]:opacity-40 md:gap-x-6 md:px-4 xl:gap-x-4 xl:gap-y-0 xl:py-2',
+		"[grid-template-areas:'id_name_handle'_'leds_leds_leds'_'read_read_read'_'bays_nics_nics'] grid-cols-[auto_minmax(0,1fr)_auto]",
+		"md:[grid-template-areas:'id_name_name_bays_nics_handle'_'id_leds_read_read_read_handle'] md:grid-cols-[4.25rem_auto_minmax(0,1fr)_auto_auto_auto]",
+		"xl:[grid-template-areas:'id_name_leds_read_bays_nics_handle'] xl:grid-cols-[4.25rem_minmax(0,1fr)_5.25rem_15.5rem_5.25rem_7.5rem_auto]",
+		!page && `hover:border-fg-faint data-[active]:border-fg-faint ${motion} ${focusRing}`,
+		page && '[view-transition-name:server]',
+	]}
+>
+	<!-- número gravado e posição -->
+	<span class="flex flex-col gap-1 self-start [grid-area:id] xl:self-center">
+		<span class="flex items-center gap-2">
+			<span class="size-1.5 rounded-full bg-brand group-data-[off]/server:bg-fg-faint" data-power></span>
+			<span class="font-mono text-2xl leading-none font-medium tabular-nums text-fg xl:text-[1.75rem]">{p.serial}</span>
+		</span>
+		<span class="plate tabular-nums">{slot(unit)}</span>
+	</span>
+
+	<!-- nome, tecnologias e fita de etiqueta -->
+	<span class="flex min-w-0 flex-col gap-0.5 [grid-area:name]">
+		<span class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+			{page ? <h1 id="titulo" class="text-lg leading-tight font-semibold text-fg xl:text-base">{p.title}</h1> : <span class="text-base leading-tight font-semibold text-fg">{p.title}</span>}
+			{
+				page && p.wip && (
+					<span class="shrink-0 -rotate-2 rounded-[2px] border border-brand/50 bg-brand/10 px-1.5 py-0.5 font-plate text-[10px] font-semibold tracking-wider text-brand uppercase">{text.project.wip}</span>
+				)
+			}
+		</span>
+		{p.subtitle && <span class="text-sm leading-snug text-fg-muted xl:text-[13px]">{p.subtitle}</span>}
+		<span class="pt-1 font-mono text-[11px] leading-tight text-fg-muted xl:pt-0.5">{p.technologies.join(' + ')}</span>
+		<span class="font-mono text-[11px] leading-tight text-fg-subtle">{p.tags.map((t) => `#${t}`).join(' ')}</span>
+	</span>
+
+	<!-- LEDs de blindagem -->
+	<span class="block [grid-area:leds]"><Leds docker={p.docker} /></span>
+
+	<!-- visor -->
+	<dl class="grid auto-cols-max grid-flow-col justify-between gap-3 rounded-[3px] border border-line bg-surface-sunken px-3 py-2 [grid-area:read] md:gap-4 xl:gap-3">
+		{
+			readout.map((r) => (
+				<div class="flex min-w-0 flex-col-reverse gap-1">
+					<dt class="plate text-[10px] leading-none">{r.label}</dt>
+					<dd class="font-mono text-sm leading-none tabular-nums text-fg">{r.value || u.none}</dd>
+				</div>
+			))
+		}
+	</dl>
+
+	<!-- baias -->
+	<span class="block [grid-area:bays]"><Bays files={p.sources} max={max} /></span>
+
+	<!-- placas de rede: uma porta por tag -->
+	<ul class="flex items-end gap-2 justify-self-end [grid-area:nics]" aria-label={u.tags}>
+		{
+			p.tags.map((t) => (
+				<li class="group/jack flex flex-col items-center gap-1" data-nic={tagOf(t)?.label} title={`${tagOf(t)?.label} · #${t}`}>
+					<span class="font-mono text-[10px] leading-none tabular-nums text-fg-subtle group-data-[on]/jack:text-brand">{tagOf(t)?.label}</span>
+					<Jack class="h-4 w-5 xl:h-[1.125rem] xl:w-6" />
+					<span class="sr-only">#{t}</span>
+				</li>
+			))
+		}
+	</ul>
+
+	<!-- alça -->
+	<span class="flex h-full items-center [grid-area:handle]" aria-hidden="true">
+		<span
+			class:list={[
+				'block h-8 w-2 rounded-full border border-line-strong bg-surface-1 md:h-14',
+				!page && `group-hover/server:border-brand group-hover/server:bg-brand/15 group-data-[active]/server:border-brand ${motion}`,
+				page && 'border-brand bg-brand/15',
+			]}
+		></span>
+	</span>
+</Tag>

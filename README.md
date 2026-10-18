@@ -1,6 +1,6 @@
 # back.thiagoeti.dev
 
-Padrões de projetos back-end: cada projeto é uma API de PIX que mantém o saldo correto sob concorrência, apresentada como um mostrador de cofre.
+Padrões de projetos back-end, apresentados como um rack de servidores: cada projeto é um servidor e cada tag, uma porta do patch panel.
 
 - Site: [back.thiagoeti.dev](https://back.thiagoeti.dev)
 

@@ -1,0 +1,48 @@
+---
+import { SHIELD, type Docker } from '../lib/docker'
+import { text } from '../lib/text'
+
+/**
+ * LEDs de blindagem: uma flag do `docker.sh` por LED, na ordem de `SHIELD`. Presente = LED aceso
+ * (cheio no acento); ausente = LED apagado (vazado). Rótulo de 3 letras gravado embaixo; o nome
+ * inteiro vai no leitor de tela e no `title`. `list`: versão da página do projeto, com o nome escrito.
+ * O LED aceso apaga quando o servidor sai da consulta (`data-off` no servidor).
+ */
+interface Props {
+	docker: Docker
+	list?: boolean
+}
+
+const { docker, list = false } = Astro.props
+const on = SHIELD.filter((k) => docker.shield[k]).length
+---
+
+{
+	list ? (
+		<ul class="grid gap-x-8 gap-y-1 sm:grid-cols-2" aria-label={`${text.unit.security} ${on}/${SHIELD.length}`}>
+			{SHIELD.map((k) => (
+				<li class="flex min-h-9 items-center gap-3 border-b border-line-subtle text-sm">
+					<span class:list={['size-2.5 shrink-0 rounded-full', docker.shield[k] ? 'bg-brand' : 'border border-fg-faint']} />
+					<span class="w-9 shrink-0 font-mono text-[11px] uppercase text-fg-subtle">{text.led[k]}</span>
+					<span class:list={[docker.shield[k] ? 'text-fg' : 'text-fg-subtle line-through decoration-fg-faint']}>{text.shield[k]}</span>
+				</li>
+			))}
+		</ul>
+	) : (
+		<ul class="grid grid-cols-6 gap-x-2 md:grid-cols-3 md:gap-x-2.5 md:gap-y-1.5" aria-label={`${text.unit.security} ${on}/${SHIELD.length}`}>
+			{SHIELD.map((k, i) => (
+				<li class="flex flex-col items-center gap-1" title={text.shield[k]}>
+					<span
+						class:list={[
+							'size-2 rounded-full transition-opacity duration-300 motion-reduce:transition-none',
+							docker.shield[k] ? 'bg-brand group-data-[off]/server:opacity-20' : 'border border-fg-faint',
+						]}
+						data-led={docker.shield[k] ? i : undefined}
+					/>
+					<span class="font-mono text-[10px] leading-none uppercase text-fg-subtle" aria-hidden="true">{text.led[k]}</span>
+					<span class="sr-only">{text.shield[k]}: {docker.shield[k] ? '✓' : '✗'}</span>
+				</li>
+			))}
+		</ul>
+	)
+}

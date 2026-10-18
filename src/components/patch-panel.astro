@@ -1,0 +1,77 @@
+---
+import Jack from './jack.astro'
+import { projects, tags } from '../lib/projects'
+import { focusRing, motion } from '../lib/site'
+import { fill, text } from '../lib/text'
+
+/**
+ * Patch panel (2U): uma porta por tag, numerada na ordem em que a tag aparece, mais a porta
+ * `todas`. Ligar uma porta acende o cabo até os servidores que têm a tag e desliga os outros
+ * (`src/scripts/rack.ts`); a URL guarda `?tag=`. `dock`: no mobile o mesmo painel vira uma régua
+ * fixa na base, acima do menu, ao alcance do polegar.
+ */
+interface Props {
+	dock?: boolean
+}
+
+const { dock = false } = Astro.props
+const t = text.patch
+const lit = fill(t.lit, { n: projects.length, total: projects.length })
+const all = { name: '', label: '··', count: projects.length }
+const ports = [all, ...tags]
+---
+
+{
+	dock ? (
+		<nav aria-label={t.label} class="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-30 border-t border-line bg-surface-1 lg:hidden">
+			<ul class="flex h-14 items-center gap-1 overflow-x-auto overscroll-x-contain px-3 [scrollbar-width:none]">
+				{ports.map((x) => (
+					<li class="shrink-0">
+						<button
+							type="button"
+							data-tag={x.name}
+							aria-pressed={x.name ? 'false' : 'true'}
+							class={`group/jack flex h-10 items-center gap-2 rounded-control px-2.5 text-xs whitespace-nowrap text-fg-muted aria-pressed:bg-surface-3 aria-pressed:text-fg data-[on]:text-fg ${motion} ${focusRing}`}
+							data-on={x.name ? undefined : ''}
+						>
+							<Jack class="h-3.5 w-4.5" />
+							<span>{x.name ? `#${x.name}` : t.all}</span>
+							<span class="font-mono text-[10px] tabular-nums text-fg-faint">{x.count}</span>
+						</button>
+					</li>
+				))}
+			</ul>
+		</nav>
+	) : (
+		<nav aria-label={t.label} class="flex h-full flex-col gap-2 rounded-[3px] border border-line-strong bg-linear-to-b from-surface-3 to-surface-2 px-4 py-2 lg:flex-row lg:items-stretch lg:gap-6">
+			<div class="flex shrink-0 flex-col justify-center gap-1 lg:w-36 xl:w-44">
+				<p class="plate text-fg-muted">{t.title}</p>
+				<p class="font-mono text-[11px] leading-snug tabular-nums text-fg" data-lit aria-live="polite">{lit}</p>
+				<p class="text-[11px] leading-snug text-fg-subtle">{t.hint}</p>
+			</div>
+			<ul class="grid flex-1 grid-cols-4 content-center gap-x-1 gap-y-1 xl:grid-cols-8">
+				{ports.map((x) => (
+					<li class="min-w-0">
+						<button
+							type="button"
+							data-tag={x.name}
+							data-port={x.name ? x.label : undefined}
+							aria-pressed={x.name ? 'false' : 'true'}
+							title={x.name ? `${x.label} · #${x.name} · ${x.count}` : t.all}
+							class={`group/jack flex h-9 w-full min-w-0 items-center gap-1.5 rounded-[3px] px-1 text-left hover:bg-white/[0.04] aria-pressed:bg-surface-sunken ${motion} ${focusRing}`}
+							data-on={x.name ? undefined : ''}
+						>
+							<span class="flex shrink-0 flex-col items-center gap-0.5">
+								<span class="font-mono text-[10px] leading-none tabular-nums text-fg-subtle group-data-[on]/jack:text-brand">{x.label}</span>
+								<span data-jack><Jack class="h-[1.125rem] w-6" /></span>
+							</span>
+							<span class="line-clamp-2 min-w-0 text-[11px] leading-tight break-words text-fg-muted group-aria-pressed/jack:text-fg">
+								{x.name || t.all} <span class="font-mono text-[10px] whitespace-nowrap tabular-nums text-fg-faint">×{x.count}</span>
+							</span>
+						</button>
+					</li>
+				))}
+			</ul>
+		</nav>
+	)
+}

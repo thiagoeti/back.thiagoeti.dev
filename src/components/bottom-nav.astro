@@ -1,8 +1,7 @@
 ---
-import Glyph from './glyph.astro'
-import { emblem, grid } from '../lib/glyphs'
-import { text } from '../lib/text'
-import { NAV, detent, focusRing, isCurrent } from '../lib/site'
+import { HEIGHT } from '../lib/rack'
+import { NAV, focusRing, isCurrent, motion } from '../lib/site'
+import { fill, text } from '../lib/text'
 
 /** Menu inferior (tablet pra baixo, DESIGN.md): os mesmos itens do topo, na mesma ordem, ao alcance do polegar. */
 interface Props {
@@ -12,7 +11,7 @@ interface Props {
 const { path } = Astro.props
 ---
 
-<nav aria-label={text.nav.label} class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface-sunken/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden">
+<nav aria-label={text.nav.label} class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface-sunken pb-[env(safe-area-inset-bottom)] lg:hidden">
 	<ul class="grid h-16 auto-cols-fr grid-flow-col">
 		{
 			NAV.map((n) => (
@@ -20,9 +19,9 @@ const { path } = Astro.props
 					<a
 						href={n.href}
 						aria-current={isCurrent(n, path) ? 'page' : undefined}
-						class={`relative flex h-full flex-col items-center justify-center gap-1 px-0.5 text-[10px] leading-none text-fg-subtle hover:text-fg aria-[current=page]:text-brand before:absolute before:inset-x-3 before:top-0 before:h-0.5 before:rounded-full before:bg-transparent aria-[current=page]:before:bg-brand ${detent} ${focusRing}`}
+						class={`group relative flex h-full flex-col items-center justify-center gap-1 px-0.5 text-[11px] leading-none text-fg-subtle hover:text-fg aria-[current=page]:text-fg before:absolute before:inset-x-3 before:top-0 before:h-0.5 before:bg-transparent aria-[current=page]:before:bg-brand ${motion} ${focusRing}`}
 					>
-						{n.project ? <Glyph shapes={emblem(n.project.tags, 64)} size={64} class="size-6" live={isCurrent(n, path)} /> : <Glyph shapes={grid(12, 11)} size={24} class="size-6" />}
+						<span class="font-mono text-sm tabular-nums text-fg-faint group-aria-[current=page]:text-brand">{n.project ? n.project.serial : fill(text.home.units, { n: HEIGHT })}</span>
 						<span class="max-w-full truncate">{n.project ? n.project.short : text.nav.home}</span>
 					</a>
 				</li>

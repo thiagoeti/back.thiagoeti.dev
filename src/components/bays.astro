@@ -1,0 +1,32 @@
+---
+import type { SourceFile } from '../lib/repos'
+import { fill, text } from '../lib/text'
+
+/**
+ * Baias de disco na chapa: uma gaveta por arquivo da pasta do projeto, na ordem do nome. A barra de
+ * dentro da gaveta mede as linhas do arquivo contra o maior arquivo do rack — o tamanho do código à
+ * vista, sem abrir. Nome do arquivo no `title` e no leitor de tela; a lista inteira está na página.
+ */
+interface Props {
+	files: SourceFile[]
+	/** Maior arquivo do rack, em linhas: régua comum a todos os servidores. */
+	max: number
+}
+
+const { files, max } = Astro.props
+const lines = files.reduce((s, f) => s + f.lines, 0)
+const LEVEL = ['h-1/5', 'h-2/5', 'h-3/5', 'h-4/5', 'h-full'] as const
+const level = (n: number) => LEVEL[Math.min(4, Math.floor((n / Math.max(1, max)) * 4.999))]!
+---
+
+<ul class="flex h-9 items-stretch gap-1 xl:h-14" aria-label={`${text.unit.bays}: ${fill(text.project.files, { n: files.length, lines, bytes: '' }).replace(/ · $/, '')}`}>
+	{
+		files.map((f) => (
+			<li class="relative flex w-3 flex-col justify-end overflow-hidden rounded-[2px] border border-line-strong bg-surface-sunken p-px xl:w-3.5" title={`${f.path} · ${f.lines}`}>
+				<span class:list={['w-full rounded-[1px] bg-fg-faint', level(f.lines)]} />
+				<span class="absolute inset-x-0.5 top-1 h-px bg-line-strong" />
+				<span class="sr-only">{f.path}, {f.lines} {text.unit.lines}</span>
+			</li>
+		))
+	}
+</ul>

@@ -1,38 +1,48 @@
 ---
 import Base from '../layouts/base.astro'
-import Shapes from '../components/shapes.astro'
-import TagBar from '../components/tag-bar.astro'
-import { TONE, grid } from '../lib/glyphs'
-import { arc } from '../lib/polar'
-import { LATCH_KEY, pageTitle } from '../lib/site'
+import Icon from '../components/icon.astro'
+import Unit from '../components/unit.astro'
+import { BUTTON, pageTitle } from '../lib/site'
 import { text } from '../lib/text'
 
 /**
- * 404 como resposta do cofre: o caminho digitado é uma conta que não existe. O disco aparece aberto
- * (anel com uma fresta) e o caminho pedido entra no lugar do número da conta (script abaixo).
+ * 404 — slot vazio: o rack sem servidor neste endereço. Tampa cega com ventilação, o código no
+ * lugar do número do servidor, o endereço procurado no visor (preenchido no cliente) e a volta ao rack.
  */
 const t = text.notfound
+const blank = { kind: 'server' as const, size: 2, top: 5, bottom: 4 }
+const vent = { kind: 'nameplate' as const, size: 3, top: 3, bottom: 1 }
 ---
 
-<Base title={pageTitle(t.title)} description={`${t.code} ${t.error}`} path="/404" noindex>
-	<TagBar slot="bar" />
-	<section class="grid h-full place-items-center px-4">
-		<div class="flex flex-col items-center gap-6 text-center">
-			<svg viewBox="0 0 200 200" class="size-56" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" data-draw>
-				<Shapes shapes={grid(100, 92)} />
-				<path d={arc(100, 80, 24, 336)} class={TONE.line} />
-				<circle cx="100" cy="20" r="5" class={TONE.hollow} />
-				<text x="100" y="112" font-size="34" text-anchor="middle" class="fill-fg font-medium tabular-nums">{t.code}</text>
-			</svg>
-			<p class="text-sm font-semibold tracking-wider text-brand">{t.error}</p>
-			<h1 class="text-2xl text-fg">{t.title}</h1>
-			<p class="max-w-xs truncate text-xs text-fg-subtle">{t.account} <span class="text-fg" data-account>—</span></p>
-			<a href="/" class={LATCH_KEY}>{t.cta}</a>
+<Base title={pageTitle(t.title)} description={t.body} path="/404" noindex>
+	<div class="mx-auto w-full max-w-[86rem] px-2 py-3 sm:px-4 lg:px-8 lg:py-6">
+		<div class="overflow-clip rounded-[8px] border border-line-strong bg-surface-sunken">
+			<Unit unit={blank} ears={false}>
+				<div class="grid h-full grid-cols-[auto_minmax(0,1fr)] items-center gap-4 rounded-[3px] border border-dashed border-line-strong p-3 lg:px-4 lg:py-2">
+					<span class="font-mono text-2xl leading-none font-medium tabular-nums text-fg-faint lg:text-[1.75rem]">{t.code}</span>
+					<span class="flex min-w-0 flex-col gap-1">
+						<h1 class="text-base font-semibold text-fg">{t.title}</h1>
+						<span class="text-sm text-fg-muted">{t.body}</span>
+					</span>
+				</div>
+			</Unit>
+			<Unit unit={vent} ears={false}>
+				<div class="flex h-full flex-col justify-center gap-4 rounded-[3px] border border-line bg-surface-1 bg-[repeating-linear-gradient(to_right,transparent_0_10px,var(--color-surface-sunken)_10px_14px)] p-4 lg:px-6">
+					<p class="flex flex-wrap items-baseline gap-3 self-start rounded-[3px] border border-line bg-surface-sunken px-3 py-2">
+						<span class="plate">{t.path}</span>
+						<code class="font-mono text-sm break-all text-fg" data-path>/404</code>
+					</p>
+					<a href="/" class={`${BUTTON} self-start`}>
+						<Icon name="layout-grid" class="size-4" />
+						{t.cta}
+					</a>
+				</div>
+			</Unit>
 		</div>
-	</section>
+	</div>
 </Base>
 
 <script>
-	const account = document.querySelector('[data-account]')
-	if (account && location.pathname !== '/404') account.textContent = decodeURIComponent(location.pathname)
+	const el = document.querySelector<HTMLElement>('[data-path]')
+	if (el && location.pathname !== '/404') el.textContent = location.pathname
 </script>

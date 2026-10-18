@@ -9,9 +9,9 @@ Atue ao mesmo tempo como diretor de arte experimental, designer de interação e
 | Campo | Valor |
 |---|---|
 | Projeto | `back.thiagoeti.dev` — `@thiagoeti — Back-end` |
-| Propósito | Mostrar os padrões de back-end publicados: cada projeto é uma API de PIX com garantia de saldo sob concorrência |
+| Propósito | Mostrar os padrões de back-end publicados: cada projeto, os conceitos que demonstra e como roda |
 | Público | Diretor ou coordenador que contrata (não técnico) e engenheiro que avalia o código |
-| Sensação | cofre · precisão · prova |
+| Sensação | físico · preciso · confiável |
 | Fonte | `.content/` (texto), `data.json` + `README.md` + `docker.sh` de cada pasta dos repositórios `back` e `back_` |
 
 ## Leitura obrigatória antes de começar
@@ -19,17 +19,23 @@ Atue ao mesmo tempo como diretor de arte experimental, designer de interação e
 1. Todo `.specs/*.md` — specs são imutáveis e incondicionais.
 2. `.content/project.md`, `.content/data.md`, `.content/data.json`, `.content/meta.json`.
 3. `data.json` e cada `README.md` dos repositórios listados em `.content/data.md › Projetos` (local: `/data/work/project/<repo>`; container: `/repos/<repo>`).
-4. Um projeto irmão pronto (`pattern.thiagoeti.dev`) para convenções de build, CDN, `llms.txt` e ícones.
+4. Os projetos irmãos (`stack`, `pattern`, `ai`.thiagoeti.dev) para convenções de build, CDN, `llms.txt` e ícones — e para **não** repetir o layout deles (hero à esquerda + mapa radial, tabela periódica, colunas por categoria).
 
 ## Missão
 
-Crie uma experiência que ninguém confunda com template. Quem fechar o site deve lembrar do mostrador.
+Crie uma experiência que ninguém confunda com template nem com os sites irmãos — hardware real, nunca futurista. Quem fechar o site deve lembrar do cabo saindo do patch panel e acendendo os servidores.
+
+## Proibido no conteúdo
+
+- Valor monetário, preço ou saldo na interface (R$, abertura, saldo final). O cenário do README é exemplo de execução, não dado do projeto.
+- Estética futurista: radar, mostrador, neon, glow, réguas finas, fundo pontilhado, tudo em mono.
+- Layout dos irmãos: hero à esquerda com visual à direita, mapa radial, tabela periódica, colunas por categoria.
 
 ## Regras de criatividade
 
 1. **Metáfora:** uma metáfora física única. Dela derive navegação, layout, cor e movimento.
 2. **Gramática:** glifos, grade e formas nascem de uma única regra geométrica.
-3. **Espaço:** sem scroll vertical padrão. Use eixo radial, horizontal, Z, zoom ou canvas.
+3. **Espaço:** um objeto só, de cima a baixo — a elevação do rack; tudo ocupa U inteiros.
 4. **Consequência:** cada ação transforma a interface; o elemento clicado vira a próxima tela.
 5. **Restrição:** 2 cores + 1 acento, 1 família tipográfica, 1 física de movimento.
 
@@ -51,67 +57,63 @@ Para cada elemento: escreva o jeito óbvio, descarte-o e invente outro.
 | Sem header logo-esquerda | `LAYOUT.md`/`DESIGN.md`: cabeçalho fixo com logo e título | Spec vence; reinvente o conteúdo do cabeçalho, não a posição |
 | Sem ícones prontos | `THEME.md › Ícones`: Lucide do catálogo | Catálogo só em utilidade; todo conteúdo usa glifo próprio |
 | Movimento livre | `THEME.md › Motion`: sem `scale` em hover | Gire e desenhe traço; nunca escale no hover |
-| 1 família | `THEME.md`: Inter + JetBrains Mono | Pedido do usuário vence: só JetBrains Mono |
-| 2 cores + 1 acento | `THEME.md`: cores semânticas | Só `surface`, `fg` (escala de luminosidade) e `brand`; recusa = vazado, aprovado = cheio |
+| 1 família | `THEME.md`: Inter + JetBrains Mono | Pedido do usuário vence: IBM Plex (Sans, Sans Condensed na gravação, Mono — uma família) |
+| 2 cores + 1 acento | `THEME.md`: cores semânticas | Só `surface`, `fg` (escala de luminosidade) e `brand`; LED ausente = vazado, presente = cheio |
 
 Regras incondicionais que nenhum prompt anula: Bun, TypeScript, Astro, só Tailwind (tokens em `global.css`), sem `<style>` nem `style` inline, texto só de `.content/` (microcopy de interface em `.analyse/page.json`), biblioteca por unpkg com `integrity` + `crossorigin`, fonte por Google Fonts.
 
 ## 1. Sistema de glifos
 
-- Grade polar: centro, 4 anéis, 12 raios a 30°. Primitivas: anel, arco, raio, ponto. Nada fora disso.
-- Traço 1.5, `non-scaling-stroke`, pontas redondas.
-- Cada tag do `data.json` tem um fragmento próprio desenhado num anel.
-- Emblema do projeto = sobreposição dos fragmentos das suas tags, de dentro para fora, com o ponto central do saldo.
-- Projetos que compartilham uma tag compartilham o mesmo anel desenhado.
-- Tag sem desenho: fragmento gerado do hash do nome, na mesma gramática.
-- Estados: repouso (`fg-faint`), ativo (`brand`), carregando (anel tracejado girando), recusado (vazado), concluído (cheio).
-- Documente a gramática no topo de `src/lib/glyphs.ts`.
+- Metáfora: rack de servidores de 19". Projeto = servidor; tag = porta numerada do patch panel; filtro = cabo ligado.
+- Regra única: tudo ocupa U inteiros entre dois postes com furos de porca-gaiola e o número do U (elevação do rack).
+- Chapa do servidor: número e posição (`U14–13`), nome, subtítulo, tecnologias, tags, 6 LEDs de blindagem do `docker.sh`, visor (cpu, memória, porta, processos), uma baia por arquivo, uma porta RJ45 por tag, alça.
+- Cabo: sai da porta do patch panel, desce à bandeja, corre ao organizador vertical e entra por baixo na porta do servidor.
+- Estados: ligado (LED e cabo no acento), fora da consulta (servidor apagado), escolhido (alça acesa).
+- Documente a gramática no topo de `src/lib/rack.ts` e de `src/components/faceplate.astro`.
 
 ## 2. Navegação
 
-Gere 5 conceitos, escolha o mais ousado que ainda funcione em 5 segundos. Defina entrada, orientação, volta e atalhos.
-
-- Capa: mostrador de cofre. Projetos são setores; o ponteiro aponta o setor em foco; o leitor de dados ao lado mostra o projeto.
-- Ponteiro segue o cursor; `← →` giram; `1–9` saltam; `Enter` abre.
-- Anel externo (desktop): os 12 sites do ecossistema, um por raio da grade.
-- Página do projeto: pranchas em eixo horizontal; régua de pranchas como índice; roda do mouse vira horizontal.
-- Menu: os mesmos itens (mostrador + projetos) no topo (desktop) e na base (mobile), com emblema e nome curto.
-- Tags: topo no desktop, base no mobile, fixas; `?tag=` filtra.
+- Capa, de cima a baixo: chapa de identificação (título, frase, selo, indicadores), patch panel (fixo no alto), bandeja, servidores, gavetas de discos (repositórios), régua de tomadas (palavras-chave), switch (ecossistema e contatos).
+- Ligar a porta: os cabos da tag acendem; os outros servidores apagam; `?tag=`.
+- Clique no servidor: a chapa vira a chapa da página (view transition `server`).
+- Teclado: ↑ ↓ escolhe; 1–9 salta; Enter abre; Esc desliga a tag.
+- Página do projeto: servidor puxado (a chapa) + chassi aberto visto de cima; mapa do chassi à esquerda com compartimentos J1…Jn; ← → servidor vizinho.
+- Cabeçalho mostra o caminho: `@thiagoeti / back-end / servidor NN`.
+- Mobile: patch panel vira régua fixa acima do menu; switch vai para o botão Rede do cabeçalho; sem cabos, as portas acendem.
+- Rótulos diretos: "Rack", "Abrir servidor", "Servidor acima", "Servidor abaixo", "Voltar ao rack".
 
 ## 3. Componentes reinventados
 
 | Comum | Reinvente como |
 |---|---|
-| Botão | Trinco: rótulo mono com anel que fecha ao passar |
-| Card | Leitor do cofre: ficha de comprovante com indicadores |
-| Modal | Abertura do cofre: o emblema clicado vira o herói da página (view transition) |
-| Formulário | Combinação: digitar números e palavras no teclado age no mostrador |
-| Lista | Anel de marcas |
-| Tabela | Gavetas (Skills) e balança (Trade-offs) |
-| Loader | Anel tracejado girando |
-| 404 | `ACCOUNT_NOT_FOUND`: o mostrador recusa o caminho digitado |
+| Filtro | Porta do patch panel com cabo |
+| Card | Chapa frontal de servidor |
+| Hero | Chapa de identificação do rack |
+| Badge | LED; selo WIP colado na chapa |
+| Tabs | Mapa do chassi |
+| Lista ordenada | Barramento com vias numeradas |
+| Rodapé | Switch |
+| 404 | Slot vazio |
 
-Componente inédito obrigatório: **Rosácea de sequência** — diagrama de sequência polar: participantes são anéis, o tempo corre no sentido horário, mensagens são raios entre anéis.
+Componente inédito obrigatório: **Cabeamento** — consulta por tag em que o cabo desce do patch panel pela bandeja e pelo organizador vertical até a porta de cada servidor com a tag.
 
 ## 4. Tipografia
 
-- Uma família: JetBrains Mono.
-- Escala extrema: 10px nos raios, número do saldo em tela cheia.
-- Texto em caminho (`textPath`) no mostrador.
-- Assinatura: valor em reais grande, sempre `tabular-nums`, centavos menores.
+- Uma família: IBM Plex — Sans no texto, Sans Condensed na gravação da chapa, Mono nos números, valores e código.
+- Escala: título gravado enorme na chapa de identificação, números grandes, rótulos curtos.
 
 ## 5. Cor e textura
 
-- `surface` (fundo), `fg` (luz, hierarquia só por opacidade), `brand` (acento).
-- Textura: grade polar pontilhada no fundo do palco.
-- Cor reage a contexto: setor em foco acende, filtro apaga os demais.
+- `surface` (chão, poste, chapa), `fg` (tinta, só luminosidade), `brand` (ligado).
+- Textura vem do objeto: furos dos postes, orelhas aparafusadas, ranhuras da bandeja e do organizador.
+- Cor reage a contexto: o cabo ligado acende; servidores fora da consulta apagam.
 
 ## 6. Movimento
 
-- Física única: trava de cofre — `cubic-bezier(0.34, 1.56, 0.64, 1)`, 320 ms. Ponteiro, anéis e pranchas usam a mesma.
-- Traço que se desenha ao entrar.
+- Física única: servidor correndo no trilho — `cubic-bezier(0.32, 0.72, 0, 1)` (`ease-rail`).
+- Só cor, opacidade, traço do cabo e a transição de página.
 - `prefers-reduced-motion`: sem animação.
-- Easter eggs (≥ 3): digitar `pix` dispara o cenário; clicar 7× no saldo tenta sacar e recebe 422; console com mostrador ASCII; 404 recusa o caminho como conta.
+- Easter eggs (≥ 3): `ping` pisca os LEDs; `reboot` religa o rack; console com o rack em ASCII; 404 como slot vazio.
 
 ## 7. Conteúdo e voz
 
@@ -136,7 +138,7 @@ Registre 1–5 em `.analyse/design.md`.
 
 - Navegação compreensível em 5 segundos.
 - Teclado, foco visível, contraste legível, `prefers-reduced-motion`.
-- Mobile reinventado: trilho horizontal de painéis, toque na metade inferior.
+- Mobile reinventado: rack estreito, patch panel na régua fixa da base, toque na metade inferior.
 - Animação só em `transform`/`opacity`/cor; SVG gerado no build.
 - Links externos em nova aba.
 
@@ -158,3 +160,6 @@ Registre 1–5 em `.analyse/design.md`.
 ## Critério final
 
 "Se eu tirar o logo, alguém reconhece este site?" Não → volte à etapa 2.
+"Há algum valor monetário ou elemento futurista na tela?" Sim → remova.
+"Dá para entender o cabo acendendo os servidores em 5 segundos?" Não → simplifique.
+"Parece algum irmão (`stack`, `pattern`, `ai`)?" Sim → volte à etapa 1.
