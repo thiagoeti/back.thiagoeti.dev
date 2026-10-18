@@ -1,16 +1,19 @@
 import { parseDocker, SHIELD, type Docker } from './docker'
-import { balanceOf, cents, concurrencyOf, parseReadme, responsesOf, type Readme, type Response } from './readme'
+import { parseReadme, type Readme } from './readme'
 import { sourceRepos, type RepoProject, type SourceFile, type SourceRepo } from './repos'
 
 /**
  * Projetos publicados: todos os repositórios do `data.md`, na ordem citada. Mesma pasta em dois
  * repositórios: vale o primeiro (o estável vem antes do `_`). Nada aqui é texto de conteúdo.
+ * No rack, cada projeto é um servidor e cada tag uma porta numerada do patch panel.
  */
 export type Project = Omit<RepoProject, 'docker'> & {
 	slug: string
 	href: string
 	index: number
-	/** `01`, `02`… — número do setor no mostrador. */
+	/** Número do servidor: `1`, `2`… */
+	number: number
+	/** `01`, `02`… — como vai gravado na chapa. */
 	serial: string
 	/** Nome antes do travessão: `PHP Hyperf`. */
 	title: string
@@ -22,13 +25,8 @@ export type Project = Omit<RepoProject, 'docker'> & {
 	repo: SourceRepo
 	github: { folder: string; readme: string; docker: string }
 	doc: Readme
-	responses: Response[]
-	ok: number
-	refused: number
-	balance: { initial: string; final: string }
-	concurrency: number | null
 	docker: Docker
-	/** Flags de blindagem presentes, de `SHIELD.length`. */
+	/** Flags de segurança presentes, de `SHIELD.length`. */
 	armor: number
 	lines: number
 	bytes: number
@@ -46,29 +44,22 @@ const flat = sourceRepos.flatMap((repo) =>
 
 export const projects: Project[] = flat.map(({ repo, p }, index) => {
 	const [title = p.name, ...rest] = p.name.split(/\s+—\s+/)
-	const doc = parseReadme(p.readme)
-	const responses = responsesOf(doc.output)
 	const docker = parseDocker(p.docker)
-	const tree = `${repo.url}/tree/HEAD/${p.dir}`
 	const blob = `${repo.url}/blob/HEAD/${p.dir}`
 	return {
 		...p,
 		slug: p.dir,
 		href: `/${p.dir}`,
 		index,
+		number: index + 1,
 		serial: String(index + 1).padStart(2, '0'),
 		title,
 		subtitle: rest.join(' — '),
 		short: title.split(/[\s+]+/).filter(Boolean).at(-1) ?? title,
 		wip: repo.wip,
 		repo,
-		github: { folder: tree, readme: `${blob}/README.md`, docker: `${blob}/docker.sh` },
-		doc,
-		responses,
-		ok: responses.filter((r) => r.code < 300).length,
-		refused: responses.filter((r) => r.code >= 400).length,
-		balance: balanceOf(doc.scenario, doc.output),
-		concurrency: concurrencyOf(doc.scenario),
+		github: { folder: `${repo.url}/tree/HEAD/${p.dir}`, readme: `${blob}/README.md`, docker: `${blob}/docker.sh` },
+		doc: parseReadme(p.readme),
 		docker,
 		armor: SHIELD.filter((k) => docker.shield[k]).length,
 		lines: p.files.reduce((s, f) => s + f.lines, 0),
@@ -79,14 +70,19 @@ export const projects: Project[] = flat.map(({ repo, p }, index) => {
 
 export const bySlug = (slug: string) => projects.find((p) => p.slug === slug)
 
-export type Tag = { name: string; count: number }
+export type Tag = { name: string; count: number; servers: number[]; port: number; label: string }
 
-/** Tags na ordem da primeira aparição, com quantos projetos cada uma marca. */
+/** Tags na ordem da primeira aparição: a porta de cada uma no patch panel (`01`…), quantos servidores liga e quais. */
 export const tags: Tag[] = (() => {
-	const count = new Map<string, number>()
-	for (const p of projects) for (const t of p.tags) count.set(t, (count.get(t) ?? 0) + 1)
-	return [...count].map(([name, n]) => ({ name, count: n }))
+	const map = new Map<string, number[]>()
+	for (const p of projects) for (const t of p.tags) map.set(t, [...(map.get(t) ?? []), p.number])
+	return [...map].map(([name, servers], i) => ({ name, count: servers.length, servers, port: i + 1, label: String(i + 1).padStart(2, '0') }))
 })()
+
+/** Tags que mais de um servidor tem: cabos que cruzam o rack. */
+export const shared: Tag[] = tags.filter((t) => t.count > 1)
+
+export const tagOf = (name: string) => tags.find((t) => t.name === name)
 
 /** Tecnologias distintas de todos os projetos. */
 export const technologies: string[] = [...new Set(projects.flatMap((p) => p.technologies))]
@@ -96,11 +92,8 @@ export const totals = {
 	projects: projects.length,
 	technologies: technologies.length,
 	tags: tags.length,
-	responses: projects.reduce((s, p) => s + p.responses.length, 0),
-	ok: projects.reduce((s, p) => s + p.ok, 0),
-	refused: projects.reduce((s, p) => s + p.refused, 0),
-	/** Saldos finais abaixo de zero entre os cenários medidos. */
-	negative: projects.filter((p) => p.balance.final && (p.balance.final.includes('-') || cents(p.balance.final) < 0)).length,
+	shared: shared.length,
+	files: projects.reduce((s, p) => s + p.sources.length, 0),
 	lines: projects.reduce((s, p) => s + p.lines, 0),
 }
 

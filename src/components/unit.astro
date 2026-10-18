@@ -1,0 +1,31 @@
+---
+import Rail from './rail.astro'
+import type { Unit } from '../lib/rack'
+
+/**
+ * Um painel no rack: poste esquerdo, o painel e poste direito, na altura exata dos U dele na tela
+ * larga (1U = 3rem). Abaixo dela a altura acompanha o conteúdo e os postes esticam junto.
+ * `ears`: painel aparafusado (servidor, patch panel, switch); sem orelha, o painel encaixa no vão.
+ */
+interface Props {
+	unit: Unit
+	ears?: boolean
+	class?: string
+	[attr: string]: unknown
+}
+
+const { unit, ears = true, class: className, ...attrs } = Astro.props
+const HEIGHT: Record<number, string> = { 1: 'xl:h-12', 2: 'xl:h-24', 3: 'xl:h-36' }
+---
+
+<div
+	class:list={['grid grid-cols-[1.5rem_minmax(0,1fr)_1.5rem] lg:grid-cols-[2.5rem_minmax(0,1fr)_2.5rem]', HEIGHT[unit.size], className]}
+	data-unit={unit.kind}
+	{...attrs}
+>
+	<Rail size={unit.size} top={unit.top} side="left" ears={ears} />
+	<div class="min-w-0 py-0.5">
+		<slot />
+	</div>
+	<Rail size={unit.size} top={unit.top} side="right" ears={ears} />
+</div>

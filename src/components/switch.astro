@@ -1,0 +1,65 @@
+---
+import Icon from './icon.astro'
+import Jack from './jack.astro'
+import { contacts, ecosystem, linkHref, linkText, titles, type Link } from '../lib/content'
+import { iconOf } from '../lib/icons'
+import { SITE, focusRing, motion } from '../lib/site'
+import { fill, text } from '../lib/text'
+
+/**
+ * Switch (2U) — o rodapé do rack: uma porta de uplink por site do ecossistema (`data.json ›
+ * ecosystem`) e, separadas à direita, as portas de console com os contatos. A porta deste site
+ * fica acesa (`aria-current`). Externo abre em nova aba. No mobile o switch sai do rack e mora no
+ * botão Rede do cabeçalho (LAYOUT.md).
+ */
+const here = (l: Link) => !!l.link && new URL(l.link).host === SITE.host
+const port = `group/jack flex min-w-0 items-center gap-2.5 rounded-[3px] px-2 py-1 hover:bg-white/[0.04] ${motion} ${focusRing}`
+---
+
+<section aria-label={text.network.label} class="flex h-full gap-4 rounded-[3px] border border-line-strong bg-linear-to-b from-surface-3 to-surface-2 px-4 py-2">
+	<div class="flex w-24 shrink-0 flex-col justify-center gap-1">
+		<h2 class="plate text-fg-muted">{titles.ecosystem}</h2>
+		<p class="font-mono text-[11px] tabular-nums text-fg-subtle">{fill(text.home.uplinks, { n: ecosystem.length })}</p>
+	</div>
+	<ul class="grid min-w-0 flex-1 grid-cols-4 content-center gap-x-1 gap-y-0.5">
+		{
+			ecosystem.map((l) => (
+				<li class="min-w-0">
+					<a
+						href={linkHref(l)}
+						target={here(l) ? undefined : '_blank'}
+						rel={here(l) ? undefined : 'noopener'}
+						aria-current={here(l) ? 'page' : undefined}
+						data-on={here(l) ? '' : undefined}
+						title={here(l) ? text.home.here : linkText(l)}
+						class={port}
+					>
+						<Jack class="h-3.5 w-4.5" />
+						<Icon name={iconOf(l.icon)} class="size-3.5 text-fg-subtle group-hover/jack:text-fg group-aria-[current=page]/jack:text-brand" />
+						<span class="flex min-w-0 flex-col">
+							<span class="truncate text-xs leading-tight font-medium text-fg">{l.label}</span>
+							{l.type && <span class="truncate text-[11px] leading-tight text-fg-subtle">{l.type}</span>}
+							<span class="truncate font-mono text-[10px] leading-tight text-fg-faint">{linkText(l)}</span>
+						</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+	<div class="flex w-72 shrink-0 flex-col justify-center gap-1 border-l border-line pl-4">
+		<h2 class="plate text-fg-muted">{titles.contacts}</h2>
+		<ul class="grid gap-0.5">
+			{
+				contacts.map((l) => (
+					<li>
+						<a href={linkHref(l)} target={/^https?:/.test(linkHref(l)) ? '_blank' : undefined} rel={/^https?:/.test(linkHref(l)) ? 'noopener' : undefined} class={port}>
+							<Icon name={iconOf(l.icon)} class="size-3.5 text-fg-subtle group-hover/jack:text-fg" />
+							<span class="text-xs text-fg-subtle">{l.label}</span>
+							<span class="truncate font-mono text-[11px] text-fg">{l.value}</span>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>

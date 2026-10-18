@@ -1,0 +1,46 @@
+---
+/**
+ * Trecho do poste do rack ao lado de um painel: por U, três furos quadrados de porca-gaiola e o
+ * número do U entre eles. `ears`: a orelha do painel aparafusada no poste, um parafuso por U.
+ * No mobile o poste afina e só o esquerdo leva número.
+ */
+interface Props {
+	size: number
+	top: number
+	side: 'left' | 'right'
+	ears?: boolean
+}
+
+const { size, top, side, ears = false } = Astro.props
+const rows = Array.from({ length: size }, (_, i) => top - i)
+---
+
+<div
+	class:list={[
+		'relative flex flex-col border-line-subtle bg-surface-1',
+		side === 'left' ? 'border-r' : 'border-l',
+		ears && (side === 'left' ? 'pr-3 lg:pr-4' : 'pl-3 lg:pl-4'),
+	]}
+	aria-hidden="true"
+>
+	{
+		rows.map((u) => (
+			<div class="flex flex-1 flex-col items-center justify-between border-b border-surface-sunken py-1 last:border-b-0">
+				<span class="size-1.5 rounded-[1px] bg-surface-sunken" />
+				<span class:list={['font-mono text-[10px] leading-none tabular-nums text-fg-faint', side === 'right' && 'max-lg:hidden']}>{u}</span>
+				<span class="size-1.5 rounded-[1px] bg-surface-sunken" />
+			</div>
+		))
+	}
+	{
+		ears && (
+			<span class:list={['absolute inset-y-0.5 flex w-3 flex-col justify-around border border-line-strong bg-surface-3 lg:w-4', side === 'left' ? 'right-0 rounded-l-[3px] border-r-0' : 'left-0 rounded-r-[3px] border-l-0']}>
+				{rows.map(() => (
+					<span class="mx-auto grid size-2 place-items-center rounded-full border border-line-strong bg-surface-2 lg:size-2.5">
+						<span class="h-px w-1.5 rotate-45 bg-fg-faint" />
+					</span>
+				))}
+			</span>
+		)
+	}
+</div>

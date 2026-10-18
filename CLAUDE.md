@@ -35,7 +35,7 @@
 |---|---|
 | `.analyse/exe.md` | Índice dos prompts de execução |
 | `.analyse/exe_projeto.md` | Super prompt de criação completa do projeto |
-| `.analyse/design.md` | Direção criativa: conceitos, metáfora (cofre), gramática, mapa de navegação, inventário de componentes |
+| `.analyse/design.md` | Direção criativa: conceitos, metáfora (rack de servidores), gramática em U, mapa de navegação, inventário de componentes |
 | `.analyse/page.json` | Microcopy de interface (`text`): rótulos, estados, easter eggs, 404 |
 
 ## Arquitetura
@@ -44,22 +44,24 @@
 |---|---|---|
 | Build | `astro.config.ts` | Astro estático; integrações `llms-txt` (`.content/data.md` → `public/llms.txt`) e `cdn` (troca a URL da CDN pelo `CDN` do `.env.local`) |
 | Repositórios | `src/lib/repos.ts` | Lê `data.md › Projetos`: pasta local citada, `/repos/<repo>` (montagem do `docker.sh`) ou GitHub bruto; `data.json`, `README.md`, `docker.sh` e arquivos de cada pasta |
-| Projetos | `src/lib/projects.ts` | Modelo do projeto: README (`readme.ts`), ficha do container (`docker.ts`), respostas, saldo, tags, totais |
-| Gramática | `src/lib/polar.ts`, `src/lib/glyphs.ts` | Geometria polar única; fragmento por tag, emblema por projeto, grade, índice |
-| Diagrama | `src/lib/rosette.ts` | Mermaid (`sequenceDiagram`, `flowchart`) → rosácea polar |
+| Projetos | `src/lib/projects.ts` | Modelo do projeto: README (`readme.ts`), ficha do container (`docker.ts`), tags com número de porta, totais |
+| Rack | `src/lib/rack.ts`, `src/components/unit.astro`, `src/components/rail.astro` | Elevação do rack (regra única: tudo em U inteiros), postes e numeração |
+| Painéis | `src/components/faceplate.astro`, `nameplate.astro`, `patch-panel.astro`, `storage.astro`, `pdu.astro`, `switch.astro` | Servidor, identificação, tags, repositórios, palavras-chave, ecossistema e contatos |
+| Glifos | `src/components/leds.astro`, `bays.astro`, `jack.astro`, `src/lib/glyphs.ts`, `src/lib/grid.ts` | LEDs de blindagem, baias por arquivo, porta RJ45; papéis de traço e geometria dos desenhos em SVG |
+| Diagrama | `src/lib/tracks.ts`, `src/components/board-diagram.astro` | Mermaid (`sequenceDiagram`, `flowchart`) → trilhas da placa |
 | Markdown | `src/lib/markdown.ts` | README renderizado no build, sem `style` inline, cores do Shiki mapeadas para 2 cores + 1 acento |
 | Cartões | `src/lib/og.ts`, `src/pages/og.png.ts`, `src/pages/[slug]/og.png.ts` | PNG 1200×630 pelo sharp |
-| Páginas | `src/pages/` | `/` (mostrador), `/[slug]` (pranchas), `404`, `robots.txt`, `sitemap.xml` |
-| Scripts cliente | `src/scripts/dial.ts`, `src/scripts/plates.ts` | Mostrador (foco, filtro `?tag=`, teclado, view transition, easter eggs) e pranchas (régua, roda horizontal, disparar cenário) |
-| Estilo | `src/styles/global.css` | Tokens Tailwind do `THEME.md`, restritos a 2 cores + 1 acento e JetBrains Mono; papéis de traço dos glifos |
-| Servidor | `app/index.ts` | Elysia serve `dist/` e `public/`; `/health`; rota sem arquivo → `dist/404.html`; exige `PORT` |
+| Páginas | `src/pages/` | `/` (frente do rack), `/[slug]` (servidor puxado + chassi aberto), `404` (slot vazio), `robots.txt`, `sitemap.xml` |
+| Scripts cliente | `src/scripts/rack.ts`, `src/scripts/chassis.ts` | Rack (cabos, `?tag=`, teclado, view transition, easter eggs) e chassi (mapa do compartimento à vista, ← → servidor vizinho) |
+| Estilo | `src/styles/global.css` | Tokens Tailwind do `THEME.md`, restritos a 2 cores + 1 acento e IBM Plex (Sans, Sans Condensed, Mono); papéis de traço dos glifos |
+| Servidor | `app/index.ts` | Elysia serve `dist/` e `public/`; `/health`; exige `PORT` |
 
 ## Execução
 
 | Script | Faz |
 |---|---|
 | `install.sh` | Recria `package.json` e instala dependências |
-| `run.sh` | Instala se faltar; sem fonte no sistema (Alpine), baixa a JetBrains Mono do Google Fonts para o fontconfig dos cartões PNG; roda `astro build`, copia `public/` para `dist/`, sobe `app/index.ts` |
+| `run.sh` | Instala se faltar, roda `astro build`, copia `public/` para `dist/`, sobe `app/index.ts` |
 | `docker.sh` | Sobe `oven/bun:1.4.2-alpine` com `run.sh`; monta `/data/work/project` em `/repos` (somente leitura); exige `.env` com `GROUP`, `PROJECT`, `PORT` |
 | `git.sh` | Symlink para `.claude/skills/deploy/git.sh` — modos `beta` (padrão), `main`, `full` |
 

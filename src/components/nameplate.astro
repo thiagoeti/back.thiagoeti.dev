@@ -1,0 +1,42 @@
+---
+import { intro } from '../lib/content'
+import { totals } from '../lib/projects'
+import { SITE } from '../lib/site'
+import { text } from '../lib/text'
+
+/**
+ * Chapa de identificação (3U, sem orelha): o título gravado em baixo-relevo, a frase do `data.md`,
+ * o selo do fabricante (`@thiagoeti`, papel). À direita, os números do rack — medidos dos
+ * projetos, nunca escritos à mão. A descrição do `meta.json` vai gravada na tampa do rack.
+ */
+const k = text.home.kpis
+const kpis = [
+	{ value: totals.projects, label: k.projects },
+	{ value: totals.tags, label: k.tags },
+	{ value: totals.shared, label: k.shared },
+	{ value: totals.technologies, label: k.technologies },
+	{ value: totals.files, label: k.files },
+	{ value: totals.lines, label: k.lines },
+]
+---
+
+<section aria-labelledby="titulo" class="flex h-full flex-col justify-between gap-5 rounded-[3px] border border-line bg-surface-2 p-4 lg:flex-row lg:items-center lg:gap-10 lg:px-6 xl:py-2">
+	<div class="flex min-w-0 flex-col gap-2 lg:gap-1.5">
+		<p class="flex flex-wrap items-center gap-x-2 gap-y-1">
+			<span class="rounded-[2px] border border-line-strong bg-surface-3 px-1.5 py-0.5 font-mono text-[11px] text-fg">{SITE.brand}</span>
+			<span class="plate">{SITE.role}</span>
+		</p>
+		<h1 id="titulo" class="font-plate text-6xl leading-[0.9] font-semibold tracking-tight text-fg lowercase lg:text-7xl">{intro.title}</h1>
+		<p class="text-base text-fg-muted lg:text-lg">{intro.description}</p>
+	</div>
+	<dl class="grid shrink-0 grid-cols-3 gap-x-6 gap-y-3 lg:gap-x-8">
+		{
+			kpis.map((x) => (
+				<div class="flex flex-col-reverse gap-1">
+					<dt class="plate text-[10px] leading-none">{x.label}</dt>
+					<dd class="font-mono text-2xl leading-none font-medium tabular-nums text-fg lg:text-3xl">{x.value}</dd>
+				</div>
+			))
+		}
+	</dl>
+</section>

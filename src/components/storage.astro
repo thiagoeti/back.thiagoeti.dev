@@ -1,0 +1,76 @@
+---
+import { host } from '../lib/content'
+import { projects } from '../lib/projects'
+import type { SourceRepo } from '../lib/repos'
+import { focusRing, motion } from '../lib/site'
+import { fill, text } from '../lib/text'
+
+/**
+ * Gaveta de discos (2U): um repositório do `data.md › Projetos`. Etiqueta com nome, endereço e os
+ * campos da raiz do `data.json` (segmento, medição, spec, total, origem); uma baia por projeto que
+ * o repositório guarda, ligada ao servidor dele. Repositório sem `data.json`: baias vazias.
+ */
+interface Props {
+	repo: SourceRepo
+}
+
+const { repo: r } = Astro.props
+const h = text.home
+const mine = projects.filter((p) => p.repo === r)
+const slots = Math.max(mine.length, r.total ?? 0, 5)
+const facts = [
+	{ label: h.segment, value: r.segment },
+	{ label: h.measured, value: r.measured },
+	{ label: h.spec, value: r.spec },
+	{ label: h.total, value: r.total === null ? '' : String(r.total) },
+	{ label: h.origin, value: h.origins[r.origin] },
+].filter((x) => x.value)
+---
+
+<section aria-label={`${h.storage} ${r.label}`} class="flex h-full flex-col gap-3 rounded-[3px] border border-line-strong bg-linear-to-b from-surface-3 to-surface-2 p-3 lg:flex-row lg:items-center lg:gap-6 lg:px-4 lg:py-2">
+	<div class="flex min-w-0 flex-1 flex-col gap-1">
+		<p class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+			<span class="plate">{h.storage}</span>
+			<a href={r.url} target="_blank" rel="noopener" class={`text-sm font-semibold text-fg hover:text-brand ${motion} ${focusRing}`}>{r.label}</a>
+			<span class="font-mono text-[11px] text-fg-subtle">{host(r.url)}</span>
+		</p>
+		{r.description && <p class="text-xs leading-snug text-fg-muted lg:truncate">{r.description}</p>}
+		<dl class="flex flex-wrap gap-x-4 gap-y-0.5 font-mono text-[11px]">
+			{
+				facts.map((x) => (
+					<div class="flex gap-1.5">
+						<dt class="text-fg-faint">{x.label}</dt>
+						<dd class="text-fg-muted">{x.value}</dd>
+					</div>
+				))
+			}
+			<div class="flex gap-1.5">
+				<dt class="sr-only">{text.unit.bays}</dt>
+				<dd class="text-fg-muted">{mine.length ? fill(h.projectsCount, { n: mine.length }) : h.empty}</dd>
+			</div>
+		</dl>
+	</div>
+	<ul class="flex shrink-0 gap-1">
+		{
+			Array.from({ length: slots }, (_, i) => mine[i]).map((p) =>
+				p ? (
+					<li>
+						<a
+							href={p.href}
+							title={p.name}
+							class={`flex h-11 w-9 flex-col items-center justify-between rounded-[2px] border border-line-strong bg-surface-sunken py-1 hover:border-brand ${motion} ${focusRing}`}
+						>
+							<span class="h-px w-5 bg-line-strong" />
+							<span class="font-mono text-[10px] tabular-nums text-fg">{p.serial}</span>
+							<span class="size-1 rounded-full bg-brand" />
+						</a>
+					</li>
+				) : (
+					<li class="flex h-11 w-9 items-end justify-center rounded-[2px] border border-dashed border-line pb-1" aria-hidden="true">
+						<span class="size-1 rounded-full border border-fg-faint" />
+					</li>
+				),
+			)
+		}
+	</ul>
+</section>

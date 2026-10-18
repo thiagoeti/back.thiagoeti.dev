@@ -1,35 +1,27 @@
-import { emblem, type Shape, type Tone } from './glyphs'
-import { band, f, pt } from './polar'
-import type { Project } from './projects'
-import { ringMarks } from './ring'
+import { f } from './grid'
+import { SHIELD } from './docker'
+import { projects, type Project } from './projects'
+import { slot, unitOf } from './rack'
+import { text as copy } from './text'
 
 /**
- * Cartões de compartilhamento (1200×630): SVG composto aqui, PNG pelo sharp. Mesma gramática e as
- * mesmas 2 cores + 1 acento do site; cor em atributo porque o arquivo é imagem, não página.
+ * Cartões de compartilhamento (1200×630): SVG composto aqui, PNG pelo sharp. A mesma gramática e
+ * as mesmas 2 cores + 1 acento do site — a frente do rack, chapas de servidor com LEDs e portas;
+ * cor em atributo porque o arquivo é imagem, não página.
  */
 const W = 1200
 const H = 630
-const COLOR = { bg: '#0B0F14', surface: '#10161E', line: 'rgba(255,255,255,0.08)', fg: '#F3F6F9', muted: '#9AA3B2', subtle: '#6B7484', faint: '#47505E', brand: '#2DD4A8' }
-const FONT = 'JetBrains Mono,DejaVu Sans Mono,monospace'
-
-const PAINT: Record<Tone, string> = {
-	grid: `fill="none" stroke="rgba(255,255,255,0.06)"`,
-	faint: `fill="none" stroke="${COLOR.faint}"`,
-	line: `fill="none" stroke="${COLOR.subtle}"`,
-	dash: `fill="none" stroke="${COLOR.subtle}" stroke-dasharray="3 4"`,
-	key: `fill="none" stroke="${COLOR.brand}"`,
-	dot: `fill="${COLOR.brand}"`,
-	hollow: `fill="${COLOR.bg}" stroke="${COLOR.subtle}"`,
-	mute: `fill="${COLOR.faint}"`,
-}
+const C = { bg: '#0B0F14', sunken: '#080B10', rail: '#10161E', plate: '#151C27', relief: '#1B2330', line: 'rgba(255,255,255,0.14)', fg: '#F3F6F9', muted: '#9AA3B2', subtle: '#6B7484', faint: '#47505E', brand: '#2DD4A8' }
+const SANS = 'IBM Plex Sans,DejaVu Sans,sans-serif'
+const PLATE = 'IBM Plex Sans Condensed,IBM Plex Sans,DejaVu Sans Condensed,sans-serif'
+const MONO = 'IBM Plex Mono,DejaVu Sans Mono,monospace'
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-const shapes = (list: Shape[]) => list.map((s) => (s.d ? `<path d="${s.d}" ${PAINT[s.tone]}/>` : `<circle cx="${s.cx}" cy="${s.cy}" r="${s.r}" ${PAINT[s.tone]}/>`)).join('')
 
-function wrap(text: string, chars: number, max: number): string[] {
+function wrap(value: string, chars: number, max: number): string[] {
 	const lines: string[] = []
 	let line = ''
-	for (const word of text.split(/\s+/)) {
+	for (const word of (value ?? '').split(/\s+/).filter(Boolean)) {
 		if (line && `${line} ${word}`.length > chars) {
 			lines.push(line)
 			line = word
@@ -42,92 +34,103 @@ function wrap(text: string, chars: number, max: number): string[] {
 	return cut
 }
 
-const text = (x: number, y: number, lines: string[], size: number, fill: string, extra = '', lead = 1.25) =>
-	`<text x="${x}" y="${y}" font-size="${size}" fill="${fill}" font-family="${FONT}" ${extra}>${lines.map((l, i) => `<tspan x="${x}" dy="${i ? size * lead : 0}">${esc(l)}</tspan>`).join('')}</text>`
+const text = (x: number, y: number, lines: string[], size: number, fill: string, extra = '', family = SANS, lead = 1.25) =>
+	`<text x="${x}" y="${y}" font-size="${size}" fill="${fill}" font-family="${family}" ${extra}>${lines.map((l, i) => `<tspan x="${x}" dy="${i ? size * lead : 0}">${esc(l)}</tspan>`).join('')}</text>`
 
-const frame = (body: string) =>
-	[
-		`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">`,
-		`<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.2" fill="rgba(255,255,255,0.05)"/></pattern></defs>`,
-		`<rect width="${W}" height="${H}" fill="${COLOR.bg}"/><rect width="${W}" height="${H}" fill="url(#dots)"/>`,
-		body,
-		'</svg>',
+const frame = (body: string) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="${C.bg}"/>${body}</svg>`
+
+const brand = (section: string) => text(64, 84, ['@thiagoeti'], 24, C.subtle, 'font-weight="500"') + text(64 + 146, 84, [`/  ${section}`], 24, C.fg, 'font-weight="600"')
+
+/** Poste do rack: furos quadrados a cada terço de U, de `y` até `y + h`. */
+function rail(x: number, y: number, h: number, w: number): string {
+	let holes = ''
+	for (let k = y + 8; k < y + h - 4; k += 16) holes += `<rect x="${f(x + w / 2 - 3)}" y="${k}" width="6" height="6" rx="1" fill="${C.sunken}"/>`
+	return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${C.rail}"/>${holes}`
+}
+
+/** Porta RJ45 de frente, acesa no acento ou apagada. */
+const jack = (x: number, y: number, s: number, on: boolean) =>
+	`<path d="M${x} ${y}h${s}v${f(s * 0.6)}h-${f(s * 0.3)}v${f(s * 0.18)}h-${f(s * 0.4)}v-${f(s * 0.18)}h-${f(s * 0.3)}z" fill="${C.sunken}" stroke="${on ? C.brand : C.faint}" stroke-width="2"/>`
+
+/**
+ * Chapa do servidor: LED de energia, número e nome à esquerda (subtítulo na chapa grande); à direita,
+ * os LEDs de blindagem por cima das portas — uma por tag — e a alça.
+ */
+function plate(p: Project, x: number, y: number, w: number, h: number, big = false): string {
+	const k = h / 64
+	const right = big ? x + w - 250 : x + w - 150 * k
+	const leds = SHIELD.map((s, i) => {
+		const cx = f(right + i * (big ? 12 : 13) * k)
+		const cy = f(y + h * 0.32)
+		const r = f((big ? 3 : 3.5) * k)
+		return p.docker.shield[s] ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${C.brand}"/>` : `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${C.faint}" stroke-width="1.5"/>`
+	}).join('')
+	const size = (big ? 14 : 16) * k
+	const jacks = p.tags.map((_, i) => jack(f(right + i * (size + 5 * k) - 2 * k), f(y + h * 0.52), f(size), big)).join('')
+	const title = big ? wrap(p.title, 30, 1) : wrap(p.title, 18, 1)
+	return [
+		`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="${C.relief}" stroke="${C.line}" stroke-width="1.5"/>`,
+		`<circle cx="${f(x + 16 * k)}" cy="${f(y + h / 2)}" r="${f(3 * k)}" fill="${C.brand}"/>`,
+		text(f(x + 28 * k), f(y + h / 2 + 8 * k), [p.serial], f(22 * k), C.fg, 'font-weight="500"', MONO),
+		text(f(x + 74 * k), f(y + h / 2 + (big ? -1 : 6) * k), title, f((big ? 15 : 17) * k), C.fg, 'font-weight="600"'),
+		big ? text(f(x + 74 * k), f(y + h / 2 + 17 * k), wrap(p.subtitle || p.description, 48, 1), f(10 * k), C.muted) : '',
+		leds,
+		jacks,
+		`<rect x="${f(x + w - 18 * k)}" y="${f(y + h / 2 - 18 * k)}" width="${f(6 * k)}" height="${f(36 * k)}" rx="${f(3 * k)}" fill="none" stroke="${big ? C.brand : C.line}" stroke-width="1.5"/>`,
 	].join('')
+}
 
-const brand = (section: string) => text(64, 88, ['@thiagoeti'], 24, COLOR.subtle, 'font-weight="600"') + text(64 + 11 * 14.4, 88, [`/ ${section}`], 24, COLOR.fg, 'font-weight="600"')
-
-/** Números em colunas: cada coluna mede o próprio valor e rótulo (fonte mono, 0.6 em por caractere). */
-function facts(list: { value: string | number; label: string }[], y: number): string {
-	let x = 64
-	return list
-		.map((item, i) => {
-			const out = text(x, y, [String(item.value)], 44, i === 0 ? COLOR.brand : COLOR.fg, 'font-weight="500"') + text(x, y + 30, [item.label], 16, COLOR.subtle)
-			x += Math.max(String(item.value).length * 26.4, item.label.length * 9.6) + 48
+/** Capa: título e números à esquerda; à direita, a frente do rack com um servidor por projeto. */
+export function homeCard(info: { section: string; title: string; description: string; caption: string; facts: { value: string | number; label: string }[] }): string {
+	const x = 600
+	const w = 540
+	const rw = 22
+	const top = 110
+	const row = 76
+	const height = projects.length * row + 16
+	const rack = [
+		`<rect x="${x - 2}" y="${top - 2}" width="${w + 4}" height="${height + 4}" rx="10" fill="${C.sunken}" stroke="${C.line}" stroke-width="1.5"/>`,
+		rail(x, top, height, rw),
+		rail(x + w - rw, top, height, rw),
+		...projects.map((p, i) => plate(p, x + rw + 4, top + 8 + i * row, w - rw * 2 - 8, row - 12)),
+	].join('')
+	let fx = 64
+	const facts = info.facts
+		.map((item) => {
+			const out = text(fx, 520, [String(item.value)], 48, C.fg, 'font-weight="500"', MONO) + text(fx, 552, [item.label], 18, C.subtle, '', PLATE)
+			fx += Math.max(String(item.value).length * 30, item.label.length * 10) + 48
 			return out
 		})
 		.join('')
-}
-
-/** Capa: título e indicadores à esquerda, mostrador com os emblemas à direita. */
-export function homeCard(card: { section: string; title: string; description: string; facts: { value: string | number; label: string }[]; projects: Project[] }): string {
-	const C = 260
-	const N = Math.max(1, card.projects.length)
-	const span = 360 / N
-	const dial = card.projects
-		.map((p) => {
-			const a = p.index * span
-			const [x, y] = pt(C, 180, a)
-			return `<path d="${band(C, 110, 250, a - span / 2 + 1, a + span / 2 - 1)}" fill="${COLOR.surface}" stroke="${p.index === 0 ? COLOR.brand : COLOR.line}"/><svg x="${f(x - 44)}" y="${f(y - 44)}" width="88" height="88" viewBox="0 0 64 64">${shapes(emblem(p.tags, 64))}</svg>`
-		})
-		.join('')
-	const ticks = Array.from({ length: 60 }, (_, k) => {
-		const [x0, y0] = pt(C, k % 5 ? 252 : 244, k * 6)
-		const [x1, y1] = pt(C, 258, k * 6)
-		return `<path d="M${x0} ${y0}L${x1} ${y1}" ${PAINT[k % 5 ? 'faint' : 'line']}/>`
-	}).join('')
 	return frame(
 		[
-			brand(card.section),
-			text(64, 250, wrap(card.title, 14, 2), 96, COLOR.fg, 'letter-spacing="-3"', 1.05),
-			text(64, 330, wrap(card.description, 34, 3), 26, COLOR.muted),
-			facts(card.facts, 500),
-			`<g transform="translate(${W - 2 * C - 50} ${(H - 2 * C) / 2})">${ticks}${dial}<circle cx="${C}" cy="${C}" r="96" fill="none" stroke="${COLOR.faint}"/><circle cx="${C}" cy="${C}" r="8" fill="${COLOR.brand}"/></g>`,
+			brand(info.section),
+			text(64, 236, wrap(info.title, 14, 2), 104, C.fg, 'font-weight="600" letter-spacing="-3"', PLATE, 1.05),
+			text(64, 304, wrap(info.description, 34, 2), 28, C.muted),
+			text(64, 386, wrap(info.caption, 40, 2), 22, C.subtle),
+			facts,
+			rack,
 		].join(''),
 	)
 }
 
-/** Projeto: nome, tecnologias e números à esquerda; emblema cercado pelo anel de respostas à direita. */
-export function projectCard(p: Project, section: string, labels: { ok: string; refused: string; balance: string; responses: string }): string {
-	const C = 230
-	const marks = ringMarks(p.responses, C, 214, 8)
-	const chips = (() => {
-		let x = 64
-		return p.technologies
-			.slice(0, 5)
-			.map((t) => {
-				const w = t.length * 11 + 28
-				const out = `<rect x="${x}" y="${H - 100}" width="${w}" height="36" rx="18" fill="none" stroke="${COLOR.line}"/>${text(x + 14, H - 76, [t], 17, COLOR.muted)}`
-				x += w + 10
-				return out
-			})
-			.join('')
-	})()
+/** Projeto: o servidor puxado do rack — a chapa inteira, com tecnologias e tags embaixo. */
+export function projectCard(p: Project, section: string): string {
+	const unit = unitOf('server', p.slug)
+	const rw = 40
+	const y = 170
+	const h = 150
 	return frame(
 		[
 			brand(section),
-			text(64, 140, [`${p.serial}`], 22, COLOR.brand, 'font-weight="600"'),
-			text(64, 220, wrap(p.title, 18, 2), 64, COLOR.fg, 'letter-spacing="-2"', 1.1),
-			text(64, p.title.length > 18 ? 340 : 270, wrap(p.subtitle || p.description, 36, 2), 24, COLOR.muted),
-			facts(
-				[
-					{ value: p.balance.final || p.responses.length, label: p.balance.final ? labels.balance : labels.responses },
-					{ value: p.ok, label: labels.ok },
-					{ value: p.refused, label: labels.refused },
-				],
-				430,
-			),
-			chips,
-			`<g transform="translate(${W - 2 * C - 64} ${(H - 2 * C) / 2})">${marks.map((m) => `<circle cx="${m.cx}" cy="${m.cy}" r="${m.r}" ${PAINT[m.tone]}/>`).join('')}<svg x="${C - 150}" y="${C - 150}" width="300" height="300" viewBox="0 0 64 64" stroke-width="0.4">${shapes(emblem(p.tags, 64))}</svg></g>`,
+			`<rect x="62" y="${y - 2}" width="${W - 124}" height="${h + 4}" rx="10" fill="${C.sunken}" stroke="${C.line}" stroke-width="1.5"/>`,
+			rail(64, y, h, rw),
+			rail(W - 64 - rw, y, h, rw),
+			plate(p, 64 + rw + 6, y + 8, W - 128 - rw * 2 - 12, h - 16, true),
+			text(64, 400, [`${slot(unit)}  ·  ${p.docker.cpus} ${copy.unit.cpus}  ·  ${p.docker.memory}  ·  :${p.docker.port}`], 20, C.subtle, '', MONO),
+			text(64, 470, wrap(p.description, 70, 2), 26, C.muted),
+			text(64, 556, [p.technologies.join('  +  ')], 22, C.fg, '', MONO),
+			text(64, 596, [`#${p.tags.join('  #')}`], 18, C.subtle, '', MONO),
 		].join(''),
 	)
 }

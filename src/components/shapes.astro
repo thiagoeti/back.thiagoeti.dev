@@ -1,7 +1,7 @@
 ---
 import { TONE, type Shape } from '../lib/glyphs'
 
-/** Formas da gramática polar dentro de um `<svg>` já aberto: caminho ou círculo, um papel por traço. */
+/** Formas dentro de um `<svg>` já aberto: caminho, círculo ou retângulo (chip, faixa); um papel por traço. */
 interface Props {
 	shapes: Shape[]
 }
@@ -13,6 +13,8 @@ const { shapes } = Astro.props
 	shapes.map((s) =>
 		s.d ? (
 			<path d={s.d} class={TONE[s.tone]} vector-effect="non-scaling-stroke" />
+		) : s.w !== undefined ? (
+			<rect x={s.x} y={s.y} width={s.w} height={s.h} rx={s.tone === 'chip' ? 3 : 6} class={TONE[s.tone]} vector-effect="non-scaling-stroke" />
 		) : (
 			<circle cx={s.cx} cy={s.cy} r={s.r} class={TONE[s.tone]} vector-effect="non-scaling-stroke" />
 		),

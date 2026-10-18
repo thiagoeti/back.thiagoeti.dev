@@ -2,74 +2,103 @@
 	"text": {
 		"skip": "Pular para o conteúdo",
 		"brand": {
-			"home": "mostrador — página inicial"
+			"home": "Rack — página inicial"
 		},
 		"nav": {
-			"label": "Cofres",
-			"home": "Mostrador"
+			"label": "Servidores",
+			"home": "Rack",
+			"unit": "servidor {n}"
 		},
-		"tags": {
-			"label": "Filtrar por tag",
-			"all": "todos",
-			"filtered": "{n} de {total}"
+		"network": {
+			"open": "Rede",
+			"close": "Fechar",
+			"label": "Rede e contatos"
+		},
+		"patch": {
+			"title": "patch panel",
+			"label": "Patch panel: ligar uma tag",
+			"all": "todas",
+			"lit": "{n} de {total} servidores ligados",
+			"hint": "Ligue uma porta: o cabo acende os servidores com a tag."
 		},
 		"home": {
-			"dial": "Mostrador dos cofres",
-			"hint": "← → gira · 1–{n} salta · enter abre",
+			"rack": "Rack de servidores",
+			"units": "{n}U",
 			"kpis": {
-				"projects": "cofres",
-				"technologies": "tecnologias",
+				"projects": "servidores",
 				"tags": "tags",
-				"responses": "respostas medidas",
-				"negative": "saldos negativos",
+				"shared": "tags em comum",
+				"technologies": "tecnologias",
+				"files": "arquivos",
 				"lines": "linhas de código"
 			},
-			"sources": "repositórios",
+			"storage": "repositório",
 			"projectsCount": "{n} projetos",
 			"measured": "medido",
 			"spec": "spec",
 			"total": "total",
-			"keywords": "índice",
-			"panels": "Painéis",
-			"swipe": "deslize →"
+			"segment": "segmento",
+			"origin": "origem",
+			"origins": {
+				"local": "pasta local",
+				"mount": "montagem",
+				"github": "GitHub",
+				"none": "sem data.json"
+			},
+			"empty": "sem projetos",
+			"pdu": "palavras-chave",
+			"here": "você está aqui",
+			"hint": "↑ ↓ escolhe · 1–{n} salta · enter abre · esc desliga a tag",
+			"uplinks": "{n} uplinks"
 		},
-		"readout": {
-			"open": "Abrir cofre",
-			"balance": "saldo final",
-			"opening": "abertura",
-			"concurrent": "simultâneos",
-			"ok": "aceitas",
-			"refused": "recusadas",
-			"responses": "respostas",
-			"technologies": "tecnologias",
-			"tags": "tags",
+		"unit": {
+			"open": "Abrir servidor",
 			"cpus": "cpu",
 			"memory": "memória",
+			"swap": "swap",
 			"port": "porta",
+			"pids": "processos",
 			"image": "imagem",
-			"pids": "pids",
+			"user": "usuário",
+			"restart": "reinício",
+			"nofile": "arquivos abertos",
 			"stop": "parada",
+			"health": "health check",
+			"log": "log",
 			"files": "arquivos",
 			"lines": "linhas",
 			"steps": "passos",
-			"armor": "blindagem",
+			"security": "segurança",
+			"technologies": "tecnologias",
+			"tags": "tags",
+			"bays": "baias",
 			"none": "—"
 		},
 		"shield": {
 			"user": "usuário sem root",
 			"readOnly": "disco só leitura",
-			"capDrop": "capabilities ALL removidas",
+			"capDrop": "capabilities removidas",
 			"noNewPrivileges": "sem novos privilégios",
 			"pids": "limite de processos",
 			"health": "health check"
 		},
+		"led": {
+			"user": "usr",
+			"readOnly": "ro",
+			"capDrop": "cap",
+			"noNewPrivileges": "nnp",
+			"pids": "pid",
+			"health": "hc"
+		},
 		"project": {
 			"wip": "WIP - Work in Progress",
-			"plates": "Pranchas",
-			"sheet": "Ficha",
+			"map": "Mapa do chassi",
+			"front": "Frente",
 			"code": "Código",
-			"next": "Próximo cofre",
-			"back": "Voltar ao mostrador",
+			"rear": "Traseira",
+			"above": "Servidor acima",
+			"below": "Servidor abaixo",
+			"back": "Voltar ao rack",
 			"folder": "pasta",
 			"repository": "repositório",
 			"readme": "README",
@@ -79,31 +108,27 @@
 			"segment": "segmento",
 			"status": "status",
 			"stable": "estável",
-			"source": "fonte",
-			"legend": "legenda",
-			"participants": "participantes",
-			"messages": "mensagens",
-			"nodes": "nós",
-			"edges": "ligações",
+			"slot": "posição",
+			"links": "Portas traseiras",
+			"participants": "chips",
+			"messages": "trilhas",
+			"nodes": "chips",
+			"edges": "trilhas",
 			"mermaid": "fonte mermaid",
-			"fire": "Disparar cenário",
-			"firing": "disparando…",
-			"output": "Saída",
-			"run": "terminal",
 			"files": "{n} arquivos · {lines} linhas · {bytes}",
-			"wheel": "role ↓ para avançar · ← →"
+			"tty": "tty"
 		},
 		"eggs": {
-			"withdraw": "422 INSUFFICIENT_FUNDS — o cofre não fica negativo",
-			"pix": "{ok} × 201 · {refused} × 422 · saldo {balance}",
-			"console": "cofre fechado. digite \"pix\" no mostrador."
+			"console": "rack ligado. digite \"ping\" ou \"reboot\".",
+			"ping": "ping: {n} servidores responderam",
+			"reboot": "reboot: rack religado"
 		},
 		"notfound": {
 			"code": "404",
-			"error": "ACCOUNT_NOT_FOUND",
-			"title": "Conta inexistente",
-			"account": "conta",
-			"cta": "Voltar ao mostrador"
+			"title": "Slot vazio",
+			"body": "Nenhum servidor responde neste endereço.",
+			"path": "procurado",
+			"cta": "Voltar ao rack"
 		}
 	}
 }

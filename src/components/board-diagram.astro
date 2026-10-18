@@ -1,0 +1,78 @@
+---
+import Shapes from './shapes.astro'
+import { inline } from '../lib/markdown'
+import { INLINE_CODE } from '../lib/site'
+import { text } from '../lib/text'
+import type { Scene } from '../lib/tracks'
+
+/**
+ * Trilhas da placa (.analyse/design.md): o mermaid do README desenhado como a placa-mãe do servidor
+ * (`src/lib/tracks.ts`), com a legenda embaixo — chips e trilhas na ordem do tempo. A fonte mermaid
+ * fica num `details`, inteira.
+ */
+interface Props {
+	scene: Scene
+	source: string
+}
+
+const { scene, source } = Astro.props
+const t = text.project
+const TONE = { label: 'fill-fg-subtle tabular-nums', text: 'fill-fg-subtle', key: 'fill-fg font-semibold', dark: 'fill-surface-0 font-semibold' } as const
+const nodes = scene.legend.filter((l) => l.kind === 'node')
+const rest = scene.legend.filter((l) => l.kind !== 'node')
+---
+
+<figure class="flex flex-col gap-6">
+	<svg viewBox={`0 0 ${scene.width} ${scene.height}`} class="block h-auto w-full max-w-3xl overflow-visible" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label={nodes.map((n) => n.label).join(' · ')}>
+		<Shapes shapes={scene.shapes} />
+		{
+			scene.labels.map((l) => (
+				<text x={l.x} y={l.y} font-size={l.size} text-anchor={l.anchor ?? 'middle'} class={TONE[l.tone]}>
+					{l.text}
+				</text>
+			))
+		}
+	</svg>
+
+	<figcaption class="grid gap-5 text-sm sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]">
+		<div>
+			<p class="plate mb-2">{scene.kind === 'sequence' ? t.participants : t.nodes}</p>
+			<ul class="grid gap-1.5">
+				{
+					nodes.map((n) => (
+						<li class="flex items-baseline gap-2.5">
+							<span class="grid h-5 min-w-5 shrink-0 place-items-center rounded-[2px] border border-fg-muted bg-surface-2 px-1.5 font-mono text-[11px] text-fg">{n.id}</span>
+							<span class="text-fg-muted">{n.label}</span>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+		{
+			rest.length > 0 && (
+				<div>
+					<p class="plate mb-2">{scene.kind === 'sequence' ? t.messages : t.edges}</p>
+					<ol class="grid gap-1">
+						{rest.map((m) =>
+							m.kind === 'block' ? (
+								<li class="mt-2 text-xs text-fg-subtle">{m.label}</li>
+							) : (
+								<li class="grid grid-cols-[1.5rem_auto_minmax(0,1fr)] items-baseline gap-2">
+									<span class="text-right text-xs tabular-nums text-fg-faint">{m.n ?? ''}</span>
+									<span class:list={['font-mono text-xs whitespace-nowrap', m.dashed ? 'text-fg-subtle' : 'text-fg']}>
+										{m.from} {m.dashed ? '⇠' : '→'} {m.to}
+									</span>
+									<span class={`text-fg-muted ${INLINE_CODE}`} set:html={inline(m.label)} />
+								</li>
+							),
+						)}
+					</ol>
+				</div>
+			)
+		}
+	</figcaption>
+	<details class="rounded-[3px] border border-line bg-surface-sunken">
+		<summary class="cursor-pointer px-3 py-2 text-xs text-fg-subtle hover:text-fg">{t.mermaid}</summary>
+		<pre class="overflow-x-auto border-t border-line px-3 py-3 font-mono text-xs leading-relaxed text-fg-muted">{source}</pre>
+	</details>
+</figure>
