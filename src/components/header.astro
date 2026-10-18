@@ -1,0 +1,63 @@
+---
+import Glyph from './glyph.astro'
+import { intro } from '../lib/content'
+import { emblem, grid } from '../lib/glyphs'
+import { text } from '../lib/text'
+import { NAV, SITE, detent, focusRing, isCurrent } from '../lib/site'
+
+/**
+ * Cabeçalho fixo (LAYOUT.md): logo e título à esquerda, sempre. Desktop: o menu é a fileira de
+ * emblemas dos cofres — o mesmo menu que desce para a base no mobile (bottom-nav.astro).
+ * Uma linha de marcas corre sob o cabeçalho como a borda graduada do disco.
+ */
+interface Props {
+	path: string
+}
+
+const { path } = Astro.props
+const item = `relative flex h-16 items-center gap-2 px-2 text-xs whitespace-nowrap text-fg-subtle hover:text-fg aria-[current=page]:text-brand before:absolute before:inset-x-2 before:bottom-0 before:h-0.5 before:rounded-full before:bg-transparent aria-[current=page]:before:bg-brand xl:px-3 ${detent} ${focusRing}`
+---
+
+<header class="fixed inset-x-0 top-0 z-40 border-b border-line bg-surface-0/90 backdrop-blur-md">
+	<div class="mx-auto flex h-16 w-full max-w-[120rem] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+		<a href="/" aria-label={text.brand.home} class:list={['group flex min-w-0 items-center gap-3 rounded-control', focusRing]}>
+			<span class="relative grid size-10 shrink-0 place-items-center">
+				<Glyph shapes={grid(20, 19)} size={40} class="absolute inset-0 size-10 transition-transform duration-320 ease-detent group-hover:rotate-30 motion-reduce:transition-none" />
+				<img src="https://cdn.thiagoeti.dev/system/logo.svg" alt="" width="20" height="20" class="relative size-5" />
+			</span>
+			<span class="flex min-w-0 items-baseline gap-1.5 text-sm leading-none">
+				<span class="text-fg-subtle">{SITE.brand}</span>
+				<span class="text-fg-faint" aria-hidden="true">/</span>
+				<span class="truncate font-semibold text-fg lowercase">{intro.title}</span>
+			</span>
+		</a>
+
+		<nav aria-label={text.nav.label} class="hidden lg:block">
+			<ul class="flex items-center">
+				{
+					NAV.map((n) => (
+						<li>
+							<a href={n.href} aria-current={isCurrent(n, path) ? 'page' : undefined} class={`group/nav ${item}`}>
+								{n.project ? (
+									<>
+										<Glyph shapes={emblem(n.project.tags, 64)} size={64} class="size-6" live={isCurrent(n, path)} />
+										<span class="font-semibold tabular-nums text-fg-faint group-aria-[current=page]/nav:text-brand">{n.project.serial}</span>
+										<span>{n.project.short}</span>
+									</>
+								) : (
+									<>
+										<Glyph shapes={grid(12, 11)} size={24} class="size-6" />
+										<span>{text.nav.home}</span>
+									</>
+								)}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+	</div>
+	<svg class="block h-1.5 w-full" aria-hidden="true">
+		<line x1="0" y1="0" x2="100%" y2="0" class="stroke-fg-faint [stroke-dasharray:1_11]" stroke-width="6" />
+	</svg>
+</header>

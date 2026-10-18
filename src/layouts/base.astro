@@ -1,0 +1,100 @@
+---
+import '../styles/global.css'
+
+import BottomNav from '../components/bottom-nav.astro'
+import Header from '../components/header.astro'
+import { meta } from '../lib/content'
+import { SITE, absoluteUrl } from '../lib/site'
+import { text } from '../lib/text'
+
+type JsonLd = Record<string, unknown>
+
+/**
+ * Casca de toda página: cabeçalho fixo no topo, menu fixo na base (mobile) e o palco entre eles.
+ * O documento não rola (.analyse/design.md › Espaço): cada página monta o próprio palco com eixo
+ * radial (capa) ou horizontal (projeto).
+ */
+interface Props {
+	title: string
+	description: string
+	path: string
+	jsonLd?: JsonLd[]
+	noindex?: boolean
+	/** Cartão de compartilhamento próprio (caminho); sem ele, o do `meta.json`. */
+	image?: string
+}
+
+const { title, description, path, jsonLd = [], noindex = false, image } = Astro.props
+const url = absoluteUrl(path)
+const card = image ? { url: absoluteUrl(image), width: 1200, height: 630, alt: title } : meta.image
+
+const person = { '@type': 'Person', name: SITE.author, alternateName: SITE.brand, jobTitle: SITE.role, url: SITE.home, sameAs: meta.author.same_as }
+const documents: JsonLd[] = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: meta.title, url: `${SITE.url}/`, inLanguage: SITE.lang, author: person }, ...jsonLd]
+const analytics = SITE.analytics
+---
+
+<!doctype html>
+<html lang={SITE.lang} class="h-full overflow-hidden bg-surface-0 [color-scheme:dark]">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="keywords" content={meta.keywords.join(', ')} />
+		<meta name="author" content={SITE.author} />
+		<meta name="robots" content={noindex ? 'noindex, follow' : meta.robots} />
+		<meta name="theme-color" content={meta.theme_color} />
+		<link rel="canonical" href={url} />
+		<link rel="icon" href="https://cdn.thiagoeti.dev/favicon.ico" sizes="32x32" />
+		<link rel="icon" href="https://cdn.thiagoeti.dev/system/logo.svg" type="image/svg+xml" />
+		<link rel="sitemap" href="/sitemap.xml" />
+		<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
+
+		<meta property="og:type" content={meta.open_graph.type} />
+		<meta property="og:site_name" content={meta.open_graph.site_name} />
+		<meta property="og:locale" content={SITE.locale} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={url} />
+		<meta property="og:image" content={card.url} />
+		<meta property="og:image:width" content={String(card.width)} />
+		<meta property="og:image:height" content={String(card.height)} />
+		<meta property="og:image:alt" content={card.alt} />
+		<meta name="twitter:card" content={meta.twitter.card} />
+		<meta name="twitter:image" content={card.url} />
+		<meta name="twitter:image:alt" content={card.alt} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet" />
+
+		{documents.map((doc) => <script type="application/ld+json" set:html={JSON.stringify(doc)} />)}
+
+		<script async src={`https://www.googletagmanager.com/gtag/js?id=${analytics}`}></script>
+		<script is:inline define:vars={{ analytics }}>
+			window.dataLayer = window.dataLayer || []
+			function gtag() { window.dataLayer.push(arguments) }
+			gtag('js', new Date())
+			gtag('config', analytics)
+		</script>
+	</head>
+	<body class="h-full overflow-hidden bg-surface-0 font-mono text-fg antialiased selection:bg-brand/30 selection:text-fg">
+		<a
+			href="#conteudo"
+			class="sr-only rounded-control bg-brand px-4 py-2 text-xs font-semibold uppercase tracking-wider text-surface-0 focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
+		>
+			{text.skip}
+		</a>
+		<Header path={path} />
+		<slot name="bar" />
+		<main
+			id="conteudo"
+			class="fixed inset-x-0 top-[4.375rem] bottom-[calc(7rem+env(safe-area-inset-bottom))] bg-[radial-gradient(circle,rgb(255_255_255/0.035)_1px,transparent_1px)] bg-size-[24px_24px] lg:top-[7.375rem] lg:bottom-0"
+		>
+			<slot />
+		</main>
+		<BottomNav path={path} />
+	</body>
+</html>

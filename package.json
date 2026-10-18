@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "check": "astro check",
+    "serve": "bun run app/index.ts"
+  },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@types/bun": "latest",
@@ -10,6 +16,7 @@
     "@elysiajs/static": "^1.4.10",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.4.0",
-    "elysia": "^1.4.30"
+    "elysia": "^1.4.30",
+    "sharp": "^0.35.5"
   }
 }
