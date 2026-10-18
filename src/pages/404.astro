@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/base.astro'
+import Shapes from '../components/shapes.astro'
+import TagBar from '../components/tag-bar.astro'
+import { TONE, grid } from '../lib/glyphs'
+import { arc } from '../lib/polar'
+import { LATCH_KEY, pageTitle } from '../lib/site'
+import { text } from '../lib/text'
+
+/**
+ * 404 como resposta do cofre: o caminho digitado é uma conta que não existe. O disco aparece aberto
+ * (anel com uma fresta) e o caminho pedido entra no lugar do número da conta (script abaixo).
+ */
+const t = text.notfound
+---
+
+<Base title={pageTitle(t.title)} description={`${t.code} ${t.error}`} path="/404" noindex>
+	<TagBar slot="bar" />
+	<section class="grid h-full place-items-center px-4">
+		<div class="flex flex-col items-center gap-6 text-center">
+			<svg viewBox="0 0 200 200" class="size-56" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" data-draw>
+				<Shapes shapes={grid(100, 92)} />
+				<path d={arc(100, 80, 24, 336)} class={TONE.line} />
+				<circle cx="100" cy="20" r="5" class={TONE.hollow} />
+				<text x="100" y="112" font-size="34" text-anchor="middle" class="fill-fg font-medium tabular-nums">{t.code}</text>
+			</svg>
+			<p class="text-sm font-semibold tracking-wider text-brand">{t.error}</p>
+			<h1 class="text-2xl text-fg">{t.title}</h1>
+			<p class="max-w-xs truncate text-xs text-fg-subtle">{t.account} <span class="text-fg" data-account>—</span></p>
+			<a href="/" class={LATCH_KEY}>{t.cta}</a>
+		</div>
+	</section>
+</Base>
+
+<script>
+	const account = document.querySelector('[data-account]')
+	if (account && location.pathname !== '/404') account.textContent = decodeURIComponent(location.pathname)
+</script>

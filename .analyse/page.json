@@ -1,0 +1,109 @@
+{
+	"text": {
+		"skip": "Pular para o conteúdo",
+		"brand": {
+			"home": "mostrador — página inicial"
+		},
+		"nav": {
+			"label": "Cofres",
+			"home": "Mostrador"
+		},
+		"tags": {
+			"label": "Filtrar por tag",
+			"all": "todos",
+			"filtered": "{n} de {total}"
+		},
+		"home": {
+			"dial": "Mostrador dos cofres",
+			"hint": "← → gira · 1–{n} salta · enter abre",
+			"kpis": {
+				"projects": "cofres",
+				"technologies": "tecnologias",
+				"tags": "tags",
+				"responses": "respostas medidas",
+				"negative": "saldos negativos",
+				"lines": "linhas de código"
+			},
+			"sources": "repositórios",
+			"projectsCount": "{n} projetos",
+			"measured": "medido",
+			"spec": "spec",
+			"total": "total",
+			"keywords": "índice",
+			"panels": "Painéis",
+			"swipe": "deslize →"
+		},
+		"readout": {
+			"open": "Abrir cofre",
+			"balance": "saldo final",
+			"opening": "abertura",
+			"concurrent": "simultâneos",
+			"ok": "aceitas",
+			"refused": "recusadas",
+			"responses": "respostas",
+			"technologies": "tecnologias",
+			"tags": "tags",
+			"cpus": "cpu",
+			"memory": "memória",
+			"port": "porta",
+			"image": "imagem",
+			"pids": "pids",
+			"stop": "parada",
+			"files": "arquivos",
+			"lines": "linhas",
+			"steps": "passos",
+			"armor": "blindagem",
+			"none": "—"
+		},
+		"shield": {
+			"user": "usuário sem root",
+			"readOnly": "disco só leitura",
+			"capDrop": "capabilities ALL removidas",
+			"noNewPrivileges": "sem novos privilégios",
+			"pids": "limite de processos",
+			"health": "health check"
+		},
+		"project": {
+			"wip": "WIP - Work in Progress",
+			"plates": "Pranchas",
+			"sheet": "Ficha",
+			"code": "Código",
+			"next": "Próximo cofre",
+			"back": "Voltar ao mostrador",
+			"folder": "pasta",
+			"repository": "repositório",
+			"readme": "README",
+			"docker": "docker.sh",
+			"page": "página",
+			"path": "caminho",
+			"segment": "segmento",
+			"status": "status",
+			"stable": "estável",
+			"source": "fonte",
+			"legend": "legenda",
+			"participants": "participantes",
+			"messages": "mensagens",
+			"nodes": "nós",
+			"edges": "ligações",
+			"mermaid": "fonte mermaid",
+			"fire": "Disparar cenário",
+			"firing": "disparando…",
+			"output": "Saída",
+			"run": "terminal",
+			"files": "{n} arquivos · {lines} linhas · {bytes}",
+			"wheel": "role ↓ para avançar · ← →"
+		},
+		"eggs": {
+			"withdraw": "422 INSUFFICIENT_FUNDS — o cofre não fica negativo",
+			"pix": "{ok} × 201 · {refused} × 422 · saldo {balance}",
+			"console": "cofre fechado. digite \"pix\" no mostrador."
+		},
+		"notfound": {
+			"code": "404",
+			"error": "ACCOUNT_NOT_FOUND",
+			"title": "Conta inexistente",
+			"account": "conta",
+			"cta": "Voltar ao mostrador"
+		}
+	}
+}

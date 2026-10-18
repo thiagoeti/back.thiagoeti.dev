@@ -19,6 +19,11 @@ PWD="$(cd "$(dirname "$0")" && pwd)"
 # name
 NAME="${GROUP}_${PROJECT}"
 
+# repos — repositórios de projetos lidos no build, somente leitura, quando existem nesta máquina
+REPOS="/data/work/project"
+MOUNT=""
+[ -d "$REPOS" ] && MOUNT="-v $REPOS:/repos:ro"
+
 # -- ----- ----- -----
 
 # pull
@@ -30,6 +35,7 @@ docker rm -f "$NAME"
 # run
 docker run --name "$NAME" \
 	-v "$PWD":"/data" \
+	$MOUNT \
 	-w "/data" \
 	-p "$PORT":"$PORT" \
 	--restart=always \

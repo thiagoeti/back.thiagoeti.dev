@@ -1,0 +1,19 @@
+---
+import { ICONS, type IconName } from '../lib/icons'
+
+/** Ícone de utilidade do catálogo, como máscara sobre `bg-current`. */
+interface Props {
+	name: IconName
+	class?: string
+	label?: string
+}
+
+const { name, class: className = 'size-5', label } = Astro.props
+---
+
+<span
+	class:list={['inline-block shrink-0 bg-current mask-contain mask-center mask-no-repeat', ICONS[name], className]}
+	role={label ? 'img' : undefined}
+	aria-label={label}
+	aria-hidden={label ? undefined : 'true'}
+></span>

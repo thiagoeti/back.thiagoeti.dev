@@ -10,6 +10,11 @@ Padrões de projetos back-end.
 - [Back-end](https://github.com/thiagoeti/back)
 - [Back-end (WIP)](https://github.com/thiagoeti/back_)
 
+**Para consulta local**:
+
+- `/data/work/project/back`
+- `/data/work/project/back_`
+
 ---
 
 ## Dados e conteúdo

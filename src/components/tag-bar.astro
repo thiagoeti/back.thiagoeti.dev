@@ -1,0 +1,51 @@
+---
+import Glyph from './glyph.astro'
+import { tagGlyph } from '../lib/glyphs'
+import { projects, tags } from '../lib/projects'
+import { detent, focusRing } from '../lib/site'
+import { fill, text } from '../lib/text'
+
+/**
+ * Barra de tags (project.md): fixa no topo, abaixo do cabeçalho, no desktop; fixa na base, acima do
+ * menu, no mobile. Cada tag mostra o próprio fragmento de glifo — o mesmo anel que ela desenha nos
+ * emblemas. Cada clique troca a URL (`?tag=`); fora da capa, leva à capa já filtrada.
+ */
+interface Props {
+	/** Na capa o filtro age no lugar; nas outras páginas o link leva à capa. */
+	live?: boolean
+}
+
+const { live = false } = Astro.props
+const chip = `inline-flex h-11 lg:h-8 shrink-0 items-center gap-1.5 rounded-full border border-line bg-surface-1 pr-3 pl-1.5 text-xs whitespace-nowrap text-fg-muted hover:border-line-strong hover:text-fg aria-[current=true]:border-brand/40 aria-[current=true]:bg-brand/10 aria-[current=true]:text-brand ${detent} ${focusRing}`
+---
+
+<div
+	id="tag-bar"
+	data-live={live ? '' : undefined}
+	class="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-30 border-t border-line bg-surface-sunken/95 backdrop-blur-md lg:top-[4.375rem] lg:bottom-auto lg:border-t-0 lg:border-b lg:bg-surface-0/80"
+>
+	<div class="mx-auto flex h-12 w-full max-w-[120rem] items-center gap-3 px-4 sm:px-6 lg:px-8">
+		<ul class="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto overscroll-x-contain py-1 [scrollbar-width:none]" aria-label={text.tags.label}>
+			<li class="shrink-0">
+				<a href="/" data-tag="" aria-current={live ? 'true' : undefined} class={chip}>
+					<span class="grid size-6 place-items-center"><span class="size-2 rounded-full bg-current"></span></span>
+					#{text.tags.all}
+					<span class="tabular-nums text-fg-faint">{projects.length}</span>
+				</a>
+			</li>
+			{
+				tags.map((t) => (
+					<li class="shrink-0">
+						<a href={`/?tag=${encodeURIComponent(t.name)}`} data-tag={t.name} class={chip}>
+							<Glyph shapes={tagGlyph(t.name, 24)} size={24} class="size-6" />#{t.name}
+							<span class="tabular-nums text-fg-faint">{t.count}</span>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+		<p class="hidden shrink-0 text-[11px] tabular-nums text-fg-subtle xl:block" aria-live="polite" data-tag-count data-template={text.tags.filtered}>
+			{fill(text.tags.filtered, { n: projects.length, total: projects.length })}
+		</p>
+	</div>
+</div>
