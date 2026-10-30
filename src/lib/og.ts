@@ -117,6 +117,7 @@ export function homeCard(info: { section: string; title: string; description: st
 /** Projeto: o servidor puxado do rack — a chapa inteira, com tecnologias e tags embaixo. */
 export function projectCard(p: Project, section: string): string {
 	const unit = unitOf('server', p.slug)
+	const none = copy.unit.none
 	const rw = 40
 	const y = 170
 	const h = 150
@@ -127,7 +128,7 @@ export function projectCard(p: Project, section: string): string {
 			rail(64, y, h, rw),
 			rail(W - 64 - rw, y, h, rw),
 			plate(p, 64 + rw + 6, y + 8, W - 128 - rw * 2 - 12, h - 16, true),
-			text(64, 400, [`${slot(unit)}  ·  ${p.docker.cpus} ${copy.unit.cpus}  ·  ${p.docker.memory}  ·  :${p.docker.port}`], 20, C.subtle, '', MONO),
+			text(64, 400, [`${slot(unit)}  ·  ${p.docker.cpus || none} ${copy.unit.cpus}  ·  ${p.docker.memory || none}  ·  ${p.docker.port ? `:${p.docker.port}` : none}`], 20, C.subtle, '', MONO),
 			text(64, 470, wrap(p.description, 70, 2), 26, C.muted),
 			text(64, 556, [p.technologies.join('  +  ')], 22, C.fg, '', MONO),
 			text(64, 596, [`#${p.tags.join('  #')}`], 18, C.subtle, '', MONO),

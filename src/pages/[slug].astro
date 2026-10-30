@@ -70,7 +70,7 @@ const links = [
 	{ label: t.readme, href: p.github.readme, icon: 'file-code' as const },
 	{ label: t.docker, href: p.github.docker, icon: 'terminal' as const },
 	{ label: t.page, href: absoluteUrl(p.href), icon: 'globe' as const },
-]
+].filter((x) => x.href)
 const facts = [
 	{ label: t.path, value: p.path },
 	{ label: t.segment, value: p.repo.segment || dash },

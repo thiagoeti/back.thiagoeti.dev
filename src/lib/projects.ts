@@ -23,6 +23,7 @@ export type Project = Omit<RepoProject, 'docker'> & {
 	short: string
 	wip: boolean
 	repo: SourceRepo
+	/** Endereços no GitHub; `docker` vazio quando a pasta não tem `docker.sh`. */
 	github: { folder: string; readme: string; docker: string }
 	doc: Readme
 	docker: Docker
@@ -58,7 +59,7 @@ export const projects: Project[] = flat.map(({ repo, p }, index) => {
 		short: title.split(/[\s+]+/).filter(Boolean).at(-1) ?? title,
 		wip: repo.wip,
 		repo,
-		github: { folder: `${repo.url}/tree/HEAD/${p.dir}`, readme: `${blob}/README.md`, docker: `${blob}/docker.sh` },
+		github: { folder: `${repo.url}/tree/HEAD/${p.dir}`, readme: `${blob}/README.md`, docker: p.docker ? `${blob}/docker.sh` : '' },
 		doc: parseReadme(p.readme),
 		docker,
 		armor: SHIELD.filter((k) => docker.shield[k]).length,
