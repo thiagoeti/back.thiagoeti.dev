@@ -7,7 +7,8 @@ export const SITE = {
 	host: new URL(meta.canonical).host,
 	brand: '@thiagoeti',
 	author: meta.author.name,
-	role: meta.keywords.find((k) => /engineer/i.test(k)) ?? '',
+	/** Papéis da marca (BRAND.md › Nome da marca): as palavras-chave em caixa alta, na ordem do `meta.json`. */
+	role: meta.keywords.filter((k) => /[A-Z]/.test(k) && k === k.toUpperCase()).join(' - '),
 	home: meta.author.url,
 	github: meta.author.same_as.find((u) => u.includes('github.com')) ?? 'https://github.com/thiagoeti',
 	lang: meta.lang,

@@ -7,7 +7,7 @@ import { arrow, f, route } from './grid'
  *   para a direita; cada mensagem é uma trilha vertical numerada entre barramentos, saindo de uma via.
  *   Retorno tracejado; mensagem para si mesmo é um laço em ângulo reto; `alt/else` é uma faixa sombreada.
  * - Fluxo: profundidade a partir das origens vira coluna (origem à esquerda); trilhas em ângulo reto e 45°;
- *   cada nó é um chip, o banco de dados leva um anel por dentro.
+ *   cada nó é um chip, o banco de dados leva um anel por dentro e a decisão (`{…}`) é um chip em losango.
  */
 export const WIDTH = 640
 
@@ -92,17 +92,21 @@ function sequence(lines: string[]): Scene {
 	return { kind: 'sequence', width: WIDTH, height, shapes, labels, legend }
 }
 
-type Node = { id: string; label: string; db: boolean }
+type Node = { id: string; label: string; db: boolean; decision: boolean }
+
+/** Forma do nó: `[texto]`, `[(banco)]`, `{decisão}` ou `(texto)`; `<br/>` do rótulo vira espaço. */
+const NODE = /^(\w+)\s*(?:\[\((.*?)\)\]|\[(.*?)\]|\{(.*?)\}|\((.*?)\))?$/
 
 function flow(lines: string[]): Scene {
 	const nodes = new Map<string, Node>()
 	const edges: { from: string; to: string; label: string }[] = []
 	const token = (raw: string): string => {
-		const m = raw.trim().match(/^(\w+)\s*(?:\[(\()?([^\]]*?)\)?\])?$/)
+		const m = raw.trim().match(NODE)
 		if (!m) return ''
 		const id = m[1]!
 		const prev = nodes.get(id)
-		nodes.set(id, { id, label: m[3]?.trim() || prev?.label || id, db: !!m[2] || !!prev?.db })
+		const label = (m[2] ?? m[3] ?? m[4] ?? m[5])?.replace(/<br\s*\/?>/gi, ' ').replace(/\s+/g, ' ').trim()
+		nodes.set(id, { id, label: label || prev?.label || id, db: m[2] !== undefined || !!prev?.db, decision: m[4] !== undefined || !!prev?.decision })
 		return id
 	}
 	for (const line of lines) {
@@ -149,7 +153,8 @@ function flow(lines: string[]): Scene {
 	}
 	for (const n of nodes.values()) {
 		const p = pos.get(n.id)!
-		shapes.push({ tone: 'chip', x: f(p.x - R), y: f(p.y - R), w: R * 2, h: R * 2 })
+		if (n.decision) shapes.push({ tone: 'chip', d: `M${p.x} ${f(p.y - R - 4)}L${f(p.x + R + 4)} ${p.y}L${p.x} ${f(p.y + R + 4)}L${f(p.x - R - 4)} ${p.y}Z` })
+		else shapes.push({ tone: 'chip', x: f(p.x - R), y: f(p.y - R), w: R * 2, h: R * 2 })
 		if (n.db) shapes.push({ tone: 'faint', cx: p.x, cy: p.y, r: R - 4 })
 		labels.push({ x: p.x, y: f(p.y + 4), text: n.id, size: n.id.length > 2 ? 9 : 11, tone: 'key', anchor: 'middle' })
 	}
