@@ -7,6 +7,7 @@ Arquivos `exe_*.md` em `.analyse/` são prompts para executar. Um prompt por tar
 | Prompt | Quando executar | Depende de |
 |---|---|---|
 | `exe_projeto.md` | Criar ou recriar o projeto inteiro (layout, glifos, páginas, build) | — |
+| `exe_layout.md` | Refazer todo o layout a partir de `_references/` | — |
 
 ## Como executar
 

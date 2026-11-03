@@ -1,0 +1,76 @@
+---
+import Icon from './icon.astro'
+import type { IconName } from '../lib/icons'
+import { focusRing } from '../lib/site'
+
+/**
+ * Integration Card (THEME.md › Integration Card): ícone, nome, estado, descrição e rodapé em mono.
+ * Com `href` o cartão inteiro é o link; externo abre em nova aba. `current`: o cartão deste site.
+ */
+interface Props {
+	name: string
+	icon: IconName
+	href?: string
+	external?: boolean
+	current?: boolean
+	status?: { label: string; tone: 'success' | 'info' | 'warning' | 'muted' }
+	description?: string
+	/** Campos medidos: rótulo e valor, em mono. */
+	facts?: [string, string][]
+	footer?: { left: string; right?: string }
+}
+
+const { name, icon, href, external = false, current = false, status, description, facts = [], footer } = Astro.props
+const TONE = { success: 'text-success', info: 'text-info', warning: 'text-warning', muted: 'text-fg-subtle' } as const
+const Tag = href ? 'a' : 'div'
+---
+
+<Tag
+	href={href}
+	target={external ? '_blank' : undefined}
+	rel={external ? 'noopener' : undefined}
+	aria-current={current ? 'page' : undefined}
+	class:list={[
+		'flex h-full flex-col gap-3 rounded-card border bg-surface-1 p-4 transition-colors duration-150',
+		current ? 'border-brand/30 bg-brand/5' : 'border-line',
+		href && `hover:border-line-strong ${focusRing}`,
+	]}
+>
+	<span class="flex items-center gap-3">
+		<span class:list={['grid size-9 shrink-0 place-items-center rounded-control border border-line bg-surface-2', current ? 'text-brand' : 'text-fg-muted']}>
+			<Icon name={icon} class="size-4" />
+		</span>
+		<span class="flex min-w-0 flex-col gap-0.5">
+			<span class="truncate text-sm font-semibold text-fg">{name}</span>
+			{
+				status && (
+					<span class:list={['flex items-center gap-1.5 text-[10px] uppercase tracking-wider', TONE[status.tone]]}>
+						<span class="size-1.5 rounded-full bg-current" aria-hidden="true" />
+						{status.label}
+					</span>
+				)
+			}
+		</span>
+	</span>
+	{description && <span class="text-xs leading-relaxed text-fg-muted">{description}</span>}
+	{
+		facts.length > 0 && (
+			<span class="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 font-mono text-[11px]">
+				{facts.map(([label, value]) => (
+					<>
+						<span class="text-fg-subtle">{label}</span>
+						<span class="truncate text-fg-muted">{value}</span>
+					</>
+				))}
+			</span>
+		)
+	}
+	{
+		footer && (
+			<span class="mt-auto flex justify-between gap-3 border-t border-line-subtle pt-3 font-mono text-[11px] text-fg-subtle">
+				<span class="min-w-0 truncate">{footer.left}</span>
+				{footer.right && <span class="shrink-0 text-success">{footer.right}</span>}
+			</span>
+		)
+	}
+</Tag>

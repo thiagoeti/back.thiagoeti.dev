@@ -1,7 +1,6 @@
 ---
 name: define
 description: Use ao criar, revisar ou ajustar README.md ou CLAUDE.md; ao separar conteúdo público do conteúdo do agente; ao criar spec em .specs/ ou indexá-la no CLAUDE.md; define e configura os arquivos do projeto. Separa README.md público de CLAUDE.md do agente.
-model: sonnet
 allowed-tools: Read Edit Write Glob Bash
 license: Unlicense
 metadata:

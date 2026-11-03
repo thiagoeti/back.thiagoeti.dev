@@ -1,0 +1,87 @@
+---
+import Integration from './integration.astro'
+import { contacts, ecosystem, host, linkHref, linkText, titles, type Link } from '../lib/content'
+import { iconOf } from '../lib/icons'
+import { SITE, focusRing, motion } from '../lib/site'
+import { fill, text } from '../lib/text'
+
+/**
+ * Rodapé do ecossistema (padrão dos sites `thiagoeti`, THEME.md › Integration Card): um cartão por
+ * site do `data.json › ecosystem` e por contato; o deste site fica aceso. Embaixo, a assinatura com
+ * `llms.txt` e o ano. Só desktop e impressão: no mobile o ecossistema e os contatos moram no botão
+ * Rede do cabeçalho (LAYOUT.md). Externo abre em nova aba.
+ */
+const here = (l: Link) => !!l.link && new URL(l.link).host === SITE.host
+const external = (l: Link) => /^https?:/.test(linkHref(l)) && !here(l)
+const linkedin = SITE.linkedin
+const email = contacts.find((c) => c.value?.includes('@'))
+const sign = `${focusRing} inline-flex min-h-11 items-center rounded-badge hover:text-brand ${motion}`
+---
+
+<footer class="mt-16 hidden border-t border-line bg-surface-sunken/60 lg:block print:block">
+	<div class="mx-auto grid w-full max-w-7xl gap-10 px-8 py-14 lg:grid-cols-4 lg:gap-x-12">
+		<nav id="ecossistema" aria-labelledby="rodape-ecossistema" class="scroll-mt-16 lg:col-span-3">
+			<h2 id="rodape-ecossistema" class="eyebrow mb-4">{titles.ecosystem}</h2>
+			<ul class="grid grid-cols-2 gap-3 xl:grid-cols-3">
+				{
+					ecosystem.map((l) => (
+						<li>
+							<Integration
+								name={l.label}
+								icon={iconOf(l.icon)}
+								href={linkHref(l)}
+								external={external(l)}
+								current={here(l)}
+								status={here(l) ? { label: text.network.here, tone: 'success' } : undefined}
+								footer={{ left: l.type ? `${l.type}` : linkText(l), right: l.type ? linkText(l) : undefined }}
+							/>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+
+		<div id="contato" class="scroll-mt-16">
+			<h2 class="eyebrow mb-4">{titles.contacts}</h2>
+			<ul class="grid gap-3">
+				{
+					contacts.map((l) => (
+						<li>
+							<Integration name={l.label} icon={iconOf(l.icon)} href={linkHref(l)} external={external(l)} footer={{ left: linkText(l) }} />
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</div>
+
+	<div class="border-t border-line-subtle">
+		<div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-x-6 px-8 py-3 font-mono text-[11px] text-fg-subtle">
+			<p class="flex flex-wrap items-center gap-x-5">
+				<a href={SITE.home} target="_blank" rel="noopener" class={`${sign} gap-2 text-fg-muted`}>
+					<img src="https://cdn.thiagoeti.dev/system/logo.svg" alt="" width="14" height="14" class="size-3.5" />
+					{host(SITE.home)}
+				</a>
+				<a href={SITE.github} target="_blank" rel="noopener" class={sign}>{SITE.brand}</a>
+				{
+					linkedin && (
+						<a href={linkedin} target="_blank" rel="noopener" class={sign}>
+							{new URL(linkedin).pathname.replace(/^\/|\/$/g, '')}
+						</a>
+					)
+				}
+				{
+					email && (
+						<a href={linkHref(email)} class={sign}>
+							{email.value}
+						</a>
+					)
+				}
+			</p>
+			<p class="flex items-center gap-x-4">
+				<a href="/llms.txt" class={`${sign} print:hidden`}>{text.footer.llms}</a>
+				<span>{fill(text.footer.copyright, { year: new Date().getFullYear(), name: SITE.author })}</span>
+			</p>
+		</div>
+	</div>
+</footer>

@@ -1,9 +1,9 @@
 ---
-import { HEIGHT } from '../lib/rack'
+import { projects } from '../lib/projects'
 import { NAV, focusRing, isCurrent, motion } from '../lib/site'
-import { fill, text } from '../lib/text'
+import { text } from '../lib/text'
 
-/** Menu inferior (tablet pra baixo, DESIGN.md): os mesmos itens do topo, na mesma ordem, ao alcance do polegar. */
+/** Menu inferior (tablet pra baixo, DESIGN.md): os mesmos itens do topo, na mesma ordem, ao alcance do polegar; o ponto é o estado do nó na malha. */
 interface Props {
 	path: string
 }
@@ -21,7 +21,7 @@ const { path } = Astro.props
 						aria-current={isCurrent(n, path) ? 'page' : undefined}
 						class={`group relative flex h-full flex-col items-center justify-center gap-1 px-0.5 text-[11px] leading-none text-fg-subtle hover:text-fg aria-[current=page]:text-fg before:absolute before:inset-x-3 before:top-0 before:h-0.5 before:bg-transparent aria-[current=page]:before:bg-brand ${motion} ${focusRing}`}
 					>
-						<span class="font-mono text-sm tabular-nums text-fg-faint group-aria-[current=page]:text-brand">{n.project ? n.project.serial : fill(text.home.units, { n: HEIGHT })}</span>
+						<span class="font-mono text-sm tabular-nums text-fg-faint group-aria-[current=page]:text-brand">{n.project ? n.project.serial : projects.length}</span>
 						<span class="max-w-full truncate">{n.project ? n.project.short : text.nav.home}</span>
 					</a>
 				</li>

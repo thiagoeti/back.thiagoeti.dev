@@ -1,6 +1,6 @@
 # back.thiagoeti.dev
 
-Padrões de projetos back-end, apresentados como um rack de servidores: cada projeto é um servidor e cada tag, uma porta do patch panel.
+Padrões de projetos back-end. A abertura mostra um back-end em funcionamento; cada projeto tem um glifo da sua linguagem, framework e stack.
 
 - Site: [back.thiagoeti.dev](https://back.thiagoeti.dev)
 

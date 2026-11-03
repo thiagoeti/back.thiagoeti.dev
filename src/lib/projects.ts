@@ -5,15 +5,15 @@ import { sourceRepos, type RepoProject, type SourceFile, type SourceRepo } from 
 /**
  * Projetos publicados: todos os repositórios do `data.md`, na ordem citada. Mesma pasta em dois
  * repositórios: vale o primeiro (o estável vem antes do `_`). Nada aqui é texto de conteúdo.
- * No rack, cada projeto é um servidor e cada tag uma porta numerada do patch panel.
+ * Cada projeto é um nó da malha (.analyse/design.md).
  */
 export type Project = Omit<RepoProject, 'docker'> & {
 	slug: string
 	href: string
 	index: number
-	/** Número do servidor: `1`, `2`… */
+	/** Ordem na lista: `1`, `2`… */
 	number: number
-	/** `01`, `02`… — como vai gravado na chapa. */
+	/** `01`, `02`… */
 	serial: string
 	/** Nome antes do travessão: `PHP Hyperf`. */
 	title: string
@@ -45,6 +45,7 @@ const flat = sourceRepos.flatMap((repo) =>
 
 export const projects: Project[] = flat.map(({ repo, p }, index) => {
 	const [title = p.name, ...rest] = p.name.split(/\s+—\s+/)
+	const lines = p.files.reduce((s, f) => s + f.lines, 0)
 	const docker = parseDocker(p.docker)
 	const blob = `${repo.url}/blob/HEAD/${p.dir}`
 	return {
@@ -63,7 +64,7 @@ export const projects: Project[] = flat.map(({ repo, p }, index) => {
 		doc: parseReadme(p.readme),
 		docker,
 		armor: SHIELD.filter((k) => docker.shield[k]).length,
-		lines: p.files.reduce((s, f) => s + f.lines, 0),
+		lines,
 		bytes: p.files.reduce((s, f) => s + f.bytes, 0),
 		sources: p.files,
 	}
@@ -71,16 +72,16 @@ export const projects: Project[] = flat.map(({ repo, p }, index) => {
 
 export const bySlug = (slug: string) => projects.find((p) => p.slug === slug)
 
-export type Tag = { name: string; count: number; servers: number[]; port: number; label: string }
+export type Tag = { name: string; count: number; projects: string[] }
 
-/** Tags na ordem da primeira aparição: a porta de cada uma no patch panel (`01`…), quantos servidores liga e quais. */
+/** Tags da que mais projetos tem para a que menos tem; empate fica na ordem da primeira aparição. */
 export const tags: Tag[] = (() => {
-	const map = new Map<string, number[]>()
-	for (const p of projects) for (const t of p.tags) map.set(t, [...(map.get(t) ?? []), p.number])
-	return [...map].map(([name, servers], i) => ({ name, count: servers.length, servers, port: i + 1, label: String(i + 1).padStart(2, '0') }))
+	const map = new Map<string, string[]>()
+	for (const p of projects) for (const t of p.tags) map.set(t, [...(map.get(t) ?? []), p.slug])
+	return [...map].map(([name, list]) => ({ name, count: list.length, projects: list })).sort((a, b) => b.count - a.count)
 })()
 
-/** Tags que mais de um servidor tem: cabos que cruzam o rack. */
+/** Tags que mais de um projeto tem. */
 export const shared: Tag[] = tags.filter((t) => t.count > 1)
 
 export const tagOf = (name: string) => tags.find((t) => t.name === name)

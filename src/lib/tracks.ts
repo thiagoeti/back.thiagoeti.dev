@@ -2,16 +2,17 @@ import type { Shape } from './glyphs'
 import { arrow, f, route } from './grid'
 
 /**
- * Trilhas da placa: o mermaid do README desenhado como a placa-mãe do servidor (.analyse/design.md).
- * - Sequência: cada participante é um chip com o seu barramento horizontal; o tempo corre da esquerda
- *   para a direita; cada mensagem é uma trilha vertical numerada entre barramentos, saindo de uma via.
- *   Retorno tracejado; mensagem para si mesmo é um laço em ângulo reto; `alt/else` é uma faixa sombreada.
- * - Fluxo: profundidade a partir das origens vira coluna (origem à esquerda); trilhas em ângulo reto e 45°;
- *   cada nó é um chip, o banco de dados leva um anel por dentro e a decisão (`{…}`) é um chip em losango.
+ * Diagrama do README desenhado como topologia (.analyse/design.md).
+ * - Sequência: cada participante é uma raia horizontal com o nome numa barra curta; a ordem corre da
+ *   esquerda para a direita; cada mensagem é um evento vertical numerado entre raias, saindo de um
+ *   ponto. Retorno tracejado; mensagem para si mesmo é um laço em ângulo reto; `alt/else` é uma faixa.
+ * - Fluxo: profundidade a partir das origens vira coluna (origem à esquerda); ligações em ângulo reto;
+ *   cada nó é uma barra curta, o banco de dados leva uma segunda linha por dentro e a decisão (`{…}`)
+ *   tem as pontas em bico.
  */
 export const WIDTH = 640
 
-export type Label = { x: number; y: number; text: string; size: number; tone: 'label' | 'text' | 'key' | 'dark'; anchor?: 'start' | 'middle' }
+export type Label = { x: number; y: number; text: string; size: number; tone: 'label' | 'text' | 'key' | 'dark'; anchor?: 'start' | 'middle' | 'end' }
 export type Legend = { id: string; label: string; kind: 'node' | 'block' | 'message'; n?: number; from?: string; to?: string; dashed?: boolean }
 export type Scene = { kind: 'sequence' | 'flow'; width: number; height: number; shapes: Shape[]; labels: Label[]; legend: Legend[] }
 
@@ -56,14 +57,16 @@ function sequence(lines: string[]): Scene {
 
 	valid.forEach((b, i) => {
 		const pad = Math.min(step / 2, 20) - b.depth * 4
-		shapes.push({ tone: i % 2 ? 'faint' : 'zone', x: f(x(b.first) - pad), y: TOP - 20 + b.depth * 4, w: f(x(b.last) - x(b.first) + pad * 2), h: f(bottom - TOP + 40 - b.depth * 8) })
-		labels.push({ x: f(x(b.first) - pad + 4), y: bottom + 40, text: b.label, size: 10, tone: 'text', anchor: 'start' })
+		shapes.push({ tone: i % 2 ? 'dash' : 'zone', x: f(x(b.first) - pad), y: TOP - 20 + b.depth * 4, w: f(x(b.last) - x(b.first) + pad * 2), h: f(bottom - TOP + 40 - b.depth * 8) })
+		// Faixa estreita leva só a palavra-chave (`alt`, `else`); o rótulo inteiro está na legenda.
+		const room = x(b.last) - x(b.first) + pad * 2 - 8
+		labels.push({ x: f(x(b.first) - pad + 4), y: bottom + 40, text: b.label.length * 6.2 <= room ? b.label : b.label.split(' ')[0]!, size: 10, tone: 'text', anchor: 'start' })
 	})
 
 	for (const p of participants) {
 		const py = y.get(p.id)!
 		shapes.push({ tone: 'rule', d: `M${LEFT - 40} ${py}L${RIGHT + 16} ${py}` })
-		shapes.push({ tone: 'chip', x: 24, y: py - 13, w: Math.max(26, p.id.length * 8 + 14), h: 26 })
+		shapes.push({ tone: 'node', x: 24, y: py - 12, w: Math.max(26, p.id.length * 8 + 14), h: 24 })
 		labels.push({ x: 24 + Math.max(26, p.id.length * 8 + 14) / 2, y: py + 4, text: p.id, size: 11, tone: 'key', anchor: 'middle' })
 	}
 
@@ -79,7 +82,7 @@ function sequence(lines: string[]): Scene {
 			const tip = { x: mx, y: b.y - dir * 7 }
 			shapes.push({ tone: m.dashed ? 'dash' : 'line', d: `M${f(mx)} ${a.y}L${f(mx)} ${tip.y}` }, { tone: 'line', d: arrow(a, tip, 6) })
 		}
-		shapes.push({ tone: m.dashed ? 'via' : 'dot', cx: f(mx), cy: a.y, r: 4 })
+		shapes.push({ tone: m.dashed ? 'node' : 'dot', cx: f(mx), cy: a.y, r: 4 })
 		labels.push({ x: f(mx), y: 22, text: String(i + 1), size: 11, tone: 'label', anchor: 'middle' })
 	})
 
@@ -128,7 +131,7 @@ function flow(lines: string[]): Scene {
 	const columns = Array.from({ length: max + 1 }, (_, d) => [...nodes.keys()].filter((id) => depth.get(id) === d))
 	const tallest = Math.max(1, ...columns.map((c) => c.length))
 	const GAP = 56
-	const R = 15
+	const BW = 22
 	const height = tallest * GAP + 48
 	const pos = new Map<string, { x: number; y: number }>()
 	columns.forEach((ids, d) => {
@@ -138,29 +141,36 @@ function flow(lines: string[]): Scene {
 
 	const shapes: Shape[] = []
 	const labels: Label[] = []
-	const named = new Set<string>()
-	for (const e of edges) {
+	// Ligação com rótulo leva um número no desenho; o texto fica na legenda, na mesma ordem.
+	const numbered = new Map<number, number>()
+	edges.forEach((e, i) => e.label && numbered.set(i, numbered.size + 1))
+	edges.forEach((e, i) => {
 		const a = pos.get(e.from)!
 		const b = pos.get(e.to)!
-		const s = { x: a.x + R, y: a.y }
-		const t = { x: b.x - R - 2, y: b.y }
-		shapes.push({ tone: 'line', d: route([s, { x: s.x + 12, y: s.y }, { x: t.x - 12, y: t.y }, t]) }, { tone: 'line', d: arrow({ x: t.x - 10, y: t.y }, t, 6) })
-		// Rótulo repetido (`W0 & W1 -->|cmpset| A`) aparece uma vez; a legenda lista todas as ligações.
-		if (e.label && !named.has(e.label)) {
-			named.add(e.label)
-			labels.push({ x: f(t.x - 30), y: f(t.y - 8), text: e.label, size: 10, tone: 'text', anchor: 'middle' })
+		const s = { x: a.x + BW, y: a.y }
+		const t = { x: b.x - BW - 2, y: b.y }
+		shapes.push({ tone: 'line', d: route([s, t]) }, { tone: 'line', d: arrow({ x: t.x - 10, y: t.y }, t, 6) })
+		const n = numbered.get(i)
+		if (n) {
+			// Trecho próprio da ligação: o de saída quando várias chegam ao mesmo nó, senão o de chegada.
+			const mid = (s.x + t.x) / 2
+			const converge = edges.filter((x) => x.to === e.to).length > 1
+			const at = a.y === b.y ? { x: mid, y: t.y } : converge ? { x: (s.x + mid) / 2, y: s.y } : { x: (mid + t.x) / 2, y: t.y }
+			labels.push({ x: f(at.x), y: f(at.y - 8), text: String(n), size: 11, tone: 'label', anchor: 'middle' })
 		}
-	}
+	})
 	for (const n of nodes.values()) {
 		const p = pos.get(n.id)!
-		if (n.decision) shapes.push({ tone: 'chip', d: `M${p.x} ${f(p.y - R - 4)}L${f(p.x + R + 4)} ${p.y}L${p.x} ${f(p.y + R + 4)}L${f(p.x - R - 4)} ${p.y}Z` })
-		else shapes.push({ tone: 'chip', x: f(p.x - R), y: f(p.y - R), w: R * 2, h: R * 2 })
-		if (n.db) shapes.push({ tone: 'faint', cx: p.x, cy: p.y, r: R - 4 })
+		const top = f(p.y - 12)
+		const bottom = f(p.y + 12)
+		if (n.decision) shapes.push({ tone: 'node', d: `M${f(p.x - BW + 8)} ${top}L${f(p.x + BW - 8)} ${top}L${f(p.x + BW)} ${p.y}L${f(p.x + BW - 8)} ${bottom}L${f(p.x - BW + 8)} ${bottom}L${f(p.x - BW)} ${p.y}Z` })
+		else shapes.push({ tone: 'node', x: f(p.x - BW), y: top, w: BW * 2, h: 24 })
+		if (n.db) shapes.push({ tone: 'rule', d: `M${f(p.x - BW + 4)} ${f(top + 5)}L${f(p.x + BW - 4)} ${f(top + 5)}` })
 		labels.push({ x: p.x, y: f(p.y + 4), text: n.id, size: n.id.length > 2 ? 9 : 11, tone: 'key', anchor: 'middle' })
 	}
 
 	const legend: Legend[] = [...nodes.values()].map((n) => ({ id: n.id, label: n.label, kind: 'node' }))
-	edges.forEach((e, i) => e.label && legend.push({ id: `e${i}`, label: e.label, kind: 'message', from: e.from, to: e.to }))
+	edges.forEach((e, i) => e.label && legend.push({ id: `e${i}`, label: e.label, kind: 'message', n: numbered.get(i), from: e.from, to: e.to }))
 	return { kind: 'flow', width: WIDTH, height, shapes, labels, legend }
 }
 

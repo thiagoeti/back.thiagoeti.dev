@@ -1,6 +1,6 @@
 /**
- * Ficha do servidor lida do `docker.sh` de cada projeto: recursos, porta, imagem, ciclo de vida e
- * as flags de blindagem — cada flag é um LED na chapa do servidor. Flag ausente fica vazia, nunca
+ * Ficha do container lida do `docker.sh` de cada projeto: recursos, porta, imagem, ciclo de vida e
+ * as flags de blindagem — cada flag é um evento do console de segurança. Flag ausente fica vazia, nunca
  * inventada.
  */
 export type Docker = {

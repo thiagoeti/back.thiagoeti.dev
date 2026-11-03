@@ -3,11 +3,9 @@
 @import "tailwindcss" source(none);
 @source "../**/*.{astro,ts}";
 
-/* Tokens: .specs/THEME.md — Dark Ops UI, restrito a 2 cores + 1 acento (.analyse/design.md):
-   chapa (superfícies do rack), luz (tinta, 4 luminosidades) e brand (LED aceso e cabo ligado).
-   Uma família: IBM Plex — Sans, Sans Condensed (gravação da chapa) e Mono (valores). */
+/* Tokens: .specs/THEME.md — Dark Ops UI. Sala de liquidação (.analyse/design.md). */
 @theme {
-	/* Superfícies: chão do datacenter → poste do rack → chapa → chapa em relevo */
+	/* Superfícies */
 	--color-surface-0: #0B0F14;
 	--color-surface-1: #10161E;
 	--color-surface-2: #151C27;
@@ -19,21 +17,27 @@
 	--color-line-strong: rgb(255 255 255 / 0.14);
 	--color-line-subtle: rgb(255 255 255 / 0.05);
 
-	/* Luz */
+	/* Texto */
 	--color-fg: #F3F6F9;
 	--color-fg-muted: #9AA3B2;
 	--color-fg-subtle: #6B7484;
 	--color-fg-faint: #47505E;
 
-	/* Acento */
+	/* Brand */
 	--color-brand: #2DD4A8;
 	--color-brand-hover: #3BE3B7;
 	--color-brand-deep: #166D55;
 
+	/* Semântica */
+	--color-success: var(--color-brand);
+	--color-info: #22D3EE;
+	--color-warning: #F0B429;
+	--color-load: #F97316;
+	--color-danger: #F05252;
+
 	/* Tipografia */
-	--font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-	--font-plate: "IBM Plex Sans Condensed", "IBM Plex Sans", ui-sans-serif, sans-serif;
-	--font-mono: "IBM Plex Mono", ui-monospace, monospace;
+	--font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 
 	/* Raio */
 	--radius-badge: 4px;
@@ -41,48 +45,65 @@
 	--radius-card: 12px;
 	--radius-panel: 16px;
 
+	/* Sombra / glow */
+	--shadow-panel: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 12px 40px rgb(0 0 0 / 0.35);
+	--shadow-glow-brand: 0 0 24px rgb(45 212 168 / 0.12);
+	--shadow-glow-danger: 0 0 16px rgb(240 82 82 / 0.14);
+
 	/* Breakpoints — em rem, como os padrões (THEME.md › Breakpoints). */
 	--breakpoint-2xs: 22.5rem;
 	--breakpoint-xs: 30rem;
 	--breakpoint-3xl: 120rem;
 	--breakpoint-4xl: 160rem;
 
-	/* Física única: servidor correndo no trilho — sai firme e trava no fim do curso. */
-	--ease-rail: cubic-bezier(0.32, 0.72, 0, 1);
-
+	/* Motion */
 	--animate-pulse-dot: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-
 	@keyframes pulse-dot {
 		0%, 100% { opacity: 1; }
 		50% { opacity: 0.4; }
 	}
 }
 
-/* Tipografia: .specs/THEME.md › Tipografia; `plate` é a gravação na chapa do rack. */
-@utility plate { @apply font-plate text-[11px] font-medium uppercase tracking-[0.12em] text-fg-subtle; }
+/* Tipografia (THEME.md › Tipografia). */
+@utility display-xl    { @apply text-5xl md:text-6xl font-normal leading-[1.05] tracking-tight text-fg; }
+@utility display-lg    { @apply text-4xl font-normal leading-tight tracking-tight text-fg; }
+@utility kpi-xl        { @apply text-5xl font-medium leading-none tracking-tight tabular-nums text-fg; }
+@utility kpi-md        { @apply text-2xl font-medium leading-none tabular-nums text-fg; }
+@utility kpi-unit      { @apply text-xl font-normal text-fg-subtle; }
+@utility heading-card  { @apply text-xl font-semibold leading-snug text-fg; }
+@utility heading-panel { @apply text-lg font-medium text-fg; }
+@utility eyebrow       { @apply text-[11px] font-semibold uppercase tracking-[0.15em] text-fg-subtle; }
+@utility body-lg       { @apply text-base leading-relaxed text-fg-muted; }
+@utility body-md       { @apply text-sm leading-normal text-fg-muted; }
+@utility body-sm       { @apply text-xs text-fg-subtle; }
+@utility delta         { @apply text-sm font-medium text-brand; }
+@utility mono-label    { @apply text-xs font-mono text-fg-subtle; }
+@utility mono-status   { @apply text-[11px] font-mono font-medium uppercase tracking-wide; }
+
+/* Fundo de radar e topologia (THEME.md › Chart Container). */
+@utility dot-grid {
+	@apply bg-surface-sunken bg-[radial-gradient(circle,rgb(255_255_255/0.04)_1px,transparent_1px)] bg-[size:16px_16px];
+}
 
 /* Desenhos em SVG: um papel por traço (src/lib/glyphs.ts). */
-@utility glyph-rule  { @apply fill-none stroke-fg-faint; }
-@utility glyph-line  { @apply fill-none stroke-fg-muted; }
-@utility glyph-faint { @apply fill-none stroke-fg-faint; }
-@utility glyph-dash  { @apply fill-none stroke-fg-subtle [stroke-dasharray:4_4]; }
-@utility glyph-chip  { @apply fill-surface-2 stroke-fg-muted; }
-@utility glyph-via   { @apply fill-surface-0 stroke-fg-muted; }
-@utility glyph-dot   { @apply fill-fg-muted stroke-none; }
-@utility glyph-key   { @apply fill-none stroke-brand; }
-@utility glyph-zone  { @apply fill-white/[0.03] stroke-none; }
+@utility glyph-rule  { @apply fill-none stroke-white/[0.06] [stroke-dasharray:3_5]; }
+@utility glyph-line  { @apply fill-none stroke-brand/60; }
+@utility glyph-dash  { @apply fill-none stroke-info/60 [stroke-dasharray:4_4]; }
+@utility glyph-node  { @apply fill-surface-2 stroke-brand/50; }
+@utility glyph-dot   { @apply fill-brand stroke-none; }
+@utility glyph-zone  { @apply fill-white/[0.025] stroke-none; }
 
-/* Puxar o servidor: o painel clicado no rack vira o painel da página do projeto (MPA nativo). */
+/* O nome clicado na grade vira o título da página do projeto (MPA nativo). */
 @view-transition {
 	navigation: auto;
 }
-::view-transition-group(server) {
-	animation-duration: 0.42s;
-	animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+::view-transition-group(project) {
+	animation-duration: 0.4s;
+	animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 ::view-transition-old(root),
 ::view-transition-new(root) {
-	animation-duration: 0.22s;
+	animation-duration: 0.2s;
 }
 @media (prefers-reduced-motion: reduce) {
 	@view-transition {

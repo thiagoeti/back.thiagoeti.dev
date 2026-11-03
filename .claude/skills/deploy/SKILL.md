@@ -1,7 +1,6 @@
 ---
 name: deploy
 description: Use ao fazer deploy, publicar, commitar, dar push, versionar, atualizar o repositório, subir para beta ou main, colocar em produção, sincronizar branches ou rodar o git.sh; "sobe isso", "manda pro beta", "publica em produção", "faz o commit", "executa push"; qualquer menção a git, push, commit ou publicação de código, mesmo sem a palavra deploy. Publica e versiona pelo git.sh nos modos beta (default), main e full.
-model: haiku
 allowed-tools: Read Bash
 license: Unlicense
 metadata:

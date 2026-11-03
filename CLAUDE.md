@@ -26,6 +26,7 @@
 | `/deploy` | 4 | Git, commit, push, publicação — o `git.sh` mora na skill; a raiz é symlink |
 | `/prompt` | 5 | Transformar pedido vago em prompt preciso |
 | `/frontend-design` | 6 | Direção visual ao criar ou remodelar UI (externa, Anthropic) |
+| `/creative` | 7 | Ideação: ≥ 10 ideias, convergência por impacto, novidade e aderência |
 
 ---
 
@@ -35,8 +36,10 @@
 |---|---|
 | `.analyse/exe.md` | Índice dos prompts de execução |
 | `.analyse/exe_projeto.md` | Super prompt de criação completa do projeto |
-| `.analyse/design.md` | Direção criativa: conceitos, metáfora (rack de servidores), gramática em U, mapa de navegação, inventário de componentes |
+| `.analyse/exe_layout.md` | Super prompt de refação do layout a partir de `_references/` |
+| `.analyse/design.md` | Direção criativa: revisão 10 (sistemas em funcionamento, glifos de tecnologia), histórico das revisões, ideação, inventário |
 | `.analyse/page.json` | Microcopy de interface (`text`): rótulos, estados, easter eggs, 404 |
+| `_references/` | Capturas Dark Ops UI: fonte visual do layout (`exe_layout.md`) |
 
 ## Arquitetura
 
@@ -44,16 +47,19 @@
 |---|---|---|
 | Build | `astro.config.ts` | Astro estático; integrações `llms-txt` (`.content/data.md` → `public/llms.txt`) e `cdn` (troca a URL da CDN pelo `CDN` do `.env.local`) |
 | Repositórios | `src/lib/repos.ts` | Lê `data.md › Projetos`: pasta local citada, `/repos/<repo>` (montagem do `docker.sh`) ou GitHub bruto; `data.json`, `README.md`, `docker.sh` e arquivos de cada pasta |
-| Projetos | `src/lib/projects.ts` | Modelo do projeto: README (`readme.ts`), ficha do container (`docker.ts`), tags com número de porta, totais |
-| Rack | `src/lib/rack.ts`, `src/components/unit.astro`, `src/components/rail.astro` | Elevação do rack (regra única: tudo em U inteiros), postes e numeração |
-| Painéis | `src/components/faceplate.astro`, `nameplate.astro`, `patch-panel.astro`, `storage.astro`, `pdu.astro`, `switch.astro` | Servidor, identificação, tags, repositórios, palavras-chave, ecossistema e contatos |
-| Glifos | `src/components/leds.astro`, `bays.astro`, `jack.astro`, `src/lib/glyphs.ts`, `src/lib/grid.ts` | LEDs de blindagem, baias por arquivo, porta RJ45; papéis de traço e geometria dos desenhos em SVG |
-| Diagrama | `src/lib/tracks.ts`, `src/components/board-diagram.astro` | Mermaid (`sequenceDiagram`, `flowchart`) → trilhas da placa |
+| Projetos | `src/lib/projects.ts` | Modelo do projeto: README (`readme.ts`), ficha do container (`docker.ts`), tags por número de projetos, totais |
+| Rajada | `src/lib/burst.ts` | `Saída:` do README → respostas HTTP em ordem (`33 respostas \`201\``, `17 \`422\``, `\`201 SETTLED\``) e saldo final citado; sem código, sem rajada |
+| Glifo | `src/lib/techglyph.ts`, `src/components/tech-glyph.astro` | Vocabulário de tecnologia em `viewBox 0 0 200 200`: moldura da linguagem, motivo do framework do título, satélites das demais; tecnologia nova sem desenho vira satélite genérico; `glyphSvg` para o cartão OG |
+| Capa | `src/components/hero-systems.astro`, `showcase-card.astro`, `command-bar.astro`, `integration.astro` | Glifos de sistema com trilhos `sync`/`async`/`store` (sem tecnologia), vitrine, busca e tags, repositórios |
+| Projeto | `src/components/threat-console.astro`, `timeline.astro`, `terminal.astro`, `source-panel.astro`, `board-diagram.astro` | Blindagem, como funciona, executar, arquivos × código, diagrama |
+| Peças | `src/components/badge.astro`, `ring.astro`, `icon.astro`, `link-row.astro` | Badge, Score Ring, ícone do catálogo, link do ecossistema |
+| Glifos | `src/lib/glyphs.ts`, `src/lib/grid.ts`, `src/components/shapes.astro` | Papéis de traço e ligações em ângulo reto do diagrama |
+| Diagrama | `src/lib/tracks.ts`, `src/components/board-diagram.astro` | Mermaid (`sequenceDiagram`, `flowchart`) → topologia sobre fundo pontilhado, nós e log numerado |
 | Markdown | `src/lib/markdown.ts` | README renderizado no build, sem `style` inline, cores do Shiki mapeadas para 2 cores + 1 acento |
-| Cartões | `src/lib/og.ts`, `src/pages/og.png.ts`, `src/pages/[slug]/og.png.ts` | PNG 1200×630 pelo sharp |
-| Páginas | `src/pages/` | `/` (frente do rack), `/[slug]` (servidor puxado + chassi aberto), `404` (slot vazio), `robots.txt`, `sitemap.xml` |
-| Scripts cliente | `src/scripts/rack.ts`, `src/scripts/chassis.ts` | Rack (cabos, `?tag=`, teclado, view transition, easter eggs) e chassi (mapa do compartimento à vista, ← → servidor vizinho) |
-| Estilo | `src/styles/global.css` | Tokens Tailwind do `THEME.md`, restritos a 2 cores + 1 acento e IBM Plex (Sans, Sans Condensed, Mono); papéis de traço dos glifos |
+| Cartões | `src/lib/og.ts`, `src/pages/og.png.ts`, `src/pages/[slug]/og.png.ts` | PNG 1200×630 pelo sharp: nome à esquerda, glifo de tecnologia (projeto) ou glifos (capa) à direita |
+| Páginas | `src/pages/` | `/` (sistemas em funcionamento, vitrine), `/[slug]` (glifo de tecnologia vivo e seções), `404` (serviço vazio), `robots.txt`, `sitemap.xml` |
+| Scripts cliente | `src/scripts/flow.ts`, `systems.ts`, `glyph.ts`, `home.ts`, `project.ts`, `src/layouts/base.astro` | Motor de pontos em trilhos (posição em atributo `transform`); abertura contínua; glifo do projeto vivo; vitrine (`?tag=`, `?q=`, `/`, `Esc`); abas de código e ← → vizinho; volta da view transition `project` |
+| Estilo | `src/styles/global.css` | Tokens e utilitários tipográficos do `THEME.md` (Inter, JetBrains Mono), `dot-grid`, papéis de traço |
 | Servidor | `app/index.ts` | Elysia serve `dist/` e `public/`; `/health`; exige `PORT` |
 
 ## Execução

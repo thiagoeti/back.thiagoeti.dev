@@ -1,156 +1,124 @@
 # Direção criativa — back.thiagoeti.dev
 
-## Revisão 4 — por que recomeçar
+## Revisão 10 — sistemas em funcionamento e glifos de tecnologia
 
-| Retorno | Decisão |
+Retorno da revisão 9: a abertura deve transferir dados sem parar e os glifos dela representam sistemas; cada projeto tem um glifo da sua tecnologia; "Como ler um selo" sai — glifo que precisa de legenda não está bom.
+
+| Decisão | Como |
 |---|---|
-| Fichário de fichas perfuradas "não ficou legal" | Metáfora nova, ligada ao próprio back-end: o rack de servidores |
-| Layout igual aos irmãos (`stack`, `pattern`, `ai`) | Nada de hero à esquerda + mapa radial à direita, tabela periódica ou colunas por categoria: a página inteira é um objeto só, de cima a baixo |
-| Valores de preço não fazem parte do projeto | Nenhum valor monetário vira indicador; os números medem o projeto (servidores, tags, arquivos, linhas, cpu, memória, porta) |
-| Futurista demais (radar, neon, glow) | Hardware real e fosco: chapa, poste, porta RJ45, LED sólido, sem brilho |
+| Abertura | Back-end em funcionamento: navegador, app e sistema legado → entrada → três serviços → fila, cache → workers → banco de dados. Dados correm sem parar: requisição vai e resposta volta (`sync`), mensagem vai para a fila e para o worker (`async`), escrita vai ao banco e a confirmação volta (`store`). O sistema que recebe pulsa |
+| Glifo do projeto | Vocabulário de tecnologia (`src/lib/techglyph.ts`): a linguagem é a moldura com a etiqueta (PHP oval, Python dois quadros entrelaçados, TypeScript quadro de arquivo), o framework do título é o motivo central (corrotinas, camadas, workers com memória compartilhada, raio no laço de eventos, prisma tipado, árvore de HTML) e as demais tecnologias são satélites ligados à moldura |
+| Sem legenda | Os glifos se explicam pela forma e pela stack escrita logo abaixo |
+| Página do projeto | O glifo grande com dados correndo entre a moldura e os satélites |
+| 404 | Um serviço tracejado, vazio; as requisições chegam e voltam vermelhas |
+| Movimento | Contínuo só onde há sistema funcionando (abertura e glifo do projeto); para fora da tela, com a aba oculta e com `prefers-reduced-motion` |
 
-## 1. Divergir — 10 conceitos
+Sai: selos, legenda do selo, contadores de replay.
 
-| # | Conceito | Metáfora central |
+## Revisão 9 — recebendo requisições, em glifos
+
+Retorno da revisão 8: a ideia de receber requisições ficou; a abertura não pode citar linguagem nem tecnologia — é vitrine de projetos — e os glifos devem carregar o visual.
+
+| Decisão | Como |
+|---|---|
+| Abertura sem tecnologia | Cena de glifos: clientes (navegador, app, sistema legado) → entrada → selos dos projetos. Nenhum nome de linguagem, só o número do nó |
+| Glifo por projeto | **Selo**: círculo gerado com o dado do projeto, de fora para dentro — respostas, blindagem, código, diagrama, número do nó (`src/lib/seal.ts`) |
+| Requisições | Cada resposta gravada na `Saída` do README é uma requisição: sai do cliente, passa pela entrada, chega ao selo, acende o traço e volta na cor da resposta |
+| Vitrine | Um selo grande por projeto, com a leitura do selo em números ao lado |
+| Página do projeto | O selo grande recebendo as requisições de fora; uma seção por anel, com a chave do anel (miniatura do selo com o anel aceso) |
+| 404 | Selo vazio: as requisições chegam e voltam vermelhas |
+
+Sai: pista por projeto, frota em tabela, player de capítulos.
+
+## Revisão 8 — replay (substituída)
+
+## Ideação (skill `creative`)
+
+Técnicas: analogia (caixa-preta de avião, pista de corrida), restrição forçada (a página inteira é um único gesto), primeiros princípios (premissa quebrada: "portfólio se lê" → portfólio se executa).
+
+| # | Ideia | Destino |
 |---|---|---|
-| 1 | Rack de servidores | Cada projeto é um servidor no rack; cada tag, uma porta do patch panel com cabo até o servidor |
-| 2 | Mesma requisição, 5 servidores | Um `POST /pix` atravessa cinco raias, uma por runtime |
-| 3 | Cozinha (back of house) | Comandas no trilho; cada tag uma estação |
-| 4 | Painel de partidas split-flap | Cada projeto é uma linha que vira as palhetas |
-| 5 | Mesa telefônica | Tags são jaques; a telefonista liga os cabos |
-| 6 | Pátio de contêineres | Cada projeto é um contêiner empilhado |
-| 7 | Sala de máquinas | Cada projeto é um motor com placa de identificação |
-| 8 | Caixa de fusíveis | Cada tag é um disjuntor |
-| 9 | Planta de subestação | Barramentos e chaves seccionadoras |
-| 10 | Livro de ponto | Cada requisição é um carimbo de horário |
+| 1 | Dashboard com KPIs e cards | óbvia — é a revisão 7 |
+| 2 | Site inteiro como terminal | óbvia — clichê de dev |
+| 3 | Command palette como única navegação | óbvia — Raycast |
+| 4 | O visitante dispara a carga: seis pistas, uma por projeto, cada resposta da `Saída` do README vira um pacote que chega ou volta | **eleita — capa** |
+| 5 | Caixa-preta: a página do projeto toca a execução gravada do README, capítulo a capítulo, com barra de progresso | **eleita — projeto** |
+| 6 | Quadro de partidas de aeroporto | descartada — fora do tema Dark Ops |
+| 7 | Tabela de frota ordenável (blindagem, linhas, aceitas) | **eleita — inventário** |
+| 8 | Sismógrafo por projeto | descartada — repete a rajada da revisão 7 |
+| 9 | Grafo de forças arrastável | descartada — efeito sem informação nova |
+| 10 | 404 como pacote que volta da rota inexistente | **eleita — 404** |
 
-## 2. Radicalizar — os 3 melhores
+Convergência (impacto · novidade · aderência = 5 · 5 · 5): 4, 5, 7 e 10 contam a mesma história — **cada projeto é uma execução gravada que o visitante reproduz**. Quem contrata vê dinheiro que nunca fica negativo sob 50 PIX simultâneos; quem avalia vê container, passos, comandos e código na ordem em que rodam.
 
-| Conceito | Ao extremo |
-|---|---|
-| Rack de servidores | A página é a elevação frontal de um rack: tudo ocupa U inteiros, até o título e o rodapé |
-| Mesma requisição | A capa é um diagrama de sequência gigante e horizontal |
-| Cozinha | Toda interação é um pedido: fazer, preparar, servir |
+## Conceito
 
-## 3. Cruzar — híbrido
+**Replay.** O site não descreve os projetos: reproduz a execução que cada README registra. Tudo é replay de dado gravado (`Saída:`, `Cenário`, `docker.sh`, `Como funciona`, `Executar`) — nada "ao vivo", e a interface diz isso.
 
-Rack (objeto e grade em U) + mesa telefônica (o filtro é ligar um cabo) + elevação de datacenter (posição `U14–13`, a linguagem de quem monta o rack).
+## Regras
 
-## 4. Convergir — direção escolhida: **Rack de servidores**
+- Uma ousadia por tela: a pista (capa), o player (projeto), o pacote que volta (404).
+- O replay toca uma vez ao entrar na tela e repete no botão. `prefers-reduced-motion`: estado final direto.
+- Sem JS, toda tela mostra o estado final: nenhum dado depende de animação.
+- Cor só com significado: `2xx` = `success`, `4xx` = `warning`, rota inexistente e flag ausente = `danger`, projeto sem container = `info`.
+- Movimento por Web Animations API (`transform`, `opacity`); nenhum `style` escrito.
 
-Back-end é literalmente isto: servidores num rack, ligados por cabos — quem contrata entende em 2 segundos.
-Os dados reais do `docker.sh` (cpu, memória, porta, processos, blindagem) viram a chapa de cada servidor; nada é decorativo.
-O filtro por tag vira gesto físico: ligar a porta no patch panel e ver o cabo acender só os servidores que têm a tag.
+## Telas
 
-## 5. Sistematizar
-
-### Gramática (regra única)
-
-Tudo ocupa um número inteiro de U (1U = 3rem na tela larga), entre dois postes com furos de porca-gaiola e o número do U.
-
-| Peça | U | Conteúdo |
+| Tela | Ousadia | Resto |
 |---|---|---|
-| Chapa de identificação | 3 | Título gravado, frase do `data.md`, selo `@thiagoeti` + papel, 6 indicadores |
-| Patch panel | 2 | Uma porta RJ45 por tag (`01`…), mais `todas`; contagem de servidores ligados |
-| Bandeja de cabos | 1 | Por onde os cabos correm até o organizador vertical; atalhos de teclado |
-| Servidor | 2 | Número, posição, nome, subtítulo, tecnologias, tags, 6 LEDs de blindagem, visor (cpu, memória, porta, processos), uma baia por arquivo, uma porta por tag, alça |
-| Gaveta de discos | 2 | Um repositório: nome, endereço, campos do `data.json`; uma baia por projeto |
-| Régua de tomadas | 2 | Uma tomada por palavra-chave do `meta.json` |
-| Switch | 3 | Uplinks = ecossistema; portas de console = contatos; a porta deste site acesa |
+| `/` | **Pista de carga**: seis pistas; pacotes saem do cliente, os aceitos chegam e somam, os recusados batem e voltam; contadores e saldo final por pista; barra de status com os totais | Frota em tabela ordenável e filtrável (busca, tags), repositórios, palavras-chave |
+| `/<projeto>` | **Player**: ▶ toca os capítulos 1 Container (flags acendem), 2 Como funciona (passos), 3 Executar (comandos), 4 Rajada (células), 5 Saída; barra com marcadores, tempo e capítulo atual | Diagrama, trade-offs, skills, ficha, container, código, links, vizinhos |
+| `404` | Uma pista: o pacote vai até o endereço e volta `404` | Alerta com o endereço e volta para a capa |
 
-| Regra | Valor |
-|---|---|
-| LED | Cheio no acento = flag presente; vazado = ausente |
-| Cabo | Sai da porta do patch panel, desce à bandeja, corre ao organizador, desce até o servidor e entra por baixo na porta |
-| Baia | Barra interna mede as linhas do arquivo contra o maior arquivo do rack |
-| Servidor fora da consulta | Apaga (opacidade), LEDs apagam, cabos quase somem |
+## Mapa referência → componente → dado
 
-### Cor (2 + 1)
-
-| Papel | Token |
-|---|---|
-| Chapa, poste, chão | `surface-*` |
-| Tinta e gravação | `fg`, `fg-muted`, `fg-subtle`, `fg-faint` |
-| Ligado | `brand` — LED aceso, cabo ligado, porta ativa, ação principal |
-
-### Tipo (1 família)
-
-IBM Plex — Sans no texto; Sans Condensed na gravação da chapa (título, rótulos `plate`); Mono nos valores, números e código.
-
-### Movimento (1)
-
-Servidor correndo no trilho: `cubic-bezier(0.32, 0.72, 0, 1)` — token `ease-rail`. Cabo puxado da porta até o servidor, servidor apagando e acendendo, transição de página (a chapa clicada vira a chapa da página). `motion-reduce` desliga.
-
-## Mapa de navegação
-
-```
-/ (rack)
-├── patch panel ──porta──▶ cabo acende os servidores com a tag; os outros apagam; ?tag=<tag>
-├── servidor ──clique / enter──▶ /<slug> (a chapa vira a chapa da página — view transition `server`)
-├── gaveta de discos ── baia ──▶ /<slug>; nome ──▶ repositório no GitHub
-├── switch ── uplinks e contatos (nova aba)
-└── teclado: ↑ ↓ escolhe · 1–5 salta · enter abre · esc desliga a tag · "ping" · "reboot"
-mobile: patch panel vira régua fixa acima do menu; switch vai para o botão Rede; sem cabos, as portas acendem
-
-/<slug> (servidor puxado, chassi aberto)
-├── chapa no alto: a mesma da capa + selo WIP (repositório com sufixo `_`)
-├── mapa do chassi (esquerda, fixo): baias, cpus, pentes de memória, porta; compartimentos J1…Jn
-├── J1 Frente: descrição, intro, dados, máquina, blindagem, tags (→ /?tag=), tecnologias
-├── Jn README na ordem: Diagrama (trilhas da placa), Cenário, Como funciona (barramento), Executar (console), Skills, Trade-offs
-├── Código: uma baia por arquivo, abre o código
-├── Traseira: portas traseiras (links), servidor acima e abaixo, voltar ao rack
-└── ← → puxam o servidor vizinho
-/404 ── slot vazio: nenhum servidor responde neste endereço
-```
-
-## Inventário de componentes
-
-| Componente | Arquivo | Comportamento |
+| Referência | Componente `THEME.md` | Dado |
 |---|---|---|
-| Elevação do rack | `src/lib/rack.ts` | Ordem, altura em U e numeração de cada painel |
-| Painel no rack | `src/components/unit.astro`, `rail.astro` | Postes com furos e número do U, orelha aparafusada |
-| Chapa de identificação | `src/components/nameplate.astro` | Título, frase, selo, indicadores |
-| Patch panel | `src/components/patch-panel.astro` | Portas por tag; régua fixa no mobile (`dock`) |
-| Servidor | `src/components/faceplate.astro` | Chapa frontal; mesma chapa no alto da página do projeto |
-| LEDs | `src/components/leds.astro` | 6 flags do `docker.sh`; lista nomeada na página |
-| Baias | `src/components/bays.astro` | Um arquivo por baia, barra pelas linhas |
-| Porta RJ45 | `src/components/jack.astro` | Acende com `data-on` |
-| Gaveta de discos | `src/components/storage.astro` | Repositório e uma baia por projeto |
-| Régua de tomadas | `src/components/pdu.astro` | Palavras-chave |
-| Switch | `src/components/switch.astro` | Ecossistema e contatos |
-| Cabos | `src/scripts/rack.ts` | Desenho dos cabos, consulta, teclado, easter eggs |
-| Mapa do chassi | `src/components/chassis-map.astro`, `src/scripts/chassis.ts` | Componentes do chassi e compartimento à vista |
-| Compartimento | `src/components/compartment.astro` | Parte da página com designador `J1` |
-| Trilhas da placa | `src/components/board-diagram.astro`, `src/lib/tracks.ts` | Mermaid como placa: chips, barramentos, trilhas numeradas |
+| AI Agent Activity, Real-time Activity Log | Chart Container + Activity Log Row | Pistas da capa: respostas da `Saída` |
+| Agent Fleet, Active Agents | Agent / Node List Item | Frota: uma linha por projeto |
+| NODE-A/B/C, Infra Health | Progress Bar + Score Ring | Linhas de código, blindagem |
+| Search ⌘K | Search / Command Bar | Busca e tags |
+| Execution Path | Execution Path | Capítulos do player |
+| Threat Detection Console | Alert / Threat Row | Capítulo Container |
+| System Event Log | Event Timeline | Capítulo Como funciona |
+| Terminal | Card Base + mono | Capítulo Executar |
+| Barra inferior do app shell | Topbar invertida | Barra de status da pista, player fixo |
+| Card AWS | Integration Card | Repositórios, skills, links, ecossistema |
 
-## Componentes reinventados
+## Mobile
 
-| Comum | Como ficou |
-|---|---|
-| Filtro por tag | Ligar a porta no patch panel: o cabo acende os servidores |
-| Card | Chapa frontal de servidor 2U |
-| Hero | Chapa de identificação gravada no topo do rack |
-| KPI | Números gravados na chapa |
-| Badge de status | LED aceso ou apagado; selo WIP colado na chapa |
-| Tabs | Mapa do chassi com compartimentos |
-| Lista ordenada | Barramento com vias numeradas |
-| Bloco de código | Console `tty` com a saída no acento |
-| Rodapé | Switch: uplinks e portas de console |
-| 404 | Slot vazio no rack |
+- Pista: nome em cima, trilho na largura toda, contadores embaixo — não é a pista do desktop encolhida.
+- Frota: cada linha vira bloco de rótulo e valor; ordenação no topo.
+- Player na régua fixa acima do menu inferior (ação principal ao alcance do polegar).
+- Busca e tags na régua da capa; ecossistema e contatos no botão Rede.
 
 ## Easter eggs
 
-- `ping`: o pacote desce o rack e cada servidor ligado pisca os LEDs.
-- `reboot`: o rack apaga e religa, servidor por servidor.
-- Console com o rack em ASCII.
-- 404 como slot vazio.
+1. Console: a pista em ASCII.
+2. Digitar `pix`: dispara as seis pistas de novo.
+3. Página do projeto: `espaço` toca e pausa o player.
 
-## Auditoria do clichê
+## Inventário (revisão 9, substituído)
 
-| Tela | Óbvio | Substituído por |
-|---|---|---|
-| Capa | Hero + grade de cards | Elevação do rack, de cima a baixo |
-| Capa | Chips de filtro | Patch panel com cabos |
-| Capa | Mapa radial (irmãos) | Cabeamento organizado em bandeja e organizador vertical |
-| Projeto | Página longa de README | Chassi aberto com mapa e compartimentos |
-| Rodapé | 4 colunas | Switch |
+| Componente | Papel |
+|---|---|
+| `hero-flow.astro` | Cena da abertura: clientes, entrada, selos (paisagem e retrato) |
+| `seal.astro` | Selo do projeto |
+| `seal-legend.astro` | Como ler um selo |
+| `showcase-card.astro` | Peça da vitrine |
+| `ring-key.astro` | Chave do anel nas seções do projeto |
+| `command-bar.astro` | Busca e tags |
+| `threat-console.astro`, `timeline.astro`, `terminal.astro`, `board-diagram.astro`, `source-panel.astro`, `integration.astro` | Seções do projeto |
+| `badge.astro`, `ring.astro`, `icon.astro`, `link-row.astro`, `shapes.astro` | Peças |
+
+## Inventário (revisão 10)
+
+| Componente | Papel |
+|---|---|
+| `hero-systems.astro` | Abertura: glifos de sistema e trilhos (paisagem e retrato) |
+| `tech-glyph.astro` | Glifo de tecnologia do projeto |
+| `showcase-card.astro` | Peça da vitrine |
+| `command-bar.astro` | Busca e tags |
+| `threat-console.astro`, `timeline.astro`, `terminal.astro`, `board-diagram.astro`, `source-panel.astro`, `integration.astro` | Seções do projeto |
+| `badge.astro`, `ring.astro`, `icon.astro`, `link-row.astro`, `shapes.astro` | Peças |

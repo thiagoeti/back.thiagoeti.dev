@@ -1,41 +1,25 @@
 /**
- * Regra geométrica única (.analyse/design.md › Gramática): traçado octilinear — todo traço é
- * horizontal, vertical ou a 45° — sobre grade de 8 unidades; todo nó é um círculo.
- * Mapa, faixas de linha, diagramas e glifos saem destas funções.
+ * Geometria do diagrama (.analyse/design.md): toda ligação anda em ângulo reto — horizontal,
+ * vertical, horizontal — como num mapa de topologia.
  */
 export type Pt = { x: number; y: number }
 
 export const f = (n: number): number => Math.round(n * 100) / 100
 
-/** Encaixa na grade de 8. */
-export const snap = (n: number): number => Math.round(n / 8) * 8
-
-/**
- * Ligação octilinear de `a` a `b`: reta quando alinhados; senão reta, diagonal a 45° e reta,
- * com a diagonal centrada. Desnível maior que o avanço vira trecho vertical no meio.
- */
-export function connector(a: Pt, b: Pt): string {
-	const dx = b.x - a.x
-	const dy = b.y - a.y
-	if (!dy || !dx) return `L${f(b.x)} ${f(b.y)}`
-	const sx = Math.sign(dx)
-	const sy = Math.sign(dy)
-	if (Math.abs(dy) <= Math.abs(dx)) {
-		const m = (Math.abs(dx) - Math.abs(dy)) / 2
-		return `L${f(a.x + sx * m)} ${f(a.y)}L${f(b.x - sx * m)} ${f(b.y)}L${f(b.x)} ${f(b.y)}`
-	}
-	const m = (Math.abs(dy) - Math.abs(dx)) / 2
-	return `L${f(a.x)} ${f(a.y + sy * m)}L${f(b.x)} ${f(b.y - sy * m)}L${f(b.x)} ${f(b.y)}`
+/** Ligação em ângulo reto de `a` a `b`, virando na coluna `mid` (padrão: meio do caminho). */
+export function elbow(a: Pt, b: Pt, mid = (a.x + b.x) / 2): string {
+	if (a.y === b.y) return `L${f(b.x)} ${f(b.y)}`
+	return `L${f(mid)} ${f(a.y)}L${f(mid)} ${f(b.y)}L${f(b.x)} ${f(b.y)}`
 }
 
-/** Caminho octilinear por uma sequência de pontos. */
+/** Caminho em ângulo reto por uma sequência de pontos. */
 export function route(points: Pt[]): string {
 	const [first, ...rest] = points
 	if (!first) return ''
 	let d = `M${f(first.x)} ${f(first.y)}`
 	let prev = first
 	for (const p of rest) {
-		d += connector(prev, p)
+		d += elbow(prev, p)
 		prev = p
 	}
 	return d
