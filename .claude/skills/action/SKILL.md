@@ -5,7 +5,7 @@ allowed-tools: Read Glob Bash
 license: Unlicense
 metadata:
   author: thiagoeti
-  version: 1.0.1
+  version: 1.0.0
 ---
 
 ## IMPORTANTE

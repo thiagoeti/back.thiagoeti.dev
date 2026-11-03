@@ -1,29 +1,22 @@
 ---
 import Base from '../layouts/base.astro'
-import Faceplate from '../components/faceplate.astro'
-import Nameplate from '../components/nameplate.astro'
-import PatchPanel from '../components/patch-panel.astro'
-import Pdu from '../components/pdu.astro'
-import Storage from '../components/storage.astro'
-import Switch from '../components/switch.astro'
-import Unit from '../components/unit.astro'
-import { intro, meta } from '../lib/content'
+import Badge from '../components/badge.astro'
+import CommandBar from '../components/command-bar.astro'
+import HeroSystems from '../components/hero-systems.astro'
+import Integration from '../components/integration.astro'
+import ShowcaseCard from '../components/showcase-card.astro'
+import { host, intro, meta } from '../lib/content'
 import { projects } from '../lib/projects'
-import { HEIGHT, unitOf } from '../lib/rack'
 import { sourceRepos } from '../lib/repos'
 import { SITE, absoluteUrl, pageTitle } from '../lib/site'
 import { fill, text } from '../lib/text'
 
 /**
- * Capa: a frente do rack, de cima para baixo — chapa de identificação, patch panel (as tags),
- * bandeja de cabos, um servidor por projeto, uma gaveta de discos por repositório, a régua de
- * tomadas (palavras-chave) e o switch (ecossistema e contatos). À direita, o organizador vertical
- * por onde os cabos descem do patch panel até as placas de rede de cada servidor (desenhados em
- * `src/scripts/rack.ts`). Mobile: o patch panel vira a régua fixa acima do menu; o switch vai para
- * o botão Rede do cabeçalho; sem cabos, as portas acendem.
+ * Capa (.analyse/design.md › Revisão 10): na abertura, um back-end em funcionamento desenhado em
+ * glifos de sistema, com dados passando sem parar; depois a vitrine, um glifo de tecnologia por
+ * projeto, com busca e tags; repositórios e palavras-chave. Mobile: busca e tags na régua acima do
+ * menu inferior. Comportamento em `src/scripts/systems.ts` e `src/scripts/home.ts`.
  */
-const h = text.home
-
 const jsonLd = [
 	{
 		'@context': 'https://schema.org',
@@ -33,83 +26,92 @@ const jsonLd = [
 		itemListElement: projects.map((p) => ({ '@type': 'ListItem', position: p.number, url: absoluteUrl(p.href), name: p.name })),
 	},
 ]
+const r = text.repos
+const s = text.showcase
 ---
 
 <Base title={pageTitle(intro.title)} description={meta.description} path="/" jsonLd={jsonLd} dock>
-	<div class="mx-auto w-full max-w-[86rem] px-2 py-3 sm:px-4 lg:px-8 lg:py-6">
-		<div class="relative" data-rack>
-			<div class="overflow-clip rounded-[8px] border border-line-strong bg-surface-sunken">
-				<!-- tampa -->
-				<div class="flex min-h-8 flex-wrap items-center gap-x-3 gap-y-0.5 border-b border-line bg-surface-1 px-3 py-1.5 lg:px-4">
-					<span class="plate shrink-0 text-fg-muted">{h.rack}</span>
-					<span class="shrink-0 font-mono text-[11px] tabular-nums text-fg-subtle">{fill(h.units, { n: HEIGHT })}</span>
-					<span class="order-last w-full text-xs text-fg-subtle sm:order-none sm:w-auto sm:min-w-0 sm:flex-1 sm:truncate">{meta.description}</span>
-					<span class="ml-auto shrink-0 font-mono text-[11px] text-fg-subtle sm:ml-0">{SITE.host}</span>
+	<div class="mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 pt-8 pb-16 sm:px-6 lg:px-8 lg:pt-12">
+		<!-- abertura -->
+		<section aria-labelledby="titulo" class="flex flex-col gap-6">
+			<div class="grid grid-cols-1 gap-4 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-end lg:gap-12">
+				<div class="flex flex-col gap-3">
+					<p class="eyebrow flex flex-wrap items-center gap-x-3 gap-y-1">
+						<span class="size-1.5 rounded-full bg-brand" aria-hidden="true"></span>
+						<a href={SITE.github} target="_blank" rel="noopener" class="text-fg hover:text-brand">{SITE.brand}</a>
+						<span>{SITE.role}</span>
+					</p>
+					<h1 id="titulo" class="display-xl lg:text-7xl">{intro.title}</h1>
 				</div>
-
-				<div class="flex">
-					<div class="min-w-0 flex-1">
-						<Unit unit={unitOf('nameplate')} ears={false}><Nameplate /></Unit>
-
-						<Unit unit={unitOf('patch')} class="sticky top-16 z-20 bg-surface-sunken max-lg:hidden"><PatchPanel /></Unit>
-
-						<Unit unit={unitOf('tray')} ears={false} class="max-lg:hidden">
-							<div
-								class="flex h-full min-h-10 items-center justify-end rounded-[3px] border border-line bg-surface-1 bg-[repeating-linear-gradient(to_right,transparent_0_46px,rgb(255_255_255/0.025)_46px_50px)] px-4"
-								data-tray
-							>
-								<span class="font-mono text-[11px] text-fg-faint">{fill(h.hint, { n: projects.length })}</span>
-							</div>
-						</Unit>
-
-						<div class="flex flex-col" data-servers>
-							{
-								projects.map((p) => (
-									<Unit unit={unitOf('server', p.slug)}>
-										<Faceplate project={p} unit={unitOf('server', p.slug)} />
-									</Unit>
-								))
-							}
-						</div>
-
-						{
-							sourceRepos.map((r) => (
-								<Unit unit={unitOf('storage', r.name)}>
-									<Storage repo={r} />
-								</Unit>
-							))
-						}
-
-						<Unit unit={unitOf('pdu')}><Pdu /></Unit>
-
-						<Unit unit={unitOf('switch')} class="max-lg:hidden"><Switch /></Unit>
-					</div>
-
-					<!-- organizador vertical de cabos -->
-					<div
-						class="hidden w-12 shrink-0 border-l border-line bg-surface-1 bg-[repeating-linear-gradient(to_bottom,transparent_0_40px,var(--color-surface-sunken)_40px_48px)] lg:block"
-						aria-hidden="true"
-						data-channel
-					>
-					</div>
-				</div>
-
-				<!-- base -->
-				<div class="flex h-6 items-end justify-between border-t border-line bg-surface-1 px-6" aria-hidden="true">
-					<span class="h-2 w-10 rounded-t-[3px] bg-surface-3"></span>
-					<span class="h-2 w-10 rounded-t-[3px] bg-surface-3"></span>
+				<div class="flex max-w-xl flex-col gap-1 lg:pb-2">
+					<p class="text-lg leading-snug text-fg">{intro.description}</p>
+					<p class="body-md">{meta.description}</p>
 				</div>
 			</div>
+			<HeroSystems />
+		</section>
 
-			<svg class="pointer-events-none absolute inset-0 z-10 hidden size-full overflow-visible lg:block" aria-hidden="true" data-cables></svg>
+		<!-- vitrine -->
+		<section aria-labelledby="vitrine" class="flex flex-col gap-5">
+			<header class="flex flex-wrap items-end justify-between gap-4">
+				<h2 id="vitrine" class="display-lg">{s.title}</h2>
+				<p class="font-mono text-xs tabular-nums text-fg-muted" aria-live="polite" data-shown>{fill(text.filter.count, { n: projects.length, total: projects.length })}</p>
+			</header>
+			<div class="sticky top-16 z-20 -mx-4 hidden border-b border-line bg-surface-0/90 px-4 py-3 backdrop-blur lg:block">
+				<CommandBar />
+			</div>
+			<ol class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+				{projects.map((p) => <ShowcaseCard project={p} />)}
+			</ol>
+			<p class="hidden place-items-center gap-2 rounded-card border border-dashed border-line p-8 text-center text-sm text-fg-subtle data-[show]:grid" data-empty>{text.search.empty}</p>
+		</section>
+
+		<!-- repositórios + palavras-chave -->
+		<div class="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+			<section aria-labelledby="repositorios" class="flex flex-col gap-5">
+				<h2 id="repositorios" class="heading-panel">{r.title}</h2>
+				<ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+					{
+						sourceRepos.map((repo) => {
+							const mine = projects.filter((p) => p.repo === repo)
+							const facts = [
+								[r.segment, repo.segment],
+								[r.spec, repo.spec],
+								[r.total, repo.total === null ? '' : String(repo.total)],
+								[r.measured, repo.measured],
+							].filter((x): x is [string, string] => !!x[1])
+							return (
+								<li>
+									<Integration
+										name={repo.label}
+										icon="tech-github"
+										href={repo.url}
+										external
+										status={{ label: r.origins[repo.origin], tone: repo.origin === 'none' ? 'muted' : repo.origin === 'github' ? 'info' : 'success' }}
+										description={repo.description}
+										facts={facts}
+										footer={{ left: host(repo.url), right: fill(r.projects, { n: mine.length }) }}
+									/>
+								</li>
+							)
+						})
+					}
+				</ul>
+			</section>
+			<section aria-labelledby="palavras-chave" class="flex flex-col gap-5">
+				<h2 id="palavras-chave" class="heading-panel">{text.keywords.title}</h2>
+				<ul class="flex flex-wrap gap-2">
+					{meta.keywords.map((w) => <li><Badge mono>{w}</Badge></li>)}
+				</ul>
+			</section>
 		</div>
 	</div>
 
-	<p class="pointer-events-none fixed bottom-[calc(8.5rem+env(safe-area-inset-bottom))] left-1/2 z-50 -translate-x-1/2 rounded-control border border-line-strong bg-surface-3 px-3 py-2 font-mono text-xs text-fg opacity-0 transition-opacity duration-300 data-[show]:opacity-100 lg:bottom-6" aria-live="polite" data-toast></p>
 
-	<PatchPanel slot="dock" dock />
+	<CommandBar slot="dock" dock />
 </Base>
 
 <script>
-	import '../scripts/rack'
+	import '../scripts/systems'
+	import '../scripts/home'
 </script>

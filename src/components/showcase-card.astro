@@ -1,0 +1,62 @@
+---
+import TechGlyph from './tech-glyph.astro'
+import { finalBalance, parseBurst } from '../lib/burst'
+import { SHIELD } from '../lib/docker'
+import type { Project } from '../lib/projects'
+import { focusRing } from '../lib/site'
+import { text } from '../lib/text'
+
+/**
+ * Peça da vitrine (THEME.md › Feature Card): o glifo de tecnologia do projeto grande sobre o fundo
+ * pontilhado; embaixo, nome, o que entrega, números medidos (respostas, blindagem, saldo), stack e
+ * tags. O nome é o link e cobre a peça; filtro e busca leem `data-tags` e `data-search`.
+ */
+interface Props {
+	project: Project
+}
+
+const { project: p } = Astro.props
+const b = parseBurst(p.doc.output)
+const balance = finalBalance(p.doc.output, p.doc.scenario)
+const none = text.unit.none
+const read = [
+	{ k: text.burst.accepted, v: b ? `${b.ok}/${b.total}` : none, tone: b ? 'text-success' : 'text-fg-faint' },
+	{ k: text.armor, v: p.github.docker ? `${p.armor}/${SHIELD.length}` : none, tone: p.github.docker ? (p.armor === SHIELD.length ? 'text-brand' : 'text-warning') : 'text-fg-faint' },
+	{ k: text.burst.balance, v: balance || none, tone: balance ? 'text-fg' : 'text-fg-faint' },
+]
+---
+
+<li class="group/card relative flex data-[off]:hidden" data-project={p.slug} data-tags={p.tags.join(' ')} data-search={[p.name, p.slug, ...p.technologies, ...p.tags].join(' ').toLowerCase()}>
+	<article class="flex w-full flex-col overflow-hidden rounded-panel border border-line bg-surface-1 transition-colors duration-150 group-hover/card:border-line-strong group-focus-within/card:border-brand/40">
+		<div class="dot-grid relative grid place-items-center px-6 pt-8 pb-6">
+			<span class="absolute top-4 left-5 font-mono text-[11px] text-fg-faint">{p.serial}</span>
+			<TechGlyph project={p} class="w-full max-w-52" />
+		</div>
+		<div class="flex flex-1 flex-col gap-2 border-t border-line-subtle bg-surface-2 p-6">
+			<h3 class="heading-card">
+				<a href={p.href} data-title class={`after:absolute after:inset-0 after:rounded-panel ${focusRing}`}>
+					<span class="sr-only">{text.home.open}: </span>
+					{p.title}
+				</a>
+			</h3>
+			{p.subtitle && <p class="text-sm font-medium text-fg-muted">{p.subtitle}</p>}
+			<p class="body-md">{p.description}</p>
+			<dl class="my-2 grid grid-cols-3 divide-x divide-line-subtle rounded-control border border-line-subtle bg-surface-1">
+				{
+					read.map((r) => (
+						<div class="flex min-w-0 flex-col gap-0.5 px-3 py-2">
+							<dt class="truncate text-[10px] text-fg-subtle uppercase">{r.k}</dt>
+							<dd class:list={['truncate font-mono text-sm tabular-nums', r.tone]}>{r.v}</dd>
+						</div>
+					))
+				}
+			</dl>
+			<p class="flex flex-wrap gap-1.5" aria-label={text.home.stack}>
+				{p.technologies.map((x) => <span class="rounded-badge border border-line bg-surface-1 px-1.5 py-0.5 font-mono text-[11px] text-fg-muted">{x}</span>)}
+			</p>
+			<p class="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-2 font-mono text-xs text-fg-subtle">
+				{p.tags.map((x) => <span class="data-[on]:text-brand" data-chip={x}>#{x}</span>)}
+			</p>
+		</div>
+	</article>
+</li>

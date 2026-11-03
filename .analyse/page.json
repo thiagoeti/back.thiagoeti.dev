@@ -2,63 +2,92 @@
 	"text": {
 		"skip": "Pular para o conteúdo",
 		"brand": {
-			"home": "Rack — página inicial"
+			"home": "Página inicial"
 		},
 		"nav": {
-			"label": "Servidores",
-			"home": "Rack",
-			"unit": "servidor {n}"
+			"label": "Projetos",
+			"home": "Todos",
+			"unit": "nó {n}"
 		},
 		"network": {
 			"open": "Rede",
 			"close": "Fechar",
-			"label": "Rede e contatos"
+			"label": "Ecossistema e contatos",
+			"here": "você está aqui"
 		},
-		"patch": {
-			"title": "patch panel",
-			"label": "Patch panel: ligar uma tag",
+		"footer": {
+			"llms": "llms.txt",
+			"copyright": "© {year} {name}"
+		},
+		"systems": {
+			"label": "Back-end em funcionamento: clientes, entrada, serviços, fila, cache, workers e banco de dados trocando dados",
+			"browser": "navegador",
+			"mobile": "app",
+			"legacy": "sistema legado",
+			"gateway": "entrada",
+			"service": "serviços",
+			"queue": "fila",
+			"cache": "cache",
+			"worker": "workers",
+			"database": "banco de dados"
+		},
+		"showcase": {
+			"title": "Projetos"
+		},
+		"armor": "blindagem",
+		"burst": {
+			"accepted": "aceitas",
+			"refused": "recusadas",
+			"failed": "falhas",
+			"replay": "Reexecutar",
+			"total": "{n} respostas",
+			"label": "{ok} de {total} respostas aceitas",
+			"balance": "saldo final",
+			"none": "sem rajada HTTP",
+			"sequence": "respostas em ordem",
+			"path": "caminho de execução"
+		},
+		"search": {
+			"label": "Buscar projetos",
+			"placeholder": "Buscar projeto, tecnologia ou tag",
+			"shortcut": "/",
+			"empty": "Nenhum projeto com esse termo. Limpe a busca ou escolha outra tag."
+		},
+		"filter": {
+			"label": "Filtrar projetos por tag",
 			"all": "todas",
-			"lit": "{n} de {total} servidores ligados",
-			"hint": "Ligue uma porta: o cabo acende os servidores com a tag."
+			"count": "{n} de {total} projetos"
 		},
 		"home": {
-			"rack": "Rack de servidores",
-			"units": "{n}U",
-			"kpis": {
-				"projects": "servidores",
-				"tags": "tags",
-				"shared": "tags em comum",
-				"technologies": "tecnologias",
-				"files": "arquivos",
-				"lines": "linhas de código"
-			},
-			"storage": "repositório",
-			"projectsCount": "{n} projetos",
-			"measured": "medido",
-			"spec": "spec",
-			"total": "total",
+			"projects": "Projetos",
+			"open": "Abrir projeto",
+			"stack": "stack"
+		},
+		"repos": {
+			"title": "Repositórios",
+			"projects": "{n} projetos",
 			"segment": "segmento",
+			"measured": "medido em",
+			"spec": "spec",
+			"total": "total declarado",
 			"origin": "origem",
 			"origins": {
 				"local": "pasta local",
 				"mount": "montagem",
 				"github": "GitHub",
 				"none": "sem data.json"
-			},
-			"empty": "sem projetos",
-			"pdu": "palavras-chave",
-			"here": "você está aqui",
-			"hint": "↑ ↓ escolhe · 1–{n} salta · enter abre · esc desliga a tag",
-			"uplinks": "{n} uplinks"
+			}
+		},
+		"keywords": {
+			"title": "Palavras-chave"
 		},
 		"unit": {
-			"open": "Abrir servidor",
+			"image": "imagem",
 			"cpus": "cpu",
 			"memory": "memória",
 			"swap": "swap",
 			"port": "porta",
 			"pids": "processos",
-			"image": "imagem",
 			"user": "usuário",
 			"restart": "reinício",
 			"nofile": "arquivos abertos",
@@ -67,11 +96,10 @@
 			"log": "log",
 			"files": "arquivos",
 			"lines": "linhas",
+			"bytes": "tamanho",
 			"steps": "passos",
-			"security": "segurança",
 			"technologies": "tecnologias",
 			"tags": "tags",
-			"bays": "baias",
 			"none": "—"
 		},
 		"shield": {
@@ -82,23 +110,19 @@
 			"pids": "limite de processos",
 			"health": "health check"
 		},
-		"led": {
-			"user": "usr",
-			"readOnly": "ro",
-			"capDrop": "cap",
-			"noNewPrivileges": "nnp",
-			"pids": "pid",
-			"health": "hc"
-		},
 		"project": {
 			"wip": "WIP - Work in Progress",
-			"map": "Mapa do chassi",
-			"front": "Frente",
+			"sheet": "Ficha",
+			"container": "Container",
+			"noContainer": "Sem docker.sh nesta pasta.",
+			"security": "Console de segurança",
+			"securityCount": "{n} de {total}",
+			"on": "ativa",
+			"off": "ausente",
+			"score": "flags",
 			"code": "Código",
-			"rear": "Traseira",
-			"above": "Servidor acima",
-			"below": "Servidor abaixo",
-			"back": "Voltar ao rack",
+			"files": "{n} arquivos, {lines} linhas, {bytes}",
+			"links": "Links",
 			"folder": "pasta",
 			"repository": "repositório",
 			"readme": "README",
@@ -108,27 +132,30 @@
 			"segment": "segmento",
 			"status": "status",
 			"stable": "estável",
-			"slot": "posição",
-			"links": "Portas traseiras",
-			"participants": "chips",
-			"messages": "trilhas",
-			"nodes": "chips",
-			"edges": "trilhas",
+			"prev": "Projeto anterior",
+			"next": "Próximo projeto",
+			"back": "Ver todos os projetos",
+			"tty": "terminal",
+			"output": "saída",
+			"participants": "participantes",
+			"messages": "mensagens",
+			"nodes": "etapas",
+			"edges": "ligações",
 			"mermaid": "fonte mermaid",
-			"files": "{n} arquivos · {lines} linhas · {bytes}",
-			"tty": "tty"
+			"scenario": "Cenário",
+			"advantage": "vantagem",
+			"drawback": "desvantagem"
 		},
 		"eggs": {
-			"console": "rack ligado. digite \"ping\" ou \"reboot\".",
-			"ping": "ping: {n} servidores responderam",
-			"reboot": "reboot: rack religado"
+			"console": "dados não param. todo back-end é uma conversa entre sistemas."
 		},
 		"notfound": {
 			"code": "404",
-			"title": "Slot vazio",
-			"body": "Nenhum servidor responde neste endereço.",
-			"path": "procurado",
-			"cta": "Voltar ao rack"
+			"title": "Rota sem projeto",
+			"body": "A requisição chegou a este endereço e voltou: nenhum sistema responde aqui.",
+			"path": "endereço",
+			"alert": "rota sem nó",
+			"cta": "Ver todos os projetos"
 		}
 	}
 }

@@ -1,0 +1,71 @@
+---
+import Badge from './badge.astro'
+import Ring from './ring.astro'
+import type { Project } from '../lib/projects'
+import { SHIELD } from '../lib/docker'
+import { fill, text } from '../lib/text'
+
+/**
+ * Console de segurança (THEME.md › Alert / Threat Row, Score Ring): à esquerda o anel das flags de
+ * blindagem do `docker.sh` e a imagem; à direita uma linha por flag — ausente é alerta (danger) e
+ * vem primeiro, ativa fica resolvida. Sem `docker.sh`, o estado vazio diz o que falta.
+ */
+interface Props {
+	project: Project
+}
+
+const { project: p } = Astro.props
+const t = text.project
+const rows = [...SHIELD].sort((a, b) => Number(p.docker.shield[a]) - Number(p.docker.shield[b]))
+const missing = SHIELD.length - p.armor
+---
+
+<section id="seguranca" aria-labelledby="seguranca-titulo" class="flex h-full scroll-mt-32 flex-col rounded-panel border border-line bg-surface-1 p-6 shadow-panel">
+	<header class="mb-6 flex flex-col gap-1">
+		<h2 id="seguranca-titulo" class="heading-panel">{t.security}</h2>
+		<p class="body-sm">{t.docker}</p>
+	</header>
+	{
+		p.github.docker ? (
+			<div class="grid flex-1 overflow-hidden rounded-card border border-line md:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] md:divide-x md:divide-line">
+				<div class="dot-grid flex flex-col items-center justify-center gap-5 p-6">
+					<Ring value={p.armor} max={SHIELD.length} label={t.score} size="lg" />
+					<Badge mono class="max-w-full">
+						<span class="truncate">{p.docker.image}</span>
+					</Badge>
+				</div>
+				<div class="flex flex-col">
+					<div class="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
+						<p class="eyebrow">{t.security}</p>
+						<Badge tone={missing ? 'danger' : 'success'} mono>
+							{fill(t.securityCount, { n: p.armor, total: SHIELD.length })}
+						</Badge>
+					</div>
+					<ul class="flex flex-col gap-2 p-3">
+						{rows.map((k) =>
+							p.docker.shield[k] ? (
+								<li class={`flex items-center justify-between gap-3 rounded-control px-4 py-2.5`}>
+									<span class="flex items-center gap-2 text-sm text-fg">
+										<span class="size-1.5 rounded-full bg-success" aria-hidden="true" />
+										{text.shield[k]}
+									</span>
+									<span class="mono-status text-success">{t.on}</span>
+								</li>
+							) : (
+								<li class={`flex items-center justify-between gap-3 rounded-control border border-danger/30 bg-danger/[0.06] px-4 py-2.5 shadow-glow-danger`}>
+									<span class="flex items-center gap-2 text-sm font-medium text-danger">
+										<span class="size-1.5 rounded-full bg-current" aria-hidden="true" />
+										{text.shield[k]}
+									</span>
+									<span class="mono-status text-danger">{t.off}</span>
+								</li>
+							),
+						)}
+					</ul>
+				</div>
+			</div>
+		) : (
+			<p class="grid flex-1 place-items-center gap-2 rounded-card border border-dashed border-line p-8 text-center text-sm text-fg-subtle">{t.noContainer}</p>
+		)
+	}
+</section>

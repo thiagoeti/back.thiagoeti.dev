@@ -6,43 +6,60 @@ import { text } from '../lib/text'
 import type { Scene } from '../lib/tracks'
 
 /**
- * Trilhas da placa (.analyse/design.md): o mermaid do README desenhado como a placa-mãe do servidor
- * (`src/lib/tracks.ts`), com a legenda embaixo — chips e trilhas na ordem do tempo. A fonte mermaid
- * fica num `details`, inteira.
+ * Diagrama do README como topologia (THEME.md › Chart Container, referência "Infrastructure Health
+ * Map"): o desenho de `src/lib/tracks.ts` sobre o fundo pontilhado; embaixo, os nós como lista de nós
+ * e as mensagens ou ligações como log numerado. A fonte mermaid fica num `details`.
  */
 interface Props {
+	title: string
 	scene: Scene
 	source: string
 }
 
-const { scene, source } = Astro.props
+const { title, scene, source } = Astro.props
 const t = text.project
-const TONE = { label: 'fill-fg-subtle tabular-nums', text: 'fill-fg-subtle', key: 'fill-fg font-semibold', dark: 'fill-surface-0 font-semibold' } as const
+const TONE = { label: 'fill-fg-subtle tabular-nums', text: 'fill-fg-subtle', key: 'fill-fg font-medium', dark: 'fill-surface-0 font-medium' } as const
 const nodes = scene.legend.filter((l) => l.kind === 'node')
 const rest = scene.legend.filter((l) => l.kind !== 'node')
 ---
 
-<figure class="flex flex-col gap-6">
-	<svg viewBox={`0 0 ${scene.width} ${scene.height}`} class="block h-auto w-full max-w-3xl overflow-visible" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label={nodes.map((n) => n.label).join(' · ')}>
-		<Shapes shapes={scene.shapes} />
-		{
-			scene.labels.map((l) => (
-				<text x={l.x} y={l.y} font-size={l.size} text-anchor={l.anchor ?? 'middle'} class={TONE[l.tone]}>
-					{l.text}
-				</text>
-			))
-		}
-	</svg>
+<section id="diagrama" aria-labelledby="diagrama-titulo" class="flex scroll-mt-32 flex-col rounded-card border border-line bg-surface-1 p-6">
+	<header class="mb-6 flex flex-wrap items-start justify-between gap-4">
+		<div class="flex flex-col gap-1">
+			<h2 id="diagrama-titulo" class="heading-panel">{title}</h2>
+			<p class="body-sm">{nodes.length} {scene.kind === 'sequence' ? t.participants : t.nodes}{rest.length > 0 && `, ${rest.filter((r) => r.kind === 'message').length} ${scene.kind === 'sequence' ? t.messages : t.edges}`}</p>
+		</div>
+		<ul class="flex items-center gap-4 text-xs text-fg-muted" aria-hidden="true">
+			<li class="inline-flex items-center gap-2"><span class="h-px w-4 bg-brand/60" />{scene.kind === 'sequence' ? t.messages : t.edges}</li>
+			{scene.kind === 'sequence' && <li class="inline-flex items-center gap-2"><span class="w-4 border-t border-dashed border-info/60" />{t.output}</li>}
+		</ul>
+	</header>
 
-	<figcaption class="grid gap-5 text-sm sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]">
-		<div>
-			<p class="plate mb-2">{scene.kind === 'sequence' ? t.participants : t.nodes}</p>
-			<ul class="grid gap-1.5">
+	<div class="dot-grid overflow-x-auto rounded-control border border-line-subtle p-4">
+		<svg viewBox={`0 0 ${scene.width} ${scene.height}`} class="block h-auto w-full min-w-[32rem] font-mono" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label={nodes.map((n) => n.label).join(', ')}>
+			<Shapes shapes={scene.shapes} />
+			{
+				scene.labels.map((l) => (
+					<text x={l.x} y={l.y} font-size={l.size} text-anchor={l.anchor ?? 'middle'} class={TONE[l.tone]}>
+						{l.text}
+					</text>
+				))
+			}
+		</svg>
+	</div>
+
+	<div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
+		<div class="flex flex-col gap-2">
+			<p class="eyebrow mb-1">{scene.kind === 'sequence' ? t.participants : t.nodes}</p>
+			<ul class="flex flex-col gap-1.5">
 				{
 					nodes.map((n) => (
-						<li class="flex items-baseline gap-2.5">
-							<span class="grid h-5 min-w-5 shrink-0 place-items-center rounded-[2px] border border-fg-muted bg-surface-2 px-1.5 font-mono text-[11px] text-fg">{n.id}</span>
-							<span class="text-fg-muted">{n.label}</span>
+						<li class="flex items-center justify-between gap-3 rounded-control border border-line-subtle bg-surface-2/60 px-3 py-2.5">
+							<span class="flex min-w-0 items-center gap-2.5">
+								<span class="size-2 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+								<span class="text-sm font-medium text-fg">{n.label}</span>
+							</span>
+							<span class="mono-status shrink-0 text-fg-subtle">{n.id}</span>
 						</li>
 					))
 				}
@@ -50,19 +67,19 @@ const rest = scene.legend.filter((l) => l.kind !== 'node')
 		</div>
 		{
 			rest.length > 0 && (
-				<div>
-					<p class="plate mb-2">{scene.kind === 'sequence' ? t.messages : t.edges}</p>
-					<ol class="grid gap-1">
+				<div class="flex flex-col gap-2">
+					<p class="eyebrow mb-1">{scene.kind === 'sequence' ? t.messages : t.edges}</p>
+					<ol class="flex flex-col divide-y divide-line-subtle">
 						{rest.map((m) =>
 							m.kind === 'block' ? (
-								<li class="mt-2 text-xs text-fg-subtle">{m.label}</li>
+								<li class="px-3 pt-3 pb-1 font-mono text-[11px] text-fg-subtle uppercase">{m.label}</li>
 							) : (
-								<li class="grid grid-cols-[1.5rem_auto_minmax(0,1fr)] items-baseline gap-2">
-									<span class="text-right text-xs tabular-nums text-fg-faint">{m.n ?? ''}</span>
-									<span class:list={['font-mono text-xs whitespace-nowrap', m.dashed ? 'text-fg-subtle' : 'text-fg']}>
+								<li class="grid grid-cols-[1.75rem_auto_minmax(0,1fr)] items-baseline gap-3 px-3 py-2.5">
+									<span class="font-mono text-xs tabular-nums text-fg-faint">{String(m.n ?? '').padStart(2, '0')}</span>
+									<span class:list={['font-mono text-xs whitespace-nowrap', m.dashed ? 'text-info' : 'text-brand']}>
 										{m.from} {m.dashed ? '⇠' : '→'} {m.to}
 									</span>
-									<span class={`text-fg-muted ${INLINE_CODE}`} set:html={inline(m.label)} />
+									<span class={`text-sm text-fg-muted ${INLINE_CODE}`} set:html={inline(m.label)} />
 								</li>
 							),
 						)}
@@ -70,9 +87,10 @@ const rest = scene.legend.filter((l) => l.kind !== 'node')
 				</div>
 			)
 		}
-	</figcaption>
-	<details class="rounded-[3px] border border-line bg-surface-sunken">
-		<summary class="cursor-pointer px-3 py-2 text-xs text-fg-subtle hover:text-fg">{t.mermaid}</summary>
-		<pre class="overflow-x-auto border-t border-line px-3 py-3 font-mono text-xs leading-relaxed text-fg-muted">{source}</pre>
+	</div>
+
+	<details class="mt-6 rounded-control border border-line bg-surface-sunken">
+		<summary class="flex min-h-11 cursor-pointer items-center px-4 font-mono text-xs text-fg-subtle hover:text-fg">{t.mermaid}</summary>
+		<pre class="overflow-x-auto border-t border-line px-4 py-3 font-mono text-xs leading-relaxed text-fg-muted">{source}</pre>
 	</details>
-</figure>
+</section>

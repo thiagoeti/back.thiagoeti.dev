@@ -1,0 +1,80 @@
+---
+import { PROSE, focusRing, motion } from '../lib/site'
+import { fill, text } from '../lib/text'
+
+/**
+ * Código (THEME.md › Painel interno split + Agent / Node List Item, referência "Active agents"):
+ * à esquerda os arquivos do projeto com linhas e tamanho; à direita o código do arquivo escolhido.
+ * A troca é por `src/scripts/project.ts` (`role="tablist"`, ← → entre arquivos com foco na lista).
+ */
+interface Props {
+	files: { path: string; lines: number; bytes: number; html: string }[]
+	lines: number
+	bytes: number
+}
+
+const { files, lines, bytes } = Astro.props
+const t = text.project
+const kb = (b: number) => (b < 1024 ? `${b} B` : `${(b / 1024).toFixed(1)} KB`)
+const peak = Math.max(1, ...files.map((f) => f.lines))
+const W = ['w-0', 'w-1/10', 'w-2/10', 'w-3/10', 'w-4/10', 'w-5/10', 'w-6/10', 'w-7/10', 'w-8/10', 'w-9/10', 'w-full']
+---
+
+<section id="codigo" aria-labelledby="codigo-titulo" class="flex scroll-mt-32 flex-col rounded-panel border border-line bg-surface-1 p-6 shadow-panel">
+	<header class="mb-6 flex flex-wrap items-start justify-between gap-4">
+		<div class="flex flex-col gap-1">
+			<h2 id="codigo-titulo" class="heading-panel">{t.code}</h2>
+			<p class="body-sm">{fill(t.files, { n: files.length, lines, bytes: kb(bytes) })}</p>
+		</div>
+	</header>
+	<div class="grid overflow-hidden rounded-card border border-line lg:grid-cols-[minmax(0,1fr)_minmax(0,2.2fr)] lg:divide-x lg:divide-line" data-source>
+		<div class="flex flex-col border-b border-line lg:border-b-0">
+			<p class="flex items-center justify-between border-b border-line px-4 py-3">
+				<span class="eyebrow">{text.unit.files}</span>
+				<span class="rounded-badge bg-success/10 px-2 py-0.5 font-mono text-[11px] text-success">{files.length}</span>
+			</p>
+			<div role="tablist" aria-label={t.code} aria-orientation="vertical" class="flex flex-col gap-1 p-3">
+				{
+					files.map((f, i) => (
+						<button
+							type="button"
+							role="tab"
+							id={`arquivo-${i}`}
+							aria-controls={`codigo-${i}`}
+							aria-selected={i === 0 ? 'true' : 'false'}
+							tabindex={i === 0 ? 0 : -1}
+							class={`group/file flex min-h-11 flex-col gap-1.5 rounded-control border border-transparent px-3 py-2.5 text-left hover:bg-white/[0.03] aria-selected:border-line aria-selected:bg-surface-2 ${motion} ${focusRing}`}
+						>
+							<span class="flex w-full items-center justify-between gap-3">
+								<span class="flex min-w-0 items-center gap-2.5">
+									<span class="size-2 shrink-0 rounded-full bg-fg-faint group-aria-selected/file:bg-success" aria-hidden="true" />
+									<span class="truncate text-sm font-medium text-fg-muted group-aria-selected/file:text-fg">{f.path.split('/').at(-1)}</span>
+								</span>
+								<span class="shrink-0 font-mono text-[11px] tabular-nums text-fg-subtle">{f.lines}</span>
+							</span>
+							<span class="truncate pl-4.5 font-mono text-[11px] text-fg-subtle">{f.path}</span>
+							<span class="ml-4.5 h-0.5 rounded-full bg-surface-3" aria-hidden="true">
+								<span class:list={['block h-full rounded-full bg-brand-deep group-aria-selected/file:bg-brand', W[Math.max(1, Math.round((f.lines / peak) * 10))]]} />
+							</span>
+						</button>
+					))
+				}
+			</div>
+		</div>
+		<div class="min-w-0 bg-surface-sunken">
+			{
+				files.map((f, i) => (
+					<div role="tabpanel" id={`codigo-${i}`} aria-labelledby={`arquivo-${i}`} hidden={i !== 0} tabindex="0" class={`flex h-full flex-col ${focusRing}`}>
+						<p class="flex items-center justify-between gap-3 border-b border-line px-4 py-3 font-mono text-[11px] text-fg-subtle">
+							<span class="truncate text-fg-muted">{f.path}</span>
+							<span class="shrink-0 tabular-nums">
+								{f.lines} {text.unit.lines} <span class="text-fg-faint">{kb(f.bytes)}</span>
+							</span>
+						</p>
+						<div class:list={[PROSE, 'max-h-[36rem] overflow-auto px-4 py-4 [&_pre]:my-0! [&_pre]:border-0! [&_pre]:bg-transparent! [&_pre]:p-0! [&_pre]:text-xs!']} set:html={f.html} />
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>

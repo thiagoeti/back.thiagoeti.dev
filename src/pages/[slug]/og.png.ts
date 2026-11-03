@@ -4,7 +4,7 @@ import { intro } from '../../lib/content'
 import { projectCard } from '../../lib/og'
 import { projects, type Project } from '../../lib/projects'
 
-/** Cartão de cada projeto: o servidor puxado do rack, com LEDs, portas e tags dele. */
+/** Cartão de cada projeto: nome e o que entrega, e o glifo de tecnologia. */
 export function getStaticPaths() {
 	return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }))
 }

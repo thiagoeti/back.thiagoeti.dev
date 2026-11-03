@@ -2,6 +2,7 @@
 import '../styles/global.css'
 
 import BottomNav from '../components/bottom-nav.astro'
+import Footer from '../components/footer.astro'
 import Header from '../components/header.astro'
 import { meta } from '../lib/content'
 import { SITE, absoluteUrl } from '../lib/site'
@@ -10,9 +11,9 @@ import { text } from '../lib/text'
 type JsonLd = Record<string, unknown>
 
 /**
- * Casca de toda página: cabeçalho fixo no topo (o topo do rack), menu fixo na base (mobile) e o
- * rack entre eles. O documento rola na vertical, como se desce um rack com os olhos. `dock`: a página
- * tem régua fixa acima do menu do mobile (patch panel da capa) e reserva o espaço dela.
+ * Casca de toda página: cabeçalho fixo no topo, menu fixo na base (mobile), o conteúdo entre eles e
+ * o rodapé do ecossistema (desktop). `dock`: a página tem régua fixa acima do menu do mobile (busca e
+ * tags na capa, índice na página do projeto) e reserva o espaço dela.
  */
 interface Props {
 	title: string
@@ -69,19 +70,19 @@ const analytics = SITE.analytics
 
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 		{documents.map((doc) => <script type="application/ld+json" set:html={JSON.stringify(doc)} />)}
 
-		<!-- Volta da página do projeto: o servidor de onde se veio recebe a transição antes do primeiro quadro. -->
+		<!-- Volta da página do projeto: o nome dele na lista recebe a transição antes do primeiro quadro. -->
 		<script is:inline>
 			addEventListener('pagereveal', (e) => {
 				if (!e.viewTransition) return
 				const nav = globalThis.navigation
 				const from = nav && nav.activation && nav.activation.from && nav.activation.from.url
 				const slug = from ? new URL(from).pathname.split('/')[1] : ''
-				const el = slug && document.querySelector('a[data-server="' + CSS.escape(slug) + '"]')
-				if (el) el.style.viewTransitionName = 'server'
+				const el = slug && document.querySelector('li[data-project="' + CSS.escape(slug) + '"] [data-title]')
+				if (el) el.style.viewTransitionName = 'project'
 			})
 		</script>
 
@@ -100,16 +101,18 @@ const analytics = SITE.analytics
 		>
 			{text.skip}
 		</a>
+		<div class="pointer-events-none absolute inset-x-0 top-0 z-0 h-[36rem] bg-[radial-gradient(ellipse_at_top_left,rgb(45_212_168/0.08),transparent_45%)]" aria-hidden="true"></div>
 		<Header path={path} />
 		<main
 			id="conteudo"
 			class:list={[
-				'pt-16 lg:pb-0',
-				dock ? 'pb-[calc(7.5rem+env(safe-area-inset-bottom))]' : 'pb-[calc(4rem+env(safe-area-inset-bottom))]',
+				'relative pt-16 lg:pb-0',
+				dock ? 'pb-[calc(10rem+env(safe-area-inset-bottom))]' : 'pb-[calc(4rem+env(safe-area-inset-bottom))]',
 			]}
 		>
 			<slot />
 		</main>
+		<Footer />
 		<slot name="dock" />
 		<BottomNav path={path} />
 	</body>
