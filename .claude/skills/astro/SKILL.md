@@ -7,8 +7,6 @@ metadata:
   version: 1.0.0
 ---
 
-#working
-
 # Astro
 
 - [Astro](https://astro.build)
@@ -29,9 +27,15 @@ claude mcp add --transport http --scope local astro-docs https://mcp.docs.astro.
 - `.astro` por padrão. Island só com interatividade real.
 - `client:visible` por padrão. `client:load` só para interação crítica acima da dobra.
 
+## Fluxo
+
+- `.astro` por padrão. Island só com interatividade real.
+- `client:visible` por padrão. `client:load` só para interação crítica acima da dobra.
+
 ## Regras
 
 - Nunca troque output para `server` nem adicione adapter.
 - Imagem de `src/` → `<Image />` de `astro:assets`.
 - View Transitions: `<ClientRouter />`.
 - Alias `@`: só `compilerOptions.paths` no `tsconfig.json`. Não use `vite.resolve.alias`.
+- O CORS não deve ficar no Astro.

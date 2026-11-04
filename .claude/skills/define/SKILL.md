@@ -108,4 +108,3 @@ Modelo:
 | "Quais skills o projeto tem e quando cada uma se aplica?" | ❌ | ✅ |
 | "Qual é o workflow de deploy?" | ❌ | ✅ |
 | "Regra já escrita em spec ou skill?" | ❌ | ❌ |
-
