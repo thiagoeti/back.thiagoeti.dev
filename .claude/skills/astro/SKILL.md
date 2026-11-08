@@ -1,6 +1,6 @@
 ---
 name: astro
-description: Use sempre que trabalhar em projetos Astro, arquivo .astro, ao criar landing pages, sites ou páginas estáticas. Estrutura site Astro estático com islands, rotas e SSG/SSR.
+description: Use sempre que trabalhar em projetos Astro, arquivo .astro, landing pages, one-page, página única, hotsite, site institucional, sites ou páginas estáticas em Astro. Estrutura site Astro estático com islands, rotas e SSG/SSR.
 license: Unlicense
 metadata:
   author: thiagoeti
