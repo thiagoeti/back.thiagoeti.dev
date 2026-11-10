@@ -105,7 +105,7 @@ const H2 = 'flex items-center gap-3 heading-panel'
 ---
 
 <Base title={pageTitle(p.name)} description={p.description} path={p.href} image={`/${p.slug}/og.png`} jsonLd={jsonLd}>
-	<div class="mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 pt-8 pb-16 sm:px-6 lg:px-8 lg:pt-12">
+	<div class="mx-auto flex w-full max-w-[120rem] flex-col gap-10 px-4 pt-8 pb-16 sm:px-6 lg:px-8 lg:pt-12">
 		<a href="/" class={`flex min-h-11 items-center gap-2 self-start text-sm text-fg-muted hover:text-fg ${motion} ${focusRing}`}>
 			<Icon name="arrow-left" class="size-4" />
 			{t.back}

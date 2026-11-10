@@ -14,7 +14,7 @@ import { fill, text } from '../lib/text'
 /**
  * Capa (.analyse/design.md › Revisão 10): na abertura, um back-end em funcionamento desenhado em
  * glifos de sistema, com dados passando sem parar; depois a vitrine, um glifo de tecnologia por
- * projeto, com busca e tags; repositórios e palavras-chave. Mobile: busca e tags na régua acima do
+ * projeto, sob o título com linha separadora; repositórios e palavras-chave. Busca e tags só na régua acima do
  * menu inferior. Comportamento em `src/scripts/systems.ts` e `src/scripts/home.ts`.
  */
 const jsonLd = [
@@ -31,7 +31,7 @@ const s = text.showcase
 ---
 
 <Base title={pageTitle(intro.title)} description={meta.description} path="/" jsonLd={jsonLd} dock>
-	<div class="mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 pt-8 pb-16 sm:px-6 lg:px-8 lg:pt-12">
+	<div class="mx-auto flex w-full max-w-[120rem] flex-col gap-10 px-4 pt-8 pb-16 sm:px-6 lg:px-8 lg:pt-12">
 		<!-- abertura -->
 		<section aria-labelledby="titulo" class="flex flex-col gap-6">
 			<div class="grid grid-cols-1 gap-4 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-end lg:gap-12">
@@ -52,15 +52,13 @@ const s = text.showcase
 		</section>
 
 		<!-- vitrine -->
-		<section aria-labelledby="vitrine" class="flex flex-col gap-5">
-			<header class="flex flex-wrap items-end justify-between gap-4">
-				<h2 id="vitrine" class="display-lg">{s.title}</h2>
-				<p class="font-mono text-xs tabular-nums text-fg-muted" aria-live="polite" data-shown>{fill(text.filter.count, { n: projects.length, total: projects.length })}</p>
-			</header>
-			<div class="sticky top-16 z-20 -mx-4 hidden border-b border-line bg-surface-0/90 px-4 py-3 backdrop-blur lg:block">
-				<CommandBar />
+		<section aria-labelledby="vitrine" class="flex flex-col gap-6">
+			<div class="flex items-center gap-4">
+				<h2 id="vitrine" class="shrink-0 text-2xl font-medium tracking-tight text-fg">{s.title}</h2>
+				<span aria-hidden="true" class="h-px flex-1 bg-line"></span>
 			</div>
-			<ol class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+			<p class="sr-only" aria-live="polite" data-shown>{fill(text.filter.count, { n: projects.length, total: projects.length })}</p>
+			<ol class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
 				{projects.map((p) => <ShowcaseCard project={p} />)}
 			</ol>
 			<p class="hidden place-items-center gap-2 rounded-card border border-dashed border-line p-8 text-center text-sm text-fg-subtle data-[show]:grid" data-empty>{text.search.empty}</p>
