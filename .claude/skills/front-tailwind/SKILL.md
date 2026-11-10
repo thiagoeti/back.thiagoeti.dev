@@ -7,9 +7,12 @@ metadata:
   version: 1.0.0
 ---
 
-#work
+# Tailwind
 
-# Tailwind CSS
+- [Tailwind](https://tailwindcss.com)
+- [Tailwind - Docs](https://tailwindcss.com/docs)
+
+## Regras
 
 - Sempre Tailwind v4.
 - Nunca utilizar CSS puro, somente as classes do Tailwind.

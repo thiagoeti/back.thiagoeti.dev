@@ -7,8 +7,6 @@ metadata:
   version: 1.0.0
 ---
 
-#work
-
 # Front por CDN
 
 - Carregue toda biblioteca pelo unpkg, nunca do projeto.
