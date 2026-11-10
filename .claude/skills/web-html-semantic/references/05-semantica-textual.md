@@ -1,0 +1,31 @@
+# Semântica Textual (Text Semantics)
+
+- `<a>`: Cria um hyperlink.
+- `<em>`: Ênfase (geralmente itálico).
+- `<strong>`: Forte importância (geralmente negrito).
+- `<small>`: Texto secundário (letras pequenas).
+- `<s>`: Texto riscado (não relevante).
+- `<cite>`: Título de obra (citação).
+- `<q>`: Citação curta inline (com aspas).
+- `<dfn>`: Define um termo a ser explicado.
+- `<abbr>`: Abreviação ou sigla.
+- `<ruby>`: Anotação ruby (para idiomas asiáticos).
+- `<rt>`: Texto da anotação ruby.
+- `<rp>`: Parênteses fallback para ruby.
+- `<data>`: Valor legível por máquina.
+- `<time>`: Data ou hora legível por máquina.
+- `<code>`: Trecho de código de programação.
+- `<var>`: Variável matemática ou de programação.
+- `<samp>`: Saída de programa ou script.
+- `<kbd>`: Entrada do usuário via teclado.
+- `<sub>`: Texto subscrito.
+- `<sup>`: Texto sobrescrito.
+- `<i>`: Texto em voz alternativa (itálico técnico).
+- `<b>`: Chama atenção sem dar importância (palavra-chave, nome de produto).
+- `<u>`: Texto sublinhado (para nomes próprios, erros).
+- `<mark>`: Texto destacado (marca-texto).
+- `<bdi>`: Isola texto para direção diferente.
+- `<bdo>`: Sobrescreve direção do texto.
+- `<span>`: Contêiner inline genérico.
+- `<br>`: Quebra de linha.
+- `<wbr>`: Sugestão de quebra de linha.
