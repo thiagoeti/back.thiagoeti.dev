@@ -11,6 +11,7 @@
 | `.specs/DESIGN.md` | Posição de logo e menu por breakpoint, o que fica fixo na tela e glifos em SVG |
 | `.specs/LAYOUT.md` | Cabeçalho fixo, menu inferior no mobile, nada oculto no mobile, link externo em nova aba |
 | `.specs/THEME.md` | Tema Dark Ops UI: tokens, cores, tipografia, superfícies, componentes e breakpoints em Tailwind v4 |
+| `.specs/WIDTH.md` | Largura do conteúdo (`max-w-[120rem]`, igual ao front) e vitrine com 4 colunas em `2xl` — substitui o Container do `THEME.md` |
 | `.specs/META.md` | Identidade, contatos e endereços do ecossistema `thiagoeti` |
 | `.specs/ROADMAP.md` | Papel de cada repositório do ecossistema |
 
