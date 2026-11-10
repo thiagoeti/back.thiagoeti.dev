@@ -1,0 +1,36 @@
+# Tags Obsoletas (não usar)
+
+- `<center>`: Centraliza conteúdo (use CSS).
+- `<font>`: Define fonte (use CSS).
+- `<strike>`: Texto riscado (use `<del>` ou `<s>`).
+- `<big>`: Texto maior (use CSS).
+- `<tt>`: Texto teletipo (use `<code>`).
+- `<marquee>`: Texto rolante (use CSS/JS).
+- `<blink>`: Não use - Texto piscante.
+- `<frame>`: Divide janela em quadros (use iframe).
+- `<frameset>`: Define estrutura de frames.
+- `<noframes>`: Fallback para sem frames.
+- `<applet>`: Applet Java (use `<object>`).
+- `<acronym>`: Acrônimo (use `<abbr>`).
+- `<dir>`: Diretório (use `<ul>`).
+- `<isindex>`: Campo de busca (use formulário).
+- `<keygen>`: Geração de chave pública.
+- `<menuitem>`: Item de menu de contexto.
+- `<plaintext>`: Não use - Tratava tudo como texto.
+- `<xmp>`: Exemplo de código (use `<pre>`).
+- `<listing>`: Código pré-formatado (use `<pre>`).
+- `<basefont>`: Fonte padrão (use CSS).
+- `<bgsound>`: Áudio de fundo (use `<audio>`).
+- `<spacer>`: Espaço em branco (use CSS).
+- `<nobr>`: Impede quebra de linha (use CSS).
+- `<noembed>`: Fallback para embed.
+- `<command>`: Botão de comando.
+- `<content>`: Ponto de inserção antigo (use `<slot>`).
+- `<shadow>`: Ponto de inserção de shadow tree antigo (use `<slot>`).
+- `<param>`: Parâmetros para object (use atributos do `<object>`).
+- `<rb>`: Base do texto ruby (use texto direto no `<ruby>`).
+- `<rtc>`: Contêiner de anotações ruby (use `<rt>`).
+- `<image>`: Alias antigo de imagem (use `<img>`).
+- `<multicol>`: Layout em colunas (use CSS).
+- `<nextid>`: Gerador de identificadores do HTML 2 (não tem substituto).
+- `<portal>`: Navegação embutida, abandonada pelo Chrome (use `<iframe>` ou links).
