@@ -1,6 +1,6 @@
 ---
 name: glyph
-description: Use para criar, desenhar, redesenhar ou vetorizar glifos, ícones, símbolos, marcas, logos, logotipos, monogramas, emblemas, selos, pictogramas, favicons, avatares, mascotes, ilustrações, desenhos, imagens e SVGs.
+description: Use para criar, desenhar, redesenhar ou ilustrar glifos, ilustrar interfaces, símbolos, marcas, logos, monogramas, emblemas, selos, pictogramas, avatares, mascotes, ilustrações, desenhos, imagens e SVGs.
 license: Unlicense
 metadata:
   author: thiagoeti
@@ -24,6 +24,8 @@ metadata:
 - Crie com liberdade total: forma, metáfora, composição, estilo, traço, sem seguir referências, convenções ou o caminho mais óbvio.
 - Nunca repita fórmula nem caia no ícone genérico.
 - Cada glifo nasce do conceito que explica o conteúdo.
+- Explicar o conteudo ou conceito em interfaces visual ou imagem.
+- Metáforas visuais e ilustrações conceituais.
 
 ## Objetivo
 
