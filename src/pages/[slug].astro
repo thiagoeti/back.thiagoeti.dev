@@ -16,7 +16,7 @@ import { inline, renderMarkdown } from '../lib/markdown'
 import { projects, tagOf, vicinity, type Project } from '../lib/projects'
 import { knownOf, type Known } from '../lib/readme'
 import { INLINE_CODE, PROSE, SECONDARY, SITE, absoluteUrl, focusRing, motion, pageTitle } from '../lib/site'
-import { fill, text } from '../lib/text'
+import { text } from '../lib/text'
 import { tracks } from '../lib/tracks'
 
 /**
@@ -115,11 +115,10 @@ const H2 = 'flex items-center gap-3 heading-panel'
 		<header class="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
 			<div class="flex flex-col gap-4">
 				<p class="flex flex-wrap items-center gap-3">
-					<span class="eyebrow flex items-center gap-2">
+					<span class="mono-label flex items-center gap-2">
 						<span class:list={['size-1.5 rounded-full', p.github.docker ? 'bg-brand' : 'bg-info']} aria-hidden="true"></span>
-						{fill(text.nav.unit, { n: p.serial })}
+						{p.path}
 					</span>
-					<span class="mono-label">{p.path}</span>
 					{p.wip && <Badge tone="warning" dot>{t.wip}</Badge>}
 				</p>
 				<h1 id="titulo" class="display-xl lg:text-7xl [view-transition-name:project]">{p.title}</h1>

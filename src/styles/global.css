@@ -85,6 +85,14 @@
 	@apply bg-surface-sunken bg-[radial-gradient(circle,rgb(255_255_255/0.04)_1px,transparent_1px)] bg-[size:16px_16px];
 }
 
+/* Rodapé do ecossistema: o mesmo código dos outros sites (`wrap`, `link-row`, `focus-ring`, `dot-live`).
+   `wrap` acompanha a largura deste site (.specs/WIDTH.md). */
+@utility wrap        { @apply mx-auto w-full max-w-[120rem] px-4 sm:px-6 lg:px-8; }
+@utility dot         { @apply inline-block size-2 shrink-0 rounded-full; }
+@utility dot-live    { @apply dot animate-pulse-dot bg-brand motion-reduce:animate-none; }
+@utility focus-ring  { @apply focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-0 focus-visible:outline-none; }
+@utility link-row    { @apply focus-ring transition-[border-color,background-color] duration-200 hover:border-line-strong hover:bg-surface-2 motion-reduce:transition-none; }
+
 /* Desenhos em SVG: um papel por traço (src/lib/glyphs.ts). */
 @utility glyph-rule  { @apply fill-none stroke-white/[0.06] [stroke-dasharray:3_5]; }
 @utility glyph-line  { @apply fill-none stroke-brand/60; }

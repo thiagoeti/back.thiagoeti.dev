@@ -6,14 +6,10 @@
 		},
 		"nav": {
 			"label": "Projetos",
-			"home": "Todos",
-			"unit": "nó {n}"
+			"home": "Todos"
 		},
 		"network": {
-			"open": "Rede",
-			"close": "Fechar",
-			"label": "Ecossistema e contatos",
-			"here": "você está aqui"
+			"label": "Ecossistema e contatos"
 		},
 		"footer": {
 			"llms": "llms.txt",

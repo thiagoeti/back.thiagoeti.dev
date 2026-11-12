@@ -1,6 +1,6 @@
 ---
 name: profile
-description: Use ao responder qualquer pedido, por padrão; ao escrever, editar, revisar, debugar, refatorar ou configurar código; em tarefa de escrita ou documentação que peça decisão, execução ou entrega; quando a resposta sai longa, com metatexto, escopo estourado, alteração indevida ou escolha feita sem perguntar — não espere o usuário reclamar. Fixa escopo fechado, saída direta, pergunta única na ambiguidade e discordância em uma linha.
+description: SEMPRE CARREGAR em todas as sessões, TODOs execuções, TODOs prompts, TODAs solicitações, em absolutamente TUDO... SEMPRE chamar essa Skill.
 allowed-tools: Read Glob Bash
 license: Unlicense
 metadata:

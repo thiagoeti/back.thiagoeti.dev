@@ -22,6 +22,8 @@ export const ICONS = {
 	search: 'mask-[url(https://cdn.thiagoeti.dev/icons/search.svg)]',
 	zap: 'mask-[url(https://cdn.thiagoeti.dev/icons/zap.svg)]',
 	globe: 'mask-[url(https://cdn.thiagoeti.dev/icons/globe.svg)]',
+	menu: 'mask-[url(https://cdn.thiagoeti.dev/icons/menu.svg)]',
+	close: 'mask-[url(https://cdn.thiagoeti.dev/icons/close.svg)]',
 	mail: 'mask-[url(https://cdn.thiagoeti.dev/icons/mail.svg)]',
 	terminal: 'mask-[url(https://cdn.thiagoeti.dev/icons/terminal.svg)]',
 	'system-ai': 'mask-[url(https://cdn.thiagoeti.dev/system/ai.svg)]',
