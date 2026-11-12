@@ -1,5 +1,6 @@
 ---
 import TechGlyph from './tech-glyph.astro'
+import TechIcon from './tech-icon.astro'
 import { finalBalance, parseBurst } from '../lib/burst'
 import { SHIELD } from '../lib/docker'
 import type { Project } from '../lib/projects'
@@ -8,8 +9,8 @@ import { text } from '../lib/text'
 
 /**
  * Peça da vitrine (THEME.md › Feature Card): o glifo de tecnologia do projeto grande sobre o fundo
- * pontilhado; embaixo, nome, o que entrega, números medidos (respostas, blindagem, saldo), stack e
- * tags. O nome é o link e cobre a peça; filtro e busca leem `data-tags` e `data-search`.
+ * pontilhado; embaixo, nome, o que entrega, números medidos (respostas, blindagem, saldo), stack (ícone de
+ * cada tecnologia, tech-icon.astro) e tags. O nome é o link e cobre a peça; filtro e busca leem `data-tags` e `data-search`.
  */
 interface Props {
 	project: Project
@@ -51,7 +52,14 @@ const read = [
 				}
 			</dl>
 			<p class="flex flex-wrap gap-1.5" aria-label={text.home.stack}>
-				{p.technologies.map((x) => <span class="rounded-badge border border-line bg-surface-1 px-1.5 py-0.5 font-mono text-[11px] text-fg-muted">{x}</span>)}
+				{
+					p.technologies.map((x) => (
+						<span class="inline-flex items-center gap-1.5 rounded-badge border border-line bg-surface-1 px-1.5 py-0.5 font-mono text-[11px] text-fg-muted">
+							<TechIcon name={x} />
+							{x}
+						</span>
+					))
+				}
 			</p>
 			<p class="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-2 font-mono text-xs text-fg-subtle">
 				{p.tags.map((x) => <span class="data-[on]:text-brand" data-chip={x}>#{x}</span>)}

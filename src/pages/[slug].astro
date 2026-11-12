@@ -6,6 +6,7 @@ import Icon from '../components/icon.astro'
 import Integration from '../components/integration.astro'
 import SourcePanel from '../components/source-panel.astro'
 import TechGlyph from '../components/tech-glyph.astro'
+import TechIcon from '../components/tech-icon.astro'
 import Terminal from '../components/terminal.astro'
 import ThreatConsole from '../components/threat-console.astro'
 import Timeline from '../components/timeline.astro'
@@ -146,7 +147,7 @@ const H2 = 'flex items-center gap-3 heading-panel'
 					<TechGlyph project={p} class="w-full max-w-[22rem]" live />
 				</div>
 				<figcaption class="flex flex-wrap justify-center gap-1.5">
-					{p.technologies.map((x) => <Badge mono>{x}</Badge>)}
+					{p.technologies.map((x) => <Badge mono><TechIcon name={x} />{x}</Badge>)}
 				</figcaption>
 			</figure>
 		</header>
@@ -217,7 +218,7 @@ const H2 = 'flex items-center gap-3 heading-panel'
 					<div class="flex flex-col gap-2 border-t border-line-subtle pt-4">
 						<p class="eyebrow">{u.technologies}</p>
 						<ul class="flex flex-wrap gap-1.5">
-							{p.technologies.map((x) => <li><Badge mono>{x}</Badge></li>)}
+							{p.technologies.map((x) => <li><Badge mono><TechIcon name={x} />{x}</Badge></li>)}
 						</ul>
 					</div>
 					<div class="flex flex-col gap-2 border-t border-line-subtle pt-4">
