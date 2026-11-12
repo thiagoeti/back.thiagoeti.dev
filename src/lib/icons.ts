@@ -1,6 +1,6 @@
 /**
  * Ícones de utilidade do catálogo (THEME.md › Ícones), aplicados como máscara sobre `bg-current`.
- * Só ecossistema, contato e navegação: conteúdo usa glifo próprio (src/lib/glyphs.ts).
+ * Ecossistema, contato, navegação e o logo oficial de cada tecnologia (`tech-*`); diagrama usa glifo próprio (src/lib/glyphs.ts).
  * Classe literal por ícone: o Tailwind só gera o que encontra escrito.
  */
 export const ICONS = {
@@ -10,6 +10,14 @@ export const ICONS = {
 	'git-branch': 'mask-[url(https://cdn.thiagoeti.dev/icons/git-branch.svg)]',
 	'layout-grid': 'mask-[url(https://cdn.thiagoeti.dev/icons/layout-grid.svg)]',
 	'tech-github': 'mask-[url(https://cdn.thiagoeti.dev/icons/tech-github.svg)]',
+	'tech-bun': 'mask-[url(https://cdn.thiagoeti.dev/icons/tech-bun.svg)]',
+	'tech-fastapi': 'mask-[url(https://cdn.thiagoeti.dev/icons/tech-fastapi.svg)]',
+	'tech-laravel': 'mask-[url(https://cdn.thiagoeti.dev/icons/tech-laravel.svg)]',
+	'tech-php': 'mask-[url(https://cdn.thiagoeti.dev/icons/tech-php.svg)]',
+	'tech-pydantic': 'mask-[url(https://cdn.thiagoeti.dev/icons/tech-pydantic.svg)]',
+	'tech-python': 'mask-[url(https://cdn.thiagoeti.dev/icons/tech-python.svg)]',
+	'tech-sqlite': 'mask-[url(https://cdn.thiagoeti.dev/icons/tech-sqlite.svg)]',
+	'tech-typescript': 'mask-[url(https://cdn.thiagoeti.dev/icons/tech-typescript.svg)]',
 	'chart-activity': 'mask-[url(https://cdn.thiagoeti.dev/icons/chart-activity.svg)]',
 	'chart-bar': 'mask-[url(https://cdn.thiagoeti.dev/icons/chart-bar.svg)]',
 	'code-xml': 'mask-[url(https://cdn.thiagoeti.dev/icons/code-xml.svg)]',
@@ -60,3 +68,16 @@ const BY_DATA: Record<string, IconName> = {
 	whatsapp: 'system-whatsapp',
 }
 export const iconOf = (icon: string): IconName => BY_DATA[icon] ?? 'globe'
+
+/** Logo oficial da tecnologia (Simple Icons, catálogo `tech-*`); sem logo, `undefined` e vale o desenho do vocabulário (techglyph.ts). */
+const BY_TECH: Record<string, IconName> = {
+	bun: 'tech-bun',
+	fastapi: 'tech-fastapi',
+	laravel: 'tech-laravel',
+	php: 'tech-php',
+	pydantic: 'tech-pydantic',
+	python: 'tech-python',
+	sqlite: 'tech-sqlite',
+	typescript: 'tech-typescript',
+}
+export const techIconOf = (tech: string): IconName | undefined => BY_TECH[tech.toLowerCase().replace(/[^a-z0-9]/g, '')]

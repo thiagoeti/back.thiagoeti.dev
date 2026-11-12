@@ -105,6 +105,9 @@ const SAT: Record<string, (x: number, y: number) => El[]> = {
 }
 const genericSat = (x: number, y: number) => [O(x, y, 7, 'sat'), O(x, y, 2, 'satFill')]
 
+/** Marca da tecnologia sem logo oficial (chip de stack): o satélite do vocabulário, centrado em 0 0, cabe em ±10. */
+export const techMark = (name: string): El[] => SAT[key(name)]?.(0, 0) ?? genericSat(0, 0)
+
 /** Posições dos satélites: dos lados da moldura, alternando direita e esquerda. */
 const ORBIT = [-30, 210, 30, 150, -70, 250].map((d) => (d * Math.PI) / 180)
 
