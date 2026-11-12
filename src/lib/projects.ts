@@ -13,8 +13,6 @@ export type Project = Omit<RepoProject, 'docker'> & {
 	index: number
 	/** Ordem na lista: `1`, `2`… */
 	number: number
-	/** `01`, `02`… */
-	serial: string
 	/** Nome antes do travessão: `PHP Hyperf`. */
 	title: string
 	/** Nome depois do travessão: `PIX concorrente com corrotinas`. */
@@ -54,7 +52,6 @@ export const projects: Project[] = flat.map(({ repo, p }, index) => {
 		href: `/${p.dir}`,
 		index,
 		number: index + 1,
-		serial: String(index + 1).padStart(2, '0'),
 		title,
 		subtitle: rest.join(' — '),
 		short: title.split(/[\s+]+/).filter(Boolean).at(-1) ?? title,

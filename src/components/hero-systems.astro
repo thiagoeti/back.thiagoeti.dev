@@ -34,7 +34,8 @@ const EDGES: Edge[] = [
 
 const wide: View = {
 	id: 'paisagem',
-	cls: 'hidden md:block',
+	/* cabe na tela junto com o título: a altura para no que sobra da janela; o desenho centraliza */
+	cls: 'hidden md:block md:max-h-[max(20rem,calc(100dvh-18rem))]',
 	w: 1200,
 	h: 540,
 	s: 1,

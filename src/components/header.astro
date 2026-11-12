@@ -1,100 +1,126 @@
 ---
 import Icon from './icon.astro'
-import LinkRow from './link-row.astro'
+import LinkCard from './link-card.astro'
 import { contacts, ecosystem, intro, titles } from '../lib/content'
-import { projects } from '../lib/projects'
-import { NAV, SITE, focusRing, isCurrent, motion } from '../lib/site'
+import { NAV, SITE, isCurrent } from '../lib/site'
 import { fill, text } from '../lib/text'
 
 /**
- * Cabeçalho fixo (LAYOUT.md, THEME.md › Topbar): logo e título à esquerda; o título é o caminho até
- * aqui, `@thiagoeti / back-end / nó 03`. Desktop: o menu traz "Todos" e cada nó com o ponto de estado
- * da malha (com container ou sem). Tablet pra baixo: o mesmo menu desce para a base (bottom-nav.astro)
- * e o botão Rede abre o ecossistema e os contatos, que saem da página.
+ * Cabeçalho fixo, no padrão dos sites do ecossistema (thiagoeti.dev, learn, front, ai): logo em caixa →
+ * capa; `@thiagoeti` → site principal; `/ back-end` → capa. Sem numeração: "Todos" leva ícone, cada projeto o ponto.
+ * Desktop: o menu traz "Todos" e cada projeto com o ponto de estado (com container ou sem) e a ação
+ * Ecossistema, que desce até o rodapé. Tablet pra baixo: o menu desce para a base (bottom-nav.astro) e o ☰
+ * abre o painel do ecossistema e dos contatos, sem script (`popover`); o próprio ☰ vira ✕ e fecha.
  */
 interface Props {
 	path: string
 }
 
 const { path } = Astro.props
-const here = NAV.find((n) => n.project && isCurrent(n, path))?.project
-const item = `group relative flex h-16 items-center gap-2 px-3 text-sm whitespace-nowrap text-fg-muted hover:text-fg aria-[current=page]:text-fg before:absolute before:inset-x-3 before:bottom-0 before:h-0.5 before:bg-transparent aria-[current=page]:before:bg-brand ${motion} ${focusRing}`
 ---
 
-<header class="fixed inset-x-0 top-0 z-40 h-16 border-b border-line bg-surface-0/80 backdrop-blur">
-	<div class="mx-auto flex h-full w-full max-w-[120rem] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-		<div class="flex min-w-0 items-center gap-3 text-sm">
-			<a href="/" aria-label={text.brand.home} class={`grid size-10 shrink-0 place-items-center rounded-control border border-line hover:border-line-strong ${motion} ${focusRing}`}>
-				<img src="https://cdn.thiagoeti.dev/system/logo.svg" alt="" width="20" height="20" class="size-5" />
+<header class="fixed inset-x-0 top-0 z-40 h-16 border-b border-line bg-surface-0/85 backdrop-blur-md print:static">
+	<div class="wrap flex h-full items-center justify-between gap-3 xs:gap-6 lg:gap-4 xl:gap-6">
+		<div class="flex min-w-0 items-center gap-2 2xs:gap-3">
+			<a
+				href="/"
+				aria-label={text.brand.home}
+				class="focus-ring grid size-11 shrink-0 place-items-center rounded-card border border-line bg-surface-2 bg-[radial-gradient(ellipse_at_top_left,rgb(45_212_168/0.18),transparent_70%)] transition-colors duration-150 hover:border-brand/30"
+			>
+				<img src="https://cdn.thiagoeti.dev/system/logo.svg" alt="" width="22" height="22" class="size-5.5" />
 			</a>
-			<p class="flex min-w-0 items-center gap-1.5 leading-none">
-				<a href={SITE.home} target="_blank" rel="noopener" class={`hidden text-fg-subtle hover:text-fg xs:inline ${focusRing}`}>{SITE.brand}</a>
-				<span class="hidden text-fg-faint xs:inline" aria-hidden="true">/</span>
-				<a href="/" class={`font-semibold text-fg lowercase hover:text-brand ${focusRing}`}>{intro.title}</a>
-				{
-					here && (
-						<>
-							<span class="text-fg-faint" aria-hidden="true">/</span>
-							<span class="truncate text-fg-muted">{fill(text.nav.unit, { n: here.serial })}</span>
-						</>
-					)
-				}
-			</p>
+			<span class="flex min-w-0 items-baseline gap-x-1 leading-none whitespace-nowrap 2xs:gap-x-1.5">
+				<a
+					href={SITE.home}
+					target="_blank"
+					rel="noopener"
+					class="focus-ring inline-flex min-h-11 items-center rounded-badge font-mono text-[11px] text-fg-subtle transition-colors duration-150 hover:text-fg 2xs:text-[13px]"
+				>
+					{SITE.brand}
+				</a>
+				<span class="text-fg-faint" aria-hidden="true">/</span>
+				<a
+					href="/"
+					class="focus-ring inline-flex min-h-11 items-center rounded-badge text-xs font-semibold tracking-tight text-fg lowercase transition-colors duration-150 hover:text-brand 2xs:text-[15px]"
+				>
+					{intro.title}
+				</a>
+			</span>
 		</div>
 
-		<nav aria-label={text.nav.label} class="hidden lg:block">
-			<ul class="flex items-center">
-				{
-					NAV.map((n) => (
-						<li>
-							<a href={n.href} aria-current={isCurrent(n, path) ? 'page' : undefined} class={item}>
-								{n.project ? (
-									<>
-										<span class:list={['size-1.5 rounded-full', n.project.github.docker ? 'bg-brand' : 'bg-info']} aria-hidden="true" />
-<span class="font-mono text-xs tabular-nums text-fg-faint group-aria-[current=page]:text-brand">{n.project.serial}</span>
-										{n.project.short}
-									</>
-								) : (
-									<>
-										<span class="font-mono text-xs tabular-nums text-fg-faint group-aria-[current=page]:text-brand">{projects.length}</span>
-										{text.nav.home}
-									</>
-								)}
-							</a>
-						</li>
-					))
-				}
-			</ul>
+		<nav aria-label={text.nav.label} class="hidden items-center lg:flex xl:gap-1 print:hidden">
+			{
+				NAV.map((n) => (
+					<a
+						href={n.href}
+						aria-current={isCurrent(n, path) ? 'page' : undefined}
+						class:list={[
+							'group focus-ring relative flex h-16 items-center gap-2 px-1.5 text-sm whitespace-nowrap text-fg-muted transition-colors duration-150 hover:text-fg motion-reduce:transition-none aria-[current=page]:text-brand xl:px-3',
+							'before:absolute before:inset-x-1.5 before:bottom-0 before:h-0.5 before:rounded-full before:bg-transparent aria-[current=page]:before:bg-brand xl:before:inset-x-3',
+						]}
+					>
+						{n.project ? (
+							<>
+								<span class:list={['size-1.5 rounded-full', n.project.github.docker ? 'bg-brand' : 'bg-info']} aria-hidden="true" />
+								{n.project.short}
+							</>
+						) : (
+							<>
+								<Icon name="layout-grid" class="size-4" />
+								{text.nav.home}
+							</>
+						)}
+					</a>
+				))
+			}
 		</nav>
 
-		<button
-			type="button"
-			popovertarget="rede"
-			class={`flex h-10 shrink-0 items-center gap-2 rounded-control border border-line px-3 text-sm text-fg-muted hover:border-line-strong hover:text-fg lg:hidden ${motion} ${focusRing}`}
-		>
-			<Icon name="globe" class="size-4" />
-			{text.network.open}
-		</button>
+		<div class="flex items-center gap-4">
+			<button
+				type="button"
+				popovertarget="painel-ecossistema"
+				aria-label={text.network.label}
+				class="focus-ring grid size-11 shrink-0 place-items-center rounded-control text-fg-muted transition-colors duration-150 hover:bg-white/5 hover:text-fg motion-reduce:transition-none lg:hidden print:hidden"
+			>
+				<span class="flex group-has-[#painel-ecossistema:popover-open]/page:hidden"><Icon name="menu" class="size-5" /></span>
+				<span class="hidden group-has-[#painel-ecossistema:popover-open]/page:flex"><Icon name="close" class="size-5" /></span>
+			</button>
+			<a
+				href="#ecossistema"
+				class="focus-ring hidden h-9 items-center justify-center gap-1.5 rounded-control bg-brand px-4 text-xs font-semibold tracking-wider whitespace-nowrap text-surface-0 uppercase transition-colors duration-150 hover:bg-brand-hover motion-reduce:transition-none lg:inline-flex print:hidden"
+			>
+				<Icon name="network" class="size-4" />
+				{titles.ecosystem}
+			</a>
+		</div>
 	</div>
 </header>
 
+<!-- Painel do ☰, tablet pra baixo: entre o cabeçalho e o menu da base; lido de baixo para cima (contatos ao alcance do polegar). -->
 <div
-	id="rede"
+	id="painel-ecossistema"
 	popover
 	aria-label={text.network.label}
-	class="inset-x-0 top-16 bottom-auto m-0 max-h-[calc(100dvh-4rem)] w-full overflow-y-auto border-b border-line bg-surface-1 p-4 text-fg backdrop:bg-surface-sunken/70 lg:hidden"
+	class="inset-x-0 top-[calc(4rem+1px)] bottom-[calc(4rem+1px+env(safe-area-inset-bottom))] m-0 h-auto max-h-none w-full max-w-none flex-col-reverse overflow-y-auto overscroll-contain border-0 bg-surface-0 p-0 text-fg open:flex lg:hidden print:hidden"
 >
-	<div class="flex items-center justify-between gap-4 pb-2">
-		<h2 class="text-sm font-medium text-fg-muted">{titles.ecosystem}</h2>
-		<button type="button" popovertarget="rede" popovertargetaction="hide" class={`flex h-10 items-center rounded-control border border-line px-3 text-sm text-fg-muted hover:text-fg ${focusRing}`}>
-			{text.network.close}
-		</button>
+	<div class="wrap flex flex-col-reverse gap-8 py-6">
+		<p class="flex items-center justify-between gap-4 border-t border-line-subtle pt-4 font-mono text-[11px] text-fg-subtle">
+			<a href="/llms.txt" class="focus-ring inline-flex min-h-11 items-center rounded-badge transition-colors duration-150 hover:text-brand">{text.footer.llms}</a>
+			<span>{fill(text.footer.copyright, { year: new Date().getFullYear(), name: SITE.author })}</span>
+		</p>
+
+		<section aria-labelledby="painel-contatos">
+			<h2 id="painel-contatos" class="eyebrow mb-4">{titles.contacts}</h2>
+			<ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+				{contacts.map((l) => <li><LinkCard item={l} /></li>)}
+			</ul>
+		</section>
+
+		<nav aria-labelledby="painel-ecossistema-titulo">
+			<h2 id="painel-ecossistema-titulo" class="eyebrow mb-4">{titles.ecosystem}</h2>
+			<ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+				{ecosystem.map((l) => <li><LinkCard item={l} /></li>)}
+			</ul>
+		</nav>
 	</div>
-	<ul class="grid gap-0.5 sm:grid-cols-2">
-		{ecosystem.map((l) => <li><LinkRow item={l} /></li>)}
-	</ul>
-	<h2 class="mt-4 pb-2 text-sm font-medium text-fg-muted">{titles.contacts}</h2>
-	<ul class="grid gap-0.5 sm:grid-cols-2">
-		{contacts.map((l) => <li><LinkRow item={l} /></li>)}
-	</ul>
 </div>

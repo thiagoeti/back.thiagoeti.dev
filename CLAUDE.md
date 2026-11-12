@@ -53,7 +53,8 @@
 | Glifo | `src/lib/techglyph.ts`, `src/components/tech-glyph.astro` | Vocabulário de tecnologia em `viewBox 0 0 200 200`: moldura da linguagem, motivo do framework do título, satélites das demais; tecnologia nova sem desenho vira satélite genérico; `glyphSvg` para o cartão OG |
 | Capa | `src/components/hero-systems.astro`, `showcase-card.astro`, `command-bar.astro`, `integration.astro` | Glifos de sistema com trilhos `sync`/`async`/`store` (sem tecnologia), vitrine, busca e tags, repositórios |
 | Projeto | `src/components/threat-console.astro`, `timeline.astro`, `terminal.astro`, `source-panel.astro`, `board-diagram.astro` | Blindagem, como funciona, executar, arquivos × código, diagrama |
-| Peças | `src/components/badge.astro`, `ring.astro`, `icon.astro`, `link-row.astro` | Badge, Score Ring, ícone do catálogo, link do ecossistema |
+| Peças | `src/components/badge.astro`, `ring.astro`, `icon.astro`, `link-card.astro` | Badge, Score Ring, ícone do catálogo, card do ecossistema e contatos no rodapé e no painel do ☰ (mesmo código dos outros sites; `wrap` na largura deste) |
+| Moldura | `src/components/header.astro`, `bottom-nav.astro`, `footer.astro` | Cabeçalho no padrão do ecossistema (logo em caixa, `@thiagoeti / back-end`, menu, ação Ecossistema; ☰ com painel em `popover` no mobile), menu da base, rodapé |
 | Glifos | `src/lib/glyphs.ts`, `src/lib/grid.ts`, `src/components/shapes.astro` | Papéis de traço e ligações em ângulo reto do diagrama |
 | Diagrama | `src/lib/tracks.ts`, `src/components/board-diagram.astro` | Mermaid (`sequenceDiagram`, `flowchart`) → topologia sobre fundo pontilhado, nós e log numerado |
 | Markdown | `src/lib/markdown.ts` | README renderizado no build, sem `style` inline, cores do Shiki mapeadas para 2 cores + 1 acento |

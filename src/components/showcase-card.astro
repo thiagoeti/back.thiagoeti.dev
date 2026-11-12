@@ -29,7 +29,6 @@ const read = [
 <li class="group/card relative flex data-[off]:hidden" data-project={p.slug} data-tags={p.tags.join(' ')} data-search={[p.name, p.slug, ...p.technologies, ...p.tags].join(' ').toLowerCase()}>
 	<article class="flex w-full flex-col overflow-hidden rounded-panel border border-line bg-surface-1 transition-colors duration-150 group-hover/card:border-line-strong group-focus-within/card:border-brand/40">
 		<div class="dot-grid relative grid place-items-center px-6 pt-8 pb-6">
-			<span class="absolute top-4 left-5 font-mono text-[11px] text-fg-faint">{p.serial}</span>
 			<TechGlyph project={p} class="w-full max-w-52" />
 		</div>
 		<div class="flex flex-1 flex-col gap-2 border-t border-line-subtle bg-surface-2 p-6">

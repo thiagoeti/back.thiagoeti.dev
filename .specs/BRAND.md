@@ -8,7 +8,7 @@
 
 ## Objetivo
 
-Desenvolver um ecossistema de marca que me posicione como **AI ENABLER** - **AI ENGINEER** - **PRODUCT AI ENGINEER** - **SOFTWARE ENGINEER** — contratado para colocar IA em produção, não para falar sobre IA.
+Desenvolver um ecossistema de marca que me posicione como **AI ENABLER** - **AI ENGINEER** - **PRODUCT AI ENGINEER** - **SOFTWARE AI ENGINEER** - **FDE - Forward Deployed Engineer** — contratado para colocar IA em produção, não para falar sobre IA.
 
 ---
 
@@ -52,7 +52,7 @@ Cada item é binário: passa ou reescreve. Quem testa é alguém de fora e não 
 
 `@thiagoeti`, minúscula sempre — inclusive em título de página e começo de frase.
 
-- raiz - `@thiagoeti | **AI ENABLER** - **AI ENGINEER** - **PRODUCT AI ENGINEER** - **SOFTWARE ENGINEER**`
+- raiz - `@thiagoeti | **AI ENABLER** - **AI ENGINEER** - **PRODUCT AI ENGINEER** - **SOFTWARE AI ENGINEER** - **FDE - Forward Deployed Engineer**`
 - subdomínio - `@thiagoeti — <page..>`
 
 ---
