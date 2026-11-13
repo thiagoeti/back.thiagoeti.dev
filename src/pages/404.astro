@@ -1,8 +1,8 @@
 ---
-import Base from '../layouts/base.astro'
-import Icon from '../components/icon.astro'
-import { BUTTON, pageTitle } from '../lib/site'
-import { text } from '../lib/text'
+import Base from '@/layouts/base.astro'
+import Icon from '@/components/ui/Icon.astro'
+import { BUTTON } from '@/lib/site'
+import { text } from '@/lib/text'
 
 /**
  * 404 — o sistema que não existe (.analyse/design.md › Revisão 10): um serviço tracejado, sem nada
@@ -12,58 +12,62 @@ import { text } from '../lib/text'
 const t = text.notfound
 ---
 
-<Base title={pageTitle(t.title)} description={t.body} path="/404" noindex>
-	<div class="mx-auto flex w-full max-w-[120rem] flex-col gap-8 px-4 pt-10 pb-16 sm:px-6 lg:px-8 lg:pt-14">
-		<section aria-labelledby="titulo" class="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
-			<div class="flex flex-col gap-4">
-				<p class="eyebrow flex items-center gap-2 text-danger">
-					<span class="size-1.5 rounded-full bg-danger" aria-hidden="true"></span>
-					{t.code}
-				</p>
-				<h1 id="titulo" class="display-xl lg:text-7xl">{t.title}</h1>
-				<p class="body-lg">{t.body}</p>
-				<div class="flex flex-col gap-2 rounded-control border border-danger/30 bg-danger/[0.06] p-4 shadow-glow-danger">
-					<p class="flex items-center justify-between gap-3">
-						<span class="flex items-center gap-2 text-sm font-medium text-danger">
-							<span class="size-1.5 rounded-full bg-current" aria-hidden="true"></span>
-							{t.alert}
-						</span>
-						<span class="font-mono text-[11px] text-fg-subtle">{t.path}</span>
-					</p>
-					<code class="font-mono text-sm break-all text-fg" data-path>/404</code>
-				</div>
-				<a href="/" class={`${BUTTON} self-start`}>
-					<Icon name="layout-grid" class="size-4" />
-					{t.cta}
-				</a>
-			</div>
-			<svg viewBox="-70 -70 340 340" class="mx-auto h-auto w-full max-w-[28rem] overflow-visible" aria-hidden="true" data-void>
-				<circle cx="100" cy="100" r="160" class="fill-none stroke-line [stroke-dasharray:2_6]" />
-				<rect x="20" y="46" width="160" height="108" rx="16" class="fill-surface-sunken stroke-danger/50 [stroke-dasharray:4_6]" stroke-width="1.5" />
-				<path d="M20 78H180" class="stroke-fg-faint [stroke-dasharray:2_5]" stroke-width="1.2" />
-				<circle cx="38" cy="62" r="4" class="fill-danger" />
-				<text x="100" y="128" text-anchor="middle" font-size="26" class="fill-danger font-mono">{t.code}</text>
-				<g data-particles />
-			</svg>
-		</section>
-	</div>
+<Base title={t.title} description={t.body} path="/404" noindex>
+  <div class="w-full max-w-[120rem] mx-auto px-4 pt-10 pb-16
+    flex flex-col gap-8
+    sm:px-6 lg:px-8 lg:pt-14">
+    <section aria-labelledby="titulo" class="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div class="flex flex-col gap-4">
+        <p class="flex items-center gap-2 eyebrow text-danger">
+          <span class="size-1.5 bg-danger rounded-full" aria-hidden="true"></span>
+          {t.code}
+        </p>
+        <h1 id="titulo" class="display-xl lg:text-7xl">{t.title}</h1>
+        <p class="body-lg">{t.body}</p>
+        <div class="p-4
+          flex flex-col gap-2
+          bg-danger/[0.06] rounded-control border border-danger/30 shadow-glow-danger">
+          <p class="flex items-center justify-between gap-3">
+            <span class="flex items-center gap-2 text-sm font-medium text-danger">
+              <span class="size-1.5 bg-current rounded-full" aria-hidden="true"></span>
+              {t.alert}
+            </span>
+            <span class="font-mono text-[11px] text-fg-subtle">{t.path}</span>
+          </p>
+          <code class="font-mono text-sm break-all text-fg" data-path>/404</code>
+        </div>
+        <a href="/" class={`${BUTTON} self-start`}>
+          <Icon name="layout-grid" class="size-4" />
+          {t.cta}
+        </a>
+      </div>
+      <svg viewBox="-70 -70 340 340" class="h-auto w-full max-w-[28rem] mx-auto overflow-visible" aria-hidden="true" data-void>
+        <circle cx="100" cy="100" r="160" class="fill-none stroke-line [stroke-dasharray:2_6]" />
+        <rect x="20" y="46" width="160" height="108" rx="16" class="fill-surface-sunken stroke-danger/50 [stroke-dasharray:4_6]" stroke-width="1.5" />
+        <path d="M20 78H180" class="stroke-fg-faint [stroke-dasharray:2_5]" stroke-width="1.2" />
+        <circle cx="38" cy="62" r="4" class="fill-danger" />
+        <text x="100" y="128" text-anchor="middle" font-size="26" class="font-mono fill-danger">{t.code}</text>
+        <g data-particles />
+      </svg>
+    </section>
+  </div>
 </Base>
 
 <script>
-	import { line, reduced, send } from '../scripts/flow'
+  import { line, reduced, send } from '@/scripts/flow'
 
-	for (const el of document.querySelectorAll<HTMLElement>('[data-path]')) if (location.pathname !== '/404') el.textContent = location.pathname
+  for (const el of document.querySelectorAll<HTMLElement>('[data-path]')) if (location.pathname !== '/404') el.textContent = location.pathname
 
-	const layer = document.querySelector('[data-void] [data-particles]')
-	if (layer && !reduced) {
-		const N = 12
-		for (let i = 0; i < N; i++) {
-			const a = -Math.PI / 2 + (i / N) * Math.PI * 2
-			const far = { x: 100 + Math.cos(a) * 168, y: 100 + Math.sin(a) * 168 }
-			// borda do serviço tracejado (160 × 108)
-			const edge = Math.min(82 / Math.abs(Math.cos(a) || 1e-6), 56 / Math.abs(Math.sin(a) || 1e-6))
-			const near = { x: 100 + Math.cos(a) * edge, y: 100 + Math.sin(a) * edge }
-			window.setTimeout(() => send(layer, [line(far, near)], 'request', 700, () => send(layer, [line(near, far)], 'danger', 900, undefined, true, 2.6), false, 2.6), i * 140)
-		}
-	}
+  const layer = document.querySelector('[data-void] [data-particles]')
+  if (layer && !reduced) {
+    const N = 12
+    for (let i = 0; i < N; i++) {
+      const a = -Math.PI / 2 + (i / N) * Math.PI * 2
+      const far = { x: 100 + Math.cos(a) * 168, y: 100 + Math.sin(a) * 168 }
+      // borda do serviço tracejado (160 × 108)
+      const edge = Math.min(82 / Math.abs(Math.cos(a) || 1e-6), 56 / Math.abs(Math.sin(a) || 1e-6))
+      const near = { x: 100 + Math.cos(a) * edge, y: 100 + Math.sin(a) * edge }
+      window.setTimeout(() => send(layer, [line(far, near)], 'request', 700, () => send(layer, [line(near, far)], 'danger', 900, undefined, true, 2.6), false, 2.6), i * 140)
+    }
+  }
 </script>

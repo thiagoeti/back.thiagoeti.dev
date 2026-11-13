@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro'
 import sharp from 'sharp'
-import { intro } from '../lib/content'
-import { homeCard } from '../lib/og'
-import { projects } from '../lib/projects'
-import { fill, text } from '../lib/text'
+import { intro } from '@/lib/content'
+import { homeCard } from '@/lib/og'
+import { projects } from '@/lib/projects'
+import { fill, text } from '@/lib/text'
 
 /** Cartão da capa (`meta.json › image`): o título e a frase do `data.md` e os glifos dos projetos. */
 export const GET: APIRoute = async () => {

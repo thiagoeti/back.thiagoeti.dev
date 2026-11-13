@@ -19,7 +19,9 @@ Padrões de projetos back-end.
 
 ## Dados e conteúdo
 
-- Cada repositório do GitHub tem um `data.json` na raiz com todas as informações do projeto; use-o como base e referência para tudo.
+- O `data.json` é a ficha técnica do projeto.
+- O `README.md` é a descrição do projeto.
+- Alguns projetos podem ter `index.html`, nesse caso a página toda HTML deve ser apresentada na integra, inclusive as imagens, é importante ser totalmente fiel ao arquivo original.
 
 ---
 

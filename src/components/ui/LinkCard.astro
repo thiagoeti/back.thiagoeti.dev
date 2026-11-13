@@ -1,0 +1,44 @@
+---
+import Icon from './Icon.astro'
+import { linkHref, linkText, type Link } from '@/lib/content'
+import { iconOf, iconUrl } from '@/lib/icons'
+import { SITE } from '@/lib/site'
+
+/**
+ * Card de link do rodapé, o mesmo código dos outros sites do ecossistema: site (`link`) ou contato (`value`).
+ * O site atual fica aceso (`aria-current`, sem nova aba). Ícone de marca (`/system/`) entra como arquivo; o resto, máscara.
+ */
+interface Props {
+  item: Link
+}
+
+const { item } = Astro.props
+const href = linkHref(item)
+const here = !!item.link && new URL(item.link).host === SITE.host
+const outside = /^https?:/.test(href) && !here
+const icon = iconOf(item.icon)
+const original = icon.startsWith('system-') ? iconUrl(icon) : undefined
+---
+
+<a
+  href={href}
+  target={outside ? '_blank' : undefined}
+  rel={outside ? 'noopener' : undefined}
+  aria-current={here ? 'page' : undefined}
+  class:list={[`h-full p-3
+    flex items-center gap-3 relative
+    rounded-card border
+    link-row`, here ? 'bg-brand/5 border-brand/30' : 'bg-surface-1 border-line']}
+>
+  <span class="size-9
+    grid shrink-0 place-items-center
+    bg-surface-2 text-brand rounded-control border border-line">
+    {original ? <img src={original} alt="" width="16" height="16" loading="lazy" class="size-4 shrink-0" /> : <Icon name={icon} class="size-4" />}
+  </span>
+  <span class="min-w-0">
+    <span class="block text-sm font-semibold text-fg">{item.label}</span>
+    {item.type && <span class="block text-xs text-fg-muted">{item.type}</span>}
+    <span class="block font-mono text-[11px] break-all text-fg-subtle">{linkText(item)}</span>
+  </span>
+  {here && <span class="absolute top-3 right-3 dot-live"></span>}
+</a>

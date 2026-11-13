@@ -1,0 +1,171 @@
+---
+import Icon from '@/components/ui/Icon.astro'
+import LinkCard from '@/components/ui/LinkCard.astro'
+import { contacts, ecosystem, intro, titles } from '@/lib/content'
+import { NAV, SITE, isCurrent } from '@/lib/site'
+import { fill, text } from '@/lib/text'
+
+/**
+ * Cabeçalho fixo, no padrão dos sites do ecossistema (thiagoeti.dev, learn, front, ai): logo em caixa →
+ * capa; `@thiagoeti` → site principal; `/ back-end` → capa. Sem numeração: "Todos" leva ícone, cada projeto o ponto.
+ * Desktop: o menu traz "Todos" e cada projeto com o ponto de estado (com container ou sem) e a ação
+ * Ecossistema, que desce até o rodapé. Tablet pra baixo: o menu desce para a base (BottomNav.astro) e o ☰
+ * abre o painel do ecossistema e dos contatos, sem script (`popover`); o próprio ☰ vira ✕ e fecha.
+ */
+interface Props {
+  path: string
+}
+
+const { path } = Astro.props
+---
+
+<header class="h-16
+  fixed inset-x-0 top-0 z-40
+  bg-surface-0/85 border-b border-line backdrop-blur-md
+  print:static">
+  <div class="wrap h-full
+    flex items-center justify-between gap-3
+    xs:gap-6 lg:gap-4 xl:gap-6">
+    <div class="min-w-0 flex items-center gap-2 2xs:gap-3">
+      <a
+        href="/"
+        aria-label={text.brand.home}
+        class="size-11
+          grid shrink-0 place-items-center
+          bg-surface-2 bg-[radial-gradient(ellipse_at_top_left,rgb(45_212_168/0.18),transparent_70%)] rounded-card border border-line
+          transition-colors duration-150
+          focus-ring hover:border-brand/30"
+      >
+        <img src="https://cdn.thiagoeti.dev/system/logo.svg" alt="" width="22" height="22" class="size-5.5" />
+      </a>
+      <span class="min-w-0 flex items-baseline gap-x-1 leading-none whitespace-nowrap 2xs:gap-x-1.5">
+        <a
+          href={SITE.home}
+          target="_blank"
+          rel="noopener"
+          class="min-h-11
+            inline-flex items-center
+            font-mono text-[11px] text-fg-subtle rounded-badge
+            transition-colors duration-150
+            2xs:text-[13px]
+            focus-ring hover:text-fg"
+        >
+          {SITE.brand}
+        </a>
+        <span class="text-fg-faint" aria-hidden="true">/</span>
+        <a
+          href="/"
+          class="min-h-11
+            inline-flex items-center
+            text-xs font-semibold tracking-tight lowercase text-fg rounded-badge
+            transition-colors duration-150
+            2xs:text-[15px]
+            focus-ring hover:text-brand"
+        >
+          {intro.title}
+        </a>
+      </span>
+    </div>
+
+    <nav aria-label={text.nav.label} class="hidden items-center lg:flex xl:gap-1 print:hidden">
+      {
+        NAV.map((n) => (
+          <a
+            href={n.href}
+            aria-current={isCurrent(n, path) ? 'page' : undefined}
+            class:list={[
+              `h-16 px-1.5
+                flex items-center gap-2 relative
+                text-sm whitespace-nowrap text-fg-muted
+                transition-colors duration-150
+                xl:px-3
+                focus-ring hover:text-fg aria-[current=page]:text-brand motion-reduce:transition-none group`,
+              `xl:before:inset-x-3
+                aria-[current=page]:before:bg-brand before:h-0.5 before:absolute before:inset-x-1.5 before:bottom-0 before:bg-transparent before:rounded-full`,
+            ]}
+          >
+            {n.project ? (
+              <>
+                <span class:list={['size-1.5 rounded-full', n.project.github.docker ? 'bg-brand' : 'bg-info']} aria-hidden="true" />
+                {n.project.short}
+              </>
+            ) : (
+              <>
+                <Icon name="layout-grid" class="size-4" />
+                {text.nav.home}
+              </>
+            )}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <button
+        type="button"
+        popovertarget="painel-ecossistema"
+        aria-label={text.network.label}
+        class="size-11
+          grid shrink-0 place-items-center
+          text-fg-muted rounded-control
+          transition-colors duration-150
+          lg:hidden
+          focus-ring hover:bg-white/5 hover:text-fg motion-reduce:transition-none print:hidden"
+      >
+        <span class="flex group-has-[#painel-ecossistema:popover-open]/page:hidden"><Icon name="menu" class="size-5" /></span>
+        <span class="hidden group-has-[#painel-ecossistema:popover-open]/page:flex"><Icon name="close" class="size-5" /></span>
+      </button>
+      <a
+        href="#ecossistema"
+        class="h-9 px-4
+          hidden items-center justify-center gap-1.5
+          text-xs font-semibold tracking-wider whitespace-nowrap uppercase bg-brand text-surface-0 rounded-control
+          transition-colors duration-150
+          lg:inline-flex
+          focus-ring hover:bg-brand-hover motion-reduce:transition-none print:hidden"
+      >
+        <Icon name="network" class="size-4" />
+        {titles.ecosystem}
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Painel do ☰, tablet pra baixo: entre o cabeçalho e o menu da base; lido de baixo para cima (contatos ao alcance do polegar). -->
+<aside
+  id="painel-ecossistema"
+  popover
+  aria-label={text.network.label}
+  class="h-auto max-h-none w-full max-w-none m-0 p-0
+    flex-col-reverse inset-x-0 top-[calc(4rem+1px)] bottom-[calc(4rem+1px+env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain
+    bg-surface-0 text-fg border-0
+    lg:hidden
+    open:flex print:hidden"
+>
+  <div class="wrap py-6 flex flex-col-reverse gap-8">
+    <p class="pt-4
+      flex items-center justify-between gap-4
+      font-mono text-[11px] text-fg-subtle border-t border-line-subtle">
+      <a href="/llms.txt" class="min-h-11
+        inline-flex items-center
+        rounded-badge
+        transition-colors duration-150
+        focus-ring hover:text-brand">{text.footer.llms}</a>
+      <span>{fill(text.footer.copyright, { year: new Date().getFullYear(), name: SITE.author })}</span>
+    </p>
+
+    <section aria-labelledby="painel-contatos">
+      <h2 id="painel-contatos" class="mb-4 eyebrow">{titles.contacts}</h2>
+      <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {contacts.map((l) => <li><LinkCard item={l} /></li>)}
+      </ul>
+    </section>
+
+    <nav aria-labelledby="painel-ecossistema-titulo">
+      <h2 id="painel-ecossistema-titulo" class="mb-4 eyebrow">{titles.ecosystem}</h2>
+      <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {ecosystem.map((l) => <li><LinkCard item={l} /></li>)}
+      </ul>
+    </nav>
+  </div>
+</aside>

@@ -1,24 +1,24 @@
 ---
-import Base from '../layouts/base.astro'
-import Badge from '../components/badge.astro'
-import BoardDiagram from '../components/board-diagram.astro'
-import Icon from '../components/icon.astro'
-import Integration from '../components/integration.astro'
-import SourcePanel from '../components/source-panel.astro'
-import TechGlyph from '../components/tech-glyph.astro'
-import TechIcon from '../components/tech-icon.astro'
-import Terminal from '../components/terminal.astro'
-import ThreatConsole from '../components/threat-console.astro'
-import Timeline from '../components/timeline.astro'
-import { host } from '../lib/content'
-import { finalBalance, parseBurst } from '../lib/burst'
-import { SHIELD } from '../lib/docker'
-import { inline, renderMarkdown } from '../lib/markdown'
-import { projects, tagOf, vicinity, type Project } from '../lib/projects'
-import { knownOf, type Known } from '../lib/readme'
-import { INLINE_CODE, PROSE, SECONDARY, SITE, absoluteUrl, focusRing, motion, pageTitle } from '../lib/site'
-import { text } from '../lib/text'
-import { tracks } from '../lib/tracks'
+import Base from '@/layouts/base.astro'
+import Badge from '@/components/ui/Badge.astro'
+import BoardDiagram from '@/components/sections/BoardDiagram.astro'
+import Icon from '@/components/ui/Icon.astro'
+import Integration from '@/components/ui/Integration.astro'
+import SourcePanel from '@/components/sections/SourcePanel.astro'
+import TechGlyph from '@/components/ui/TechGlyph.astro'
+import TechIcon from '@/components/ui/TechIcon.astro'
+import Terminal from '@/components/ui/Terminal.astro'
+import ThreatConsole from '@/components/sections/ThreatConsole.astro'
+import Timeline from '@/components/ui/Timeline.astro'
+import { host } from '@/lib/content'
+import { finalBalance, parseBurst } from '@/lib/burst'
+import { SHIELD } from '@/lib/docker'
+import { inline, renderMarkdown } from '@/lib/markdown'
+import { projects, tagOf, vicinity, type Project } from '@/lib/projects'
+import { knownOf, type Known } from '@/lib/readme'
+import { INLINE_CODE, PROSE, SECONDARY, SITE, absoluteUrl, focusRing, motion } from '@/lib/site'
+import { text } from '@/lib/text'
+import { tracks } from '@/lib/tracks'
 
 /**
  * Página do projeto (.analyse/design.md › Revisão 10): o glifo de tecnologia grande, com dados
@@ -26,11 +26,11 @@ import { tracks } from '../lib/tracks'
  * blindagem, código, diagrama, como funciona, executar, trade-offs, skills, links e vizinhos.
  */
 export function getStaticPaths() {
-	return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }))
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }))
 }
 
 interface Props {
-	project: Project
+  project: Project
 }
 
 const { project: p } = Astro.props
@@ -49,322 +49,354 @@ const LANG: Record<string, string> = { php: 'php', py: 'python', ts: 'ts', js: '
 const sources = await Promise.all(p.sources.map(async (f) => ({ ...f, html: await renderMarkdown(`\`\`\`${LANG[f.path.split('.').pop() ?? ''] ?? 'txt'}\n${f.code.trimEnd()}\n\`\`\``) })))
 
 const links = [
-	{ label: t.folder, href: p.github.folder, icon: 'tech-github' as const },
-	{ label: t.repository, href: p.repo.url, icon: 'git-branch' as const },
-	{ label: t.readme, href: p.github.readme, icon: 'file-code' as const },
-	{ label: t.docker, href: p.github.docker, icon: 'container' as const },
-	{ label: t.page, href: absoluteUrl(p.href), icon: 'globe' as const },
+  { label: t.folder, href: p.github.folder, icon: 'tech-github' as const },
+  { label: t.repository, href: p.repo.url, icon: 'git-branch' as const },
+  { label: t.readme, href: p.github.readme, icon: 'file-code' as const },
+  { label: t.docker, href: p.github.docker, icon: 'container' as const },
+  { label: t.page, href: absoluteUrl(p.href), icon: 'globe' as const },
 ].filter((x) => x.href)
 const facts = [
-	{ label: t.path, value: p.path },
-	{ label: t.segment, value: p.repo.segment || dash },
-	{ label: t.status, value: p.wip ? t.wip : t.stable, tone: p.wip ? 'text-warning' : 'text-success' },
-	{ label: text.repos.measured, value: p.repo.measured || dash },
-	{ label: text.repos.spec, value: p.repo.spec || dash },
-	{ label: u.tags, value: p.tags.length },
-	{ label: u.steps, value: p.doc.steps.length },
-	{ label: u.files, value: p.sources.length || dash },
-	{ label: u.lines, value: p.lines || dash },
+  { label: t.path, value: p.path },
+  { label: t.segment, value: p.repo.segment || dash },
+  { label: t.status, value: p.wip ? t.wip : t.stable, tone: p.wip ? 'text-warning' : 'text-success' },
+  { label: text.repos.measured, value: p.repo.measured || dash },
+  { label: text.repos.spec, value: p.repo.spec || dash },
+  { label: u.tags, value: p.tags.length },
+  { label: u.steps, value: p.doc.steps.length },
+  { label: u.files, value: p.sources.length || dash },
+  { label: u.lines, value: p.lines || dash },
 ]
 const machine = [
-	{ label: u.image, value: p.docker.image || dash },
-	{ label: u.cpus, value: p.docker.cpus || dash },
-	{ label: u.memory, value: p.docker.memory || dash },
-	{ label: u.swap, value: p.docker.swap || dash },
-	{ label: u.port, value: p.docker.port ? `:${p.docker.port}` : dash },
-	{ label: u.pids, value: p.docker.pids || dash },
-	{ label: u.nofile, value: p.docker.nofile || dash },
-	{ label: u.user, value: p.docker.user || dash },
-	{ label: u.restart, value: p.docker.restart || dash },
-	{ label: u.stop, value: p.docker.stopSignal ? `${p.docker.stopSignal}${p.docker.stopTimeout ? ` ${p.docker.stopTimeout}s` : ''}` : dash },
-	{ label: u.health, value: p.docker.healthInterval || dash },
-	{ label: u.log, value: p.docker.log || dash },
+  { label: u.image, value: p.docker.image || dash },
+  { label: u.cpus, value: p.docker.cpus || dash },
+  { label: u.memory, value: p.docker.memory || dash },
+  { label: u.swap, value: p.docker.swap || dash },
+  { label: u.port, value: p.docker.port ? `:${p.docker.port}` : dash },
+  { label: u.pids, value: p.docker.pids || dash },
+  { label: u.nofile, value: p.docker.nofile || dash },
+  { label: u.user, value: p.docker.user || dash },
+  { label: u.restart, value: p.docker.restart || dash },
+  { label: u.stop, value: p.docker.stopSignal ? `${p.docker.stopSignal}${p.docker.stopTimeout ? ` ${p.docker.stopTimeout}s` : ''}` : dash },
+  { label: u.health, value: p.docker.healthInterval || dash },
+  { label: u.log, value: p.docker.log || dash },
 ]
 const read = [
-	{ k: text.burst.accepted, v: burst ? String(burst.ok) : dash, tone: 'text-success' },
-	{ k: text.burst.refused, v: burst ? String(burst.refused + burst.failed) : dash, tone: burst?.refused ? 'text-warning' : 'text-fg-faint' },
-	{ k: text.burst.balance, v: balance || dash, tone: 'text-fg' },
-	{ k: text.armor, v: p.github.docker ? `${p.armor}/${SHIELD.length}` : dash, tone: p.github.docker && p.armor === SHIELD.length ? 'text-brand' : 'text-danger' },
+  { k: text.burst.accepted, v: burst ? String(burst.ok) : dash, tone: 'text-success' },
+  { k: text.burst.refused, v: burst ? String(burst.refused + burst.failed) : dash, tone: burst?.refused ? 'text-warning' : 'text-fg-faint' },
+  { k: text.burst.balance, v: balance || dash, tone: 'text-fg' },
+  { k: text.armor, v: p.github.docker ? `${p.armor}/${SHIELD.length}` : dash, tone: p.github.docker && p.armor === SHIELD.length ? 'text-brand' : 'text-danger' },
 ]
 
 const jsonLd = [
-	{
-		'@context': 'https://schema.org',
-		'@type': 'SoftwareSourceCode',
-		name: p.name,
-		description: p.description,
-		url: absoluteUrl(p.href),
-		codeRepository: p.github.folder,
-		programmingLanguage: p.technologies,
-		keywords: p.tags.join(', '),
-		creativeWorkStatus: p.wip ? t.wip : t.stable,
-		author: { '@type': 'Person', name: SITE.author, url: SITE.home },
-	},
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareSourceCode',
+    name: p.name,
+    description: p.description,
+    url: absoluteUrl(p.href),
+    codeRepository: p.github.folder,
+    programmingLanguage: p.technologies,
+    keywords: p.tags.join(', '),
+    creativeWorkStatus: p.wip ? t.wip : t.stable,
+    author: { '@type': 'Person', name: SITE.author, url: SITE.home },
+  },
 ]
-const LIST_ROW = 'flex min-w-0 items-center justify-between gap-4 rounded-control border border-line-subtle bg-surface-2/60 px-3 py-2.5'
+const LIST_ROW = `min-w-0 px-3 py-2.5
+  flex items-center justify-between gap-4
+  bg-surface-2/60 rounded-control border border-line-subtle`
 const H2 = 'flex items-center gap-3 heading-panel'
 ---
 
-<Base title={pageTitle(p.name)} description={p.description} path={p.href} image={`/${p.slug}/og.png`} jsonLd={jsonLd}>
-	<div class="mx-auto flex w-full max-w-[120rem] flex-col gap-10 px-4 pt-8 pb-16 sm:px-6 lg:px-8 lg:pt-12">
-		<a href="/" class={`flex min-h-11 items-center gap-2 self-start text-sm text-fg-muted hover:text-fg ${motion} ${focusRing}`}>
-			<Icon name="arrow-left" class="size-4" />
-			{t.back}
-		</a>
+<Base title={p.name} description={p.description} path={p.href} image={`/${p.slug}/og.png`} jsonLd={jsonLd}>
+  <div class="w-full max-w-[120rem] mx-auto px-4 pt-8 pb-16
+    flex flex-col gap-10
+    sm:px-6 lg:px-8 lg:pt-12">
+    <a href="/" class={`min-h-11 flex items-center gap-2 self-start text-sm text-fg-muted hover:text-fg
+      ${motion}
+      ${focusRing}`}>
+      <Icon name="arrow-left" class="size-4" />
+      {t.back}
+    </a>
 
-		<!-- abertura: o projeto e o glifo da tecnologia -->
-		<header class="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
-			<div class="flex flex-col gap-4">
-				<p class="flex flex-wrap items-center gap-3">
-					<span class="mono-label flex items-center gap-2">
-						<span class:list={['size-1.5 rounded-full', p.github.docker ? 'bg-brand' : 'bg-info']} aria-hidden="true"></span>
-						{p.path}
-					</span>
-					{p.wip && <Badge tone="warning" dot>{t.wip}</Badge>}
-				</p>
-				<h1 id="titulo" class="display-xl lg:text-7xl [view-transition-name:project]">{p.title}</h1>
-				{p.subtitle && <p class="text-xl leading-snug text-fg-muted">{p.subtitle}</p>}
-				<p class="max-w-2xl text-base leading-relaxed text-fg">{p.description}</p>
-				{p.doc.intro && <p class={`body-md max-w-2xl ${INLINE_CODE}`} set:html={inline(p.doc.intro)} />}
-				<dl class="mt-2 grid max-w-xl grid-cols-2 gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-4">
-					{
-						read.map((r) => (
-							<div class="flex min-w-0 flex-col gap-1 bg-surface-1 px-4 py-3">
-								<dt class="text-[10px] text-fg-subtle uppercase">{r.k}</dt>
-								<dd class:list={['truncate font-mono text-lg leading-none tabular-nums', r.tone]}>{r.v}</dd>
-							</div>
-						))
-					}
-				</dl>
-				<p class="flex flex-wrap gap-2 pt-1">
-					{p.github.folder && <a href={p.github.folder} target="_blank" rel="noopener" class={SECONDARY}><Icon name="tech-github" class="size-4" />{t.folder}</a>}
-					{p.github.readme && <a href={p.github.readme} target="_blank" rel="noopener" class={SECONDARY}><Icon name="file-code" class="size-4" />{t.readme}</a>}
-				</p>
-			</div>
+    <!-- abertura: o projeto e o glifo da tecnologia -->
+    <header class="grid grid-cols-1 items-center gap-10
+      lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
+      <div class="flex flex-col gap-4">
+        <p class="flex flex-wrap items-center gap-3">
+          <span class="flex items-center gap-2 mono-label">
+            <span class:list={['size-1.5 rounded-full', p.github.docker ? 'bg-brand' : 'bg-info']} aria-hidden="true"></span>
+            {p.path}
+          </span>
+          {p.wip && <Badge tone="warning" dot>{t.wip}</Badge>}
+        </p>
+        <h1 id="titulo" class="display-xl [view-transition-name:project] lg:text-7xl">{p.title}</h1>
+        {p.subtitle && <p class="text-xl leading-snug text-fg-muted">{p.subtitle}</p>}
+        <p class="max-w-2xl text-base leading-relaxed text-fg">{p.description}</p>
+        {p.doc.intro && <p class={`max-w-2xl body-md ${INLINE_CODE}`} set:html={inline(p.doc.intro)} />}
+        <dl class="max-w-xl mt-2
+          grid grid-cols-2 gap-px overflow-hidden
+          bg-line rounded-card border border-line
+          sm:grid-cols-4">
+          {
+            read.map((r) => (
+              <div class="min-w-0 px-4 py-3 flex flex-col gap-1 bg-surface-1">
+                <dt class="text-[10px] uppercase text-fg-subtle">{r.k}</dt>
+                <dd class:list={['truncate font-mono text-lg leading-none tabular-nums', r.tone]}>{r.v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="pt-1 flex flex-wrap gap-2">
+          {p.github.folder && <a href={p.github.folder} target="_blank" rel="noopener" class={SECONDARY}><Icon name="tech-github" class="size-4" />{t.folder}</a>}
+          {p.github.readme && <a href={p.github.readme} target="_blank" rel="noopener" class={SECONDARY}><Icon name="file-code" class="size-4" />{t.readme}</a>}
+        </p>
+      </div>
 
-			<figure class="relative flex flex-col items-center gap-4">
-				<div class="dot-grid grid w-full place-items-center rounded-panel border border-line-subtle p-8 sm:p-12">
-					<TechGlyph project={p} class="w-full max-w-[22rem]" live />
-				</div>
-				<figcaption class="flex flex-wrap justify-center gap-1.5">
-					{p.technologies.map((x) => <Badge mono><TechIcon name={x} />{x}</Badge>)}
-				</figcaption>
-			</figure>
-		</header>
+      <figure class="flex flex-col items-center gap-4 relative">
+        <div class="w-full p-8
+          grid place-items-center
+          dot-grid rounded-panel border border-line-subtle
+          sm:p-12">
+          <TechGlyph project={p} class="w-full max-w-[22rem]" live />
+        </div>
+        <figcaption class="flex flex-wrap justify-center gap-1.5">
+          {p.technologies.map((x) => <Badge mono><TechIcon name={x} />{x}</Badge>)}
+        </figcaption>
+      </figure>
+    </header>
 
-		<!-- cenário e saída -->
-		<section id="respostas" aria-labelledby="respostas-titulo" class="flex flex-col gap-4 rounded-card border border-line bg-surface-1 p-6">
-			<h2 id="respostas-titulo" class={H2}>{titleOf('Cenário')}</h2>
-			<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-				<div class="flex flex-col gap-2">
-					<p class={`text-base leading-relaxed text-fg ${INLINE_CODE}`} set:html={p.doc.scenario ? inline(p.doc.scenario) : dash} />
-				</div>
-				<div class="flex flex-col gap-2 rounded-control border border-line bg-surface-sunken p-4">
-					<p class="eyebrow">{t.output}</p>
-					<p class={`font-mono text-sm leading-relaxed text-fg-muted [&_code]:text-success ${INLINE_CODE}`} set:html={p.doc.output ? inline(p.doc.output) : dash} />
-				</div>
-			</div>
-			{
-				burst && (
-					<ol class="flex flex-wrap gap-1.5 border-t border-line-subtle pt-4" aria-label={text.burst.sequence}>
-						{burst.hits.map((h) => (
-							<li>
-								<Badge tone={h.code.startsWith('2') ? 'success' : h.code.startsWith('4') ? 'warning' : 'danger'} mono>
-									{h.count > 1 ? `${h.count}× ` : ''}
-									{h.code}
-									{h.label ? ` ${h.label}` : ''}
-								</Badge>
-							</li>
-						))}
-					</ol>
-				)
-			}
-		</section>
+    <!-- cenário e saída -->
+    <section id="respostas" aria-labelledby="respostas-titulo" class="p-6 flex flex-col gap-4 bg-surface-1 rounded-card border border-line">
+      <h2 id="respostas-titulo" class={H2}>{titleOf('Cenário')}</h2>
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div class="flex flex-col gap-2">
+          <p class={`text-base leading-relaxed text-fg ${INLINE_CODE}`} set:html={p.doc.scenario ? inline(p.doc.scenario) : dash} />
+        </div>
+        <div class="p-4 flex flex-col gap-2 bg-surface-sunken rounded-control border border-line">
+          <p class="eyebrow">{t.output}</p>
+          <p class={`font-mono text-sm leading-relaxed text-fg-muted [&_code]:text-success
+            ${INLINE_CODE}`} set:html={p.doc.output ? inline(p.doc.output) : dash} />
+        </div>
+      </div>
+      {
+        burst && (
+          <ol class="pt-4 flex flex-wrap gap-1.5 border-t border-line-subtle" aria-label={text.burst.sequence}>
+            {burst.hits.map((h) => (
+              <li>
+                <Badge tone={h.code.startsWith('2') ? 'success' : h.code.startsWith('4') ? 'warning' : 'danger'} mono>
+                  {h.count > 1 ? `${h.count}× ` : ''}
+                  {h.code}
+                  {h.label ? ` ${h.label}` : ''}
+                </Badge>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+    </section>
 
-		<!-- blindagem -->
-		<div class="flex flex-col gap-4">
-			<div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-				<ThreatConsole project={p} />
-				<section aria-labelledby="container-titulo" class="flex flex-col gap-4 rounded-card border border-line bg-surface-1 p-6">
-					<div class="flex flex-wrap items-center justify-between gap-3">
-						<h3 id="container-titulo" class="heading-panel">{t.container}</h3>
-						{!p.github.docker && <Badge tone="info" dot>{t.noContainer}</Badge>}
-					</div>
-					<dl class="flex flex-col gap-1.5">
-						{machine.map((x) => (
-							<div class={LIST_ROW}>
-								<dt class="shrink-0 text-sm text-fg-muted">{x.label}</dt>
-								<dd class="min-w-0 truncate text-right font-mono text-xs font-medium text-fg">{x.value}</dd>
-							</div>
-						))}
-					</dl>
-				</section>
-			</div>
-		</div>
+    <!-- blindagem -->
+    <div class="flex flex-col gap-4">
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+        <ThreatConsole project={p} />
+        <section aria-labelledby="container-titulo" class="p-6 flex flex-col gap-4 bg-surface-1 rounded-card border border-line">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h3 id="container-titulo" class="heading-panel">{t.container}</h3>
+            {!p.github.docker && <Badge tone="info" dot>{t.noContainer}</Badge>}
+          </div>
+          <dl class="flex flex-col gap-1.5">
+            {machine.map((x) => (
+              <div class={LIST_ROW}>
+                <dt class="shrink-0 text-sm text-fg-muted">{x.label}</dt>
+                <dd class="min-w-0 truncate text-right font-mono text-xs font-medium text-fg">{x.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      </div>
+    </div>
 
-		<!-- código -->
-		<div class="flex flex-col gap-4">
-			<div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
-				<section aria-labelledby="ficha-titulo" class="flex flex-col gap-4 rounded-card border border-line bg-surface-1 p-6">
-					<h3 id="ficha-titulo" class="heading-panel">{t.sheet}</h3>
-					<dl class="flex flex-col gap-1.5">
-						{facts.map((x) => (
-							<div class={LIST_ROW}>
-								<dt class="shrink-0 text-sm text-fg-muted">{x.label}</dt>
-								<dd class:list={['min-w-0 truncate text-right font-mono text-xs font-medium', x.tone ?? 'text-fg']}>{x.value}</dd>
-							</div>
-						))}
-					</dl>
-					<div class="flex flex-col gap-2 border-t border-line-subtle pt-4">
-						<p class="eyebrow">{u.technologies}</p>
-						<ul class="flex flex-wrap gap-1.5">
-							{p.technologies.map((x) => <li><Badge mono><TechIcon name={x} />{x}</Badge></li>)}
-						</ul>
-					</div>
-					<div class="flex flex-col gap-2 border-t border-line-subtle pt-4">
-						<p class="eyebrow">{u.tags}</p>
-						<ul class="flex flex-wrap gap-2">
-							{p.tags.map((x) => (
-								<li>
-									<a href={`/?tag=${encodeURIComponent(x)}`} class={`flex min-h-11 items-center gap-2 rounded-badge border border-line px-2.5 font-mono text-xs text-fg-muted hover:border-line-strong hover:text-fg lg:min-h-8 ${motion} ${focusRing}`}>
-										#{x}
-										<span class="tabular-nums text-fg-subtle">{tagOf(x)?.count}</span>
-									</a>
-								</li>
-							))}
-						</ul>
-					</div>
-				</section>
-				{sources.length > 0 ? <SourcePanel files={sources} lines={p.lines} bytes={p.bytes} /> : <p class="grid place-items-center rounded-card border border-dashed border-line p-8 text-sm text-fg-subtle">{dash}</p>}
-			</div>
-		</div>
+    <!-- código -->
+    <div class="flex flex-col gap-4">
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+        <section aria-labelledby="ficha-titulo" class="p-6 flex flex-col gap-4 bg-surface-1 rounded-card border border-line">
+          <h3 id="ficha-titulo" class="heading-panel">{t.sheet}</h3>
+          <dl class="flex flex-col gap-1.5">
+            {facts.map((x) => (
+              <div class={LIST_ROW}>
+                <dt class="shrink-0 text-sm text-fg-muted">{x.label}</dt>
+                <dd class:list={['min-w-0 truncate text-right font-mono text-xs font-medium', x.tone ?? 'text-fg']}>{x.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="pt-4 flex flex-col gap-2 border-t border-line-subtle">
+            <p class="eyebrow">{u.technologies}</p>
+            <ul class="flex flex-wrap gap-1.5">
+              {p.technologies.map((x) => <li><Badge mono><TechIcon name={x} />{x}</Badge></li>)}
+            </ul>
+          </div>
+          <div class="pt-4 flex flex-col gap-2 border-t border-line-subtle">
+            <p class="eyebrow">{u.tags}</p>
+            <ul class="flex flex-wrap gap-2">
+              {p.tags.map((x) => (
+                <li>
+                  <a href={`/?tag=${encodeURIComponent(x)}`} class={`min-h-11 px-2.5
+                    flex items-center gap-2
+                    font-mono text-xs text-fg-muted rounded-badge border border-line
+                    lg:min-h-8
+                    hover:text-fg hover:border-line-strong
+                    ${motion}
+                    ${focusRing}`}>
+                    #{x}
+                    <span class="tabular-nums text-fg-subtle">{tagOf(x)?.count}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+        {sources.length > 0 ? <SourcePanel files={sources} lines={p.lines} bytes={p.bytes} /> : <p class="p-8
+          grid place-items-center
+          text-sm text-fg-subtle rounded-card border border-dashed border-line">{dash}</p>}
+      </div>
+    </div>
 
-		<!-- diagrama -->
-		{
-			scene && (
-				<div class="flex flex-col gap-4">
-					<BoardDiagram title={titleOf('Diagrama')} scene={scene} source={p.doc.diagram} />
-				</div>
-			)
-		}
+    <!-- diagrama -->
+    {
+      scene && (
+        <div class="flex flex-col gap-4">
+          <BoardDiagram title={titleOf('Diagrama')} scene={scene} source={p.doc.diagram} />
+        </div>
+      )
+    }
 
-		<!-- como funciona + executar -->
-		{
-			(p.doc.steps.length > 0 || p.doc.run) && (
-				<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
-					{p.doc.steps.length > 0 && (
-						<section aria-labelledby="como-funciona" class="flex flex-col gap-4 lg:col-span-5">
-							<h2 id="como-funciona" class="heading-panel">{titleOf('Como funciona')}</h2>
-							<Timeline steps={p.doc.steps} />
-						</section>
-					)}
-					{p.doc.run && (
-						<section aria-labelledby="executar" class:list={['flex flex-col gap-4', p.doc.steps.length ? 'lg:col-span-7' : 'lg:col-span-12']}>
-							<h2 id="executar" class="heading-panel">{titleOf('Executar')}</h2>
-							<Terminal run={p.doc.run} output={p.doc.output} slug={p.slug} />
-						</section>
-					)}
-				</div>
-			)
-		}
+    <!-- como funciona + executar -->
+    {
+      (p.doc.steps.length > 0 || p.doc.run) && (
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+          {p.doc.steps.length > 0 && (
+            <section aria-labelledby="como-funciona" class="flex flex-col gap-4 lg:col-span-5">
+              <h2 id="como-funciona" class="heading-panel">{titleOf('Como funciona')}</h2>
+              <Timeline steps={p.doc.steps} />
+            </section>
+          )}
+          {p.doc.run && (
+            <section aria-labelledby="executar" class:list={['flex flex-col gap-4', p.doc.steps.length ? 'lg:col-span-7' : 'lg:col-span-12']}>
+              <h2 id="executar" class="heading-panel">{titleOf('Executar')}</h2>
+              <Terminal run={p.doc.run} output={p.doc.output} slug={p.slug} />
+            </section>
+          )}
+        </div>
+      )
+    }
 
-		<!-- trade-offs -->
-		{
-			p.doc.tradeoffs.rows.length > 0 && (
-				<section aria-labelledby="trade-offs-titulo" class="rounded-card border border-line bg-surface-1 p-6">
-					<h2 id="trade-offs-titulo" class="heading-panel mb-6">{titleOf('Trade-offs')}</h2>
-					<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-						{[0, 1].map((col) => (
-							<div class="flex flex-col gap-2">
-								<p class="flex items-center justify-between">
-									<span class="eyebrow">{p.doc.tradeoffs.head[col] ?? (col ? t.drawback : t.advantage)}</span>
-									<Badge tone={col ? 'warning' : 'success'} mono>{p.doc.tradeoffs.rows.filter((r) => r[col]).length}</Badge>
-								</p>
-								<ul class="flex flex-col gap-2">
-									{p.doc.tradeoffs.rows
-										.map((r) => r[col] ?? '')
-										.filter(Boolean)
-										.map((x) => (
-											<li class:list={['flex gap-3 rounded-control border p-4 text-sm leading-relaxed', col ? 'border-warning/30 bg-warning/[0.06] text-fg-muted' : 'border-line-subtle bg-surface-2/60 text-fg', INLINE_CODE]}>
-												<span class:list={['mt-2 size-1.5 shrink-0 rounded-full', col ? 'bg-warning' : 'bg-success']} aria-hidden="true" />
-												<span set:html={inline(x)} />
-											</li>
-										))}
-								</ul>
-							</div>
-						))}
-					</div>
-				</section>
-			)
-		}
+    <!-- trade-offs -->
+    {
+      p.doc.tradeoffs.rows.length > 0 && (
+        <section aria-labelledby="trade-offs-titulo" class="p-6 bg-surface-1 rounded-card border border-line">
+          <h2 id="trade-offs-titulo" class="mb-6 heading-panel">{titleOf('Trade-offs')}</h2>
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {[0, 1].map((col) => (
+              <div class="flex flex-col gap-2">
+                <p class="flex items-center justify-between">
+                  <span class="eyebrow">{p.doc.tradeoffs.head[col] ?? (col ? t.drawback : t.advantage)}</span>
+                  <Badge tone={col ? 'warning' : 'success'} mono>{p.doc.tradeoffs.rows.filter((r) => r[col]).length}</Badge>
+                </p>
+                <ul class="flex flex-col gap-2">
+                  {p.doc.tradeoffs.rows
+                    .map((r) => r[col] ?? '')
+                    .filter(Boolean)
+                    .map((x) => (
+                      <li class:list={['p-4 flex gap-3 text-sm leading-relaxed rounded-control border', col ? 'bg-warning/[0.06] text-fg-muted border-warning/30' : 'bg-surface-2/60 text-fg border-line-subtle', INLINE_CODE]}>
+                        <span class:list={['size-1.5 mt-2 shrink-0 rounded-full', col ? 'bg-warning' : 'bg-success']} aria-hidden="true" />
+                        <span set:html={inline(x)} />
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
 
-		<!-- skills -->
-		{
-			p.doc.skills.rows.length > 0 && (
-				<section aria-labelledby="skills-titulo" class="flex flex-col gap-4">
-					<h2 id="skills-titulo" class="heading-panel">{titleOf('Skills')}</h2>
-					<ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-						{p.doc.skills.rows.map((row) => (
-							<li class="flex flex-col gap-3 rounded-card border border-line bg-surface-1 p-4">
-								<span class="flex items-center gap-3">
-									<span class="grid size-9 shrink-0 place-items-center rounded-control border border-line bg-surface-2 text-fg-muted">
-										<Icon name="layers" class="size-4" />
-									</span>
-									<span class="text-sm font-semibold text-fg">{row[0]}</span>
-								</span>
-								<span class={`border-t border-line-subtle pt-3 font-mono text-[11px] text-fg-muted [&_a]:text-brand [&_a]:underline [&_a]:underline-offset-4 ${INLINE_CODE}`} set:html={inline(row[1] ?? '')} />
-							</li>
-						))}
-					</ul>
-				</section>
-			)
-		}
+    <!-- skills -->
+    {
+      p.doc.skills.rows.length > 0 && (
+        <section aria-labelledby="skills-titulo" class="flex flex-col gap-4">
+          <h2 id="skills-titulo" class="heading-panel">{titleOf('Skills')}</h2>
+          <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {p.doc.skills.rows.map((row) => (
+              <li class="p-4 flex flex-col gap-3 bg-surface-1 rounded-card border border-line">
+                <span class="flex items-center gap-3">
+                  <span class="size-9
+                    grid shrink-0 place-items-center
+                    bg-surface-2 text-fg-muted rounded-control border border-line">
+                    <Icon name="layers" class="size-4" />
+                  </span>
+                  <span class="text-sm font-semibold text-fg">{row[0]}</span>
+                </span>
+                <span class={`pt-3
+                  font-mono text-[11px] text-fg-muted border-t border-line-subtle
+                  [&_a]:underline [&_a]:underline-offset-4 [&_a]:text-brand
+                  ${INLINE_CODE}`} set:html={inline(row[1] ?? '')} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
 
-		{
-			extra.map((x) => (
-				<section class="rounded-card border border-line bg-surface-1 p-6">
-					<h2 class="heading-panel mb-4">{x.title}</h2>
-					<div class:list={[PROSE, 'max-w-3xl text-base']} set:html={x.html} />
-				</section>
-			))
-		}
+    {
+      extra.map((x) => (
+        <section class="p-6 bg-surface-1 rounded-card border border-line">
+          <h2 class="mb-4 heading-panel">{x.title}</h2>
+          <div class:list={[PROSE, 'max-w-3xl text-base']} set:html={x.html} />
+        </section>
+      ))
+    }
 
-		<!-- links -->
-		<section aria-labelledby="links-titulo" class="flex flex-col gap-4">
-			<h2 id="links-titulo" class="heading-panel">{t.links}</h2>
-			<ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
-				{links.map((x) => (
-					<li>
-						<Integration name={x.label} icon={x.icon} href={x.href} external footer={{ left: host(x.href) }} />
-					</li>
-				))}
-			</ul>
-		</section>
+    <!-- links -->
+    <section aria-labelledby="links-titulo" class="flex flex-col gap-4">
+      <h2 id="links-titulo" class="heading-panel">{t.links}</h2>
+      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+        {links.map((x) => (
+          <li>
+            <Integration name={x.label} icon={x.icon} href={x.href} external footer={{ left: host(x.href) }} />
+          </li>
+        ))}
+      </ul>
+    </section>
 
-		<nav aria-label={text.nav.label} class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-			{
-				[
-					{ p: prev, label: t.prev, icon: 'arrow-left' as const },
-					{ p: next, label: t.next, icon: 'arrow-right' as const },
-				].map((n) => (
-					<a href={n.p.href} data-neighbor class={`group grid min-w-0 grid-cols-[4rem_minmax(0,1fr)] items-center gap-4 rounded-card border border-line bg-surface-1 p-4 hover:border-line-strong ${motion} ${focusRing}`}>
-						<TechGlyph project={n.p} class="size-16" />
-						<span class="flex min-w-0 flex-col gap-1">
-							<span class="eyebrow flex items-center gap-2">
-								<Icon name={n.icon} class="size-3.5 text-fg-subtle group-hover:text-brand" />
-								{n.label}
-							</span>
-							<span class="truncate heading-card">{n.p.title}</span>
-							{n.p.subtitle && <span class="truncate text-sm text-fg-muted">{n.p.subtitle}</span>}
-						</span>
-					</a>
-				))
-			}
-		</nav>
-	</div>
+    <nav aria-label={text.nav.label} class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {
+        [
+          { p: prev, label: t.prev, icon: 'arrow-left' as const },
+          { p: next, label: t.next, icon: 'arrow-right' as const },
+        ].map((n) => (
+          <a href={n.p.href} data-neighbor class={`min-w-0 p-4
+            grid grid-cols-[4rem_minmax(0,1fr)] items-center gap-4
+            bg-surface-1 rounded-card border border-line
+            hover:border-line-strong group
+            ${motion}
+            ${focusRing}`}>
+            <TechGlyph project={n.p} class="size-16" />
+            <span class="min-w-0 flex flex-col gap-1">
+              <span class="flex items-center gap-2 eyebrow">
+                <Icon name={n.icon} class="size-3.5 text-fg-subtle group-hover:text-brand" />
+                {n.label}
+              </span>
+              <span class="truncate heading-card">{n.p.title}</span>
+              {n.p.subtitle && <span class="truncate text-sm text-fg-muted">{n.p.subtitle}</span>}
+            </span>
+          </a>
+        ))
+      }
+    </nav>
+  </div>
 </Base>
 
 <script>
-	import '../scripts/glyph'
-	import '../scripts/project'
+  import '@/scripts/glyph'
+  import '@/scripts/project'
 </script>
