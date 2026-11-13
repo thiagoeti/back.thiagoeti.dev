@@ -1,0 +1,93 @@
+---
+import { PROSE, focusRing, motion } from '@/lib/site'
+import { fill, text } from '@/lib/text'
+
+/**
+ * Código (THEME.md › Painel interno split + Agent / Node List Item, referência "Active agents"):
+ * à esquerda os arquivos do projeto com linhas e tamanho; à direita o código do arquivo escolhido.
+ * A troca é por `src/scripts/project.ts` (`role="tablist"`, ← → entre arquivos com foco na lista).
+ */
+interface Props {
+  files: { path: string; lines: number; bytes: number; html: string }[]
+  lines: number
+  bytes: number
+}
+
+const { files, lines, bytes } = Astro.props
+const t = text.project
+const kb = (b: number) => (b < 1024 ? `${b} B` : `${(b / 1024).toFixed(1)} KB`)
+const peak = Math.max(1, ...files.map((f) => f.lines))
+const W = ['w-0', 'w-1/10', 'w-2/10', 'w-3/10', 'w-4/10', 'w-5/10', 'w-6/10', 'w-7/10', 'w-8/10', 'w-9/10', 'w-full']
+---
+
+<section id="codigo" aria-labelledby="codigo-titulo" class="scroll-mt-32 p-6
+  flex flex-col
+  bg-surface-1 rounded-panel border border-line shadow-panel">
+  <header class="mb-6 flex flex-wrap items-start justify-between gap-4">
+    <div class="flex flex-col gap-1">
+      <h2 id="codigo-titulo" class="heading-panel">{t.code}</h2>
+      <p class="body-sm">{fill(t.files, { n: files.length, lines, bytes: kb(bytes) })}</p>
+    </div>
+  </header>
+  <div class="grid overflow-hidden
+    rounded-card border border-line
+    lg:grid-cols-[minmax(0,1fr)_minmax(0,2.2fr)] lg:divide-x lg:divide-line" data-source>
+    <div class="flex flex-col border-b border-line lg:border-b-0">
+      <p class="px-4 py-3 flex items-center justify-between border-b border-line">
+        <span class="eyebrow">{text.unit.files}</span>
+        <span class="px-2 py-0.5 font-mono text-[11px] bg-success/10 text-success rounded-badge">{files.length}</span>
+      </p>
+      <div role="tablist" aria-label={t.code} aria-orientation="vertical" class="p-3 flex flex-col gap-1">
+        {
+          files.map((f, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`arquivo-${i}`}
+              aria-controls={`codigo-${i}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              class={`min-h-11 px-3 py-2.5
+                flex flex-col gap-1.5
+                text-left rounded-control border border-transparent
+                hover:bg-white/[0.03] aria-selected:bg-surface-2 aria-selected:border-line group/file
+                ${motion}
+                ${focusRing}`}
+            >
+              <span class="w-full flex items-center justify-between gap-3">
+                <span class="min-w-0 flex items-center gap-2.5">
+                  <span class="size-2 shrink-0 bg-fg-faint rounded-full group-aria-selected/file:bg-success" aria-hidden="true" />
+                  <span class="truncate text-sm font-medium text-fg-muted group-aria-selected/file:text-fg">{f.path.split('/').at(-1)}</span>
+                </span>
+                <span class="shrink-0 font-mono text-[11px] tabular-nums text-fg-subtle">{f.lines}</span>
+              </span>
+              <span class="pl-4.5 truncate font-mono text-[11px] text-fg-subtle">{f.path}</span>
+              <span class="h-0.5 ml-4.5 bg-surface-3 rounded-full" aria-hidden="true">
+                <span class:list={['h-full block bg-brand-deep rounded-full group-aria-selected/file:bg-brand', W[Math.max(1, Math.round((f.lines / peak) * 10))]]} />
+              </span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+    <div class="min-w-0 bg-surface-sunken">
+      {
+        files.map((f, i) => (
+          <div role="tabpanel" id={`codigo-${i}`} aria-labelledby={`arquivo-${i}`} hidden={i !== 0} tabindex="0" class={`h-full flex flex-col ${focusRing}`}>
+            <p class="px-4 py-3
+              flex items-center justify-between gap-3
+              font-mono text-[11px] text-fg-subtle border-b border-line">
+              <span class="truncate text-fg-muted">{f.path}</span>
+              <span class="shrink-0 tabular-nums">
+                {f.lines} {text.unit.lines} <span class="text-fg-faint">{kb(f.bytes)}</span>
+              </span>
+            </p>
+            <div class:list={[PROSE, `max-h-[36rem] px-4 py-4
+              overflow-auto
+              [&_pre]:my-0! [&_pre]:p-0! [&_pre]:text-xs! [&_pre]:bg-transparent! [&_pre]:border-0!`]} set:html={f.html} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

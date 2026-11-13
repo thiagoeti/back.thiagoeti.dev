@@ -1,0 +1,53 @@
+---
+import Icon from '@/components/ui/Icon.astro'
+import { NAV, isCurrent } from '@/lib/site'
+import { text } from '@/lib/text'
+
+/**
+ * Menu inferior (tablet pra baixo, DESIGN.md), no padrão dos sites do ecossistema: os mesmos itens do topo,
+ * na mesma ordem, ao alcance do polegar; ícone (Todos) ou ponto de estado (projeto) sobre o rótulo e, de `md` pra cima, à esquerda dele.
+ */
+interface Props {
+  path: string
+}
+
+const { path } = Astro.props
+---
+
+<nav aria-label={text.nav.label} class="pb-[env(safe-area-inset-bottom)]
+  fixed inset-x-0 bottom-0 z-40
+  bg-surface-sunken/95 border-t border-line backdrop-blur-md
+  lg:hidden
+  print:hidden">
+  <ul class="h-16 grid auto-cols-fr grid-flow-col">
+    {
+      NAV.map((n) => (
+        <li class="min-w-0">
+          <a
+            href={n.href}
+            aria-current={isCurrent(n, path) ? 'page' : undefined}
+            class:list={[
+              `h-full px-0.5
+                flex flex-col items-center justify-center gap-1 relative
+                text-[10px] font-medium text-fg-subtle
+                transition-colors duration-150
+                2xs:text-[11px] md:flex-row md:gap-2 md:text-xs
+                focus-ring hover:text-fg aria-[current=page]:text-brand motion-reduce:transition-none group`,
+              `md:before:inset-x-5
+                aria-[current=page]:before:bg-brand before:h-0.5 before:absolute before:inset-x-3 before:top-0 before:bg-transparent before:rounded-full`,
+            ]}
+          >
+            {n.project ? (
+              <span class="size-5 grid place-items-center" aria-hidden="true">
+                <span class:list={['size-2 rounded-full', n.project.github.docker ? 'bg-brand' : 'bg-info']} />
+              </span>
+            ) : (
+              <Icon name="layout-grid" class="size-5" />
+            )}
+            <span class="max-w-full truncate">{n.project ? n.project.short : text.nav.home}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

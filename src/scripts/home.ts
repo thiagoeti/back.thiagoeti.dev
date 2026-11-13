@@ -40,12 +40,13 @@ function apply() {
 
 for (const b of buttons) b.addEventListener('click', () => ((tag = b.dataset.tag === tag ? '' : (b.dataset.tag ?? '')), apply()))
 for (const i of inputs) i.addEventListener('input', () => ((query = i.value), apply()))
+// Com script, a busca filtra na hora; o envio do formulário (`?q=`) fica para quem navega sem script.
+for (const i of inputs) i.form?.addEventListener('submit', (e) => e.preventDefault())
 
 for (const c of cards) {
 	c.querySelector('a[data-title]')?.addEventListener('click', () => {
-		for (const x of document.querySelectorAll<HTMLElement>('[data-title]')) x.style.viewTransitionName = ''
-		const title = c.querySelector<HTMLElement>('[data-title]')
-		if (title) title.style.viewTransitionName = 'project'
+		for (const x of document.querySelectorAll<HTMLElement>('[data-title]')) x.classList.remove('[view-transition-name:project]')
+		c.querySelector<HTMLElement>('[data-title]')?.classList.add('[view-transition-name:project]')
 	})
 }
 

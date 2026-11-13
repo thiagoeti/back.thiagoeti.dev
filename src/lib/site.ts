@@ -38,18 +38,31 @@ export const focusRing =
 export const motion = 'transition-colors duration-150 motion-reduce:transition-none'
 
 /** Botões (THEME.md › Botão); `min-h-11` no toque, `h-9` no desktop. */
-const BTN = `inline-flex min-h-11 lg:min-h-9 items-center justify-center gap-1.5 rounded-control px-4 text-xs font-semibold uppercase tracking-wider disabled:pointer-events-none disabled:opacity-40 ${motion} ${focusRing}`
+const BTN = `min-h-11 px-4
+	inline-flex items-center justify-center gap-1.5
+	text-xs font-semibold uppercase tracking-wider rounded-control
+	lg:min-h-9
+	disabled:opacity-40 disabled:pointer-events-none
+	${motion}
+	${focusRing}`
 export const BUTTON = `${BTN} bg-brand text-surface-0 hover:bg-brand-hover`
-export const SECONDARY = `${BTN} border border-line bg-transparent text-fg hover:bg-white/5`
-export const INLINE_BUTTON = `inline-flex min-h-11 lg:min-h-7 items-center gap-1.5 rounded-control border border-line px-2.5 text-xs font-semibold uppercase tracking-wider text-fg-muted hover:border-line-strong hover:text-fg ${motion} ${focusRing}`
+export const SECONDARY = `${BTN} bg-transparent text-fg border border-line hover:bg-white/5`
+export const INLINE_BUTTON = `min-h-11 px-2.5
+	inline-flex items-center gap-1.5
+	text-xs font-semibold uppercase tracking-wider text-fg-muted rounded-control border border-line
+	lg:min-h-7
+	hover:text-fg hover:border-line-strong
+	${motion}
+	${focusRing}`
 
 /** Superfícies (THEME.md › Card Base, Chart Container, Feature Card). */
-export const CARD = 'rounded-card border border-line bg-surface-1'
-export const PANEL = 'rounded-panel border border-line bg-surface-1 shadow-panel'
+export const CARD = 'bg-surface-1 rounded-card border border-line'
+export const PANEL = 'bg-surface-1 rounded-panel border border-line shadow-panel'
 
 /** Corpo de markdown renderizado (README): texto em Inter, código em JetBrains Mono, tabela no tema. */
 export const PROSE =
-	'text-sm leading-relaxed text-fg-muted [&_p]:my-3 [&_strong]:font-semibold [&_strong]:text-fg [&_a]:text-brand [&_a]:underline [&_a]:decoration-brand/40 [&_a]:underline-offset-4 hover:[&_a]:decoration-brand [&_code]:rounded-badge [&_code]:bg-surface-3 [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.88em] [&_code]:text-fg [&_pre]:my-4 [&_pre]:overflow-x-auto [&_pre]:border [&_pre]:border-line [&_pre]:bg-surface-sunken [&_pre]:p-4 [&_pre]:font-mono [&_pre]:text-xs [&_pre]:leading-relaxed [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-1 [&_table]:my-4 [&_table]:w-full [&_table]:border-collapse [&_table]:text-xs [&_th]:border-b [&_th]:border-line [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-medium [&_th]:text-fg-subtle [&_td]:border-b [&_td]:border-line-subtle [&_td]:px-3 [&_td]:py-2 [&_td]:align-top [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-fg'
+	`text-sm leading-relaxed text-fg-muted
+		hover:[&_a]:decoration-brand [&_p]:my-3 [&_strong]:font-semibold [&_strong]:text-fg [&_a]:underline [&_a]:decoration-brand/40 [&_a]:underline-offset-4 [&_a]:text-brand [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.88em] [&_code]:bg-surface-3 [&_code]:text-fg [&_code]:rounded-badge [&_pre]:my-4 [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-xs [&_pre]:leading-relaxed [&_pre]:bg-surface-sunken [&_pre]:border [&_pre]:border-line [&_pre_code]:p-0 [&_pre_code]:bg-transparent [&_ol]:my-3 [&_ol]:pl-5 [&_ol]:list-decimal [&_ul]:my-3 [&_ul]:pl-5 [&_ul]:list-disc [&_li]:my-1 [&_table]:w-full [&_table]:my-4 [&_table]:text-xs [&_table]:border-collapse [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-medium [&_th]:text-fg-subtle [&_th]:border-b [&_th]:border-line [&_td]:px-3 [&_td]:py-2 [&_td]:align-top [&_td]:border-b [&_td]:border-line-subtle [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-fg`
 
 /** Código inline em trecho curto (passo, célula, legenda). */
-export const INLINE_CODE = '[&_code]:rounded-badge [&_code]:bg-surface-3 [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em] [&_code]:text-fg'
+export const INLINE_CODE = '[&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em] [&_code]:bg-surface-3 [&_code]:text-fg [&_code]:rounded-badge'

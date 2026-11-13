@@ -1,0 +1,72 @@
+---
+import Icon from '@/components/ui/Icon.astro'
+import { projects, tags } from '@/lib/projects'
+import { focusRing, motion } from '@/lib/site'
+import { text } from '@/lib/text'
+
+/**
+ * Barra de comando (THEME.md › Search / Command Bar) com as tags (`/?tag=`): busca por nome,
+ * tecnologia ou tag (`/` foca, `Esc` limpa) e as tags da que mais projetos tem para a que menos tem.
+ * `dock`: régua fixa acima do menu inferior, na zona do polegar (DESIGN.md).
+ */
+interface Props {
+  dock?: boolean
+}
+
+const { dock = false } = Astro.props
+const s = text.search
+const t = text.filter
+const chip = `min-h-10 px-2.5
+  flex shrink-0 items-center gap-2
+  text-xs whitespace-nowrap text-fg-muted rounded-badge border border-line
+  lg:min-h-8
+  hover:text-fg hover:border-line-strong aria-pressed:bg-brand/5 aria-pressed:text-fg aria-pressed:border-brand/30
+  ${motion}
+  ${focusRing}`
+---
+
+<search aria-label={t.label}>
+  <form
+    action="/"
+    method="get"
+    class:list={[
+      dock
+        ? `px-4 py-2
+          flex flex-col gap-2 fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-30
+          bg-surface-0/95 border-t border-line backdrop-blur
+          lg:hidden`
+        : 'hidden flex-col gap-3 lg:flex',
+    ]}
+  >
+    <label class="h-10 w-full px-3
+      flex items-center gap-2
+      text-sm bg-surface-1 text-fg rounded-control border border-line
+      lg:h-9 lg:max-w-sm
+      focus-within:border-line-strong focus-within:ring-2 focus-within:ring-brand/40">
+      <Icon name="search" class="size-4 text-fg-subtle" />
+      <span class="sr-only">{s.label}</span>
+      <input type="search" name="q" data-search placeholder={s.placeholder} autocomplete="off" spellcheck="false" class="min-w-0
+        flex-1
+        bg-transparent outline-none
+        placeholder:text-fg-subtle [&::-webkit-search-cancel-button]:hidden" />
+      <kbd class="px-1.5 py-0.5
+        hidden
+        font-mono text-[10px] bg-surface-3 text-fg-subtle rounded-badge border border-line
+        lg:inline">{s.shortcut}</kbd>
+    </label>
+    <div class:list={['flex items-center gap-2', dock ? 'overflow-x-auto overscroll-x-contain [scrollbar-width:none]' : 'flex-wrap']}>
+      <button type="button" class={chip} data-tag="" aria-pressed="true">
+        {t.all}
+        <span class="font-mono tabular-nums text-fg-subtle">{projects.length}</span>
+      </button>
+      {
+        tags.map((x) => (
+          <button type="button" class={chip} data-tag={x.name} aria-pressed="false">
+            #{x.name}
+            <span class="font-mono tabular-nums text-fg-subtle">{x.count}</span>
+          </button>
+        ))
+      }
+    </div>
+  </form>
+</search>

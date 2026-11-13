@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro'
 import sharp from 'sharp'
-import { intro } from '../../lib/content'
-import { projectCard } from '../../lib/og'
-import { projects, type Project } from '../../lib/projects'
+import { intro } from '@/lib/content'
+import { projectCard } from '@/lib/og'
+import { projects, type Project } from '@/lib/projects'
 
 /** Cartão de cada projeto: nome e o que entrega, e o glifo de tecnologia. */
 export function getStaticPaths() {

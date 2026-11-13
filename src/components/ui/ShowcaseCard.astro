@@ -1,0 +1,79 @@
+---
+import TechGlyph from './TechGlyph.astro'
+import TechIcon from './TechIcon.astro'
+import { finalBalance, parseBurst } from '@/lib/burst'
+import { SHIELD } from '@/lib/docker'
+import type { Project } from '@/lib/projects'
+import { focusRing } from '@/lib/site'
+import { text } from '@/lib/text'
+
+/**
+ * Peça da vitrine (THEME.md › Feature Card): o glifo de tecnologia do projeto grande sobre o fundo
+ * pontilhado; embaixo, nome, o que entrega, números medidos (respostas, blindagem, saldo), stack (ícone de
+ * cada tecnologia, TechIcon.astro) e tags. O nome é o link e cobre a peça; filtro e busca leem `data-tags` e `data-search`.
+ */
+interface Props {
+  project: Project
+}
+
+const { project: p } = Astro.props
+const b = parseBurst(p.doc.output)
+const balance = finalBalance(p.doc.output, p.doc.scenario)
+const none = text.unit.none
+const read = [
+  { k: text.burst.accepted, v: b ? `${b.ok}/${b.total}` : none, tone: b ? 'text-success' : 'text-fg-faint' },
+  { k: text.armor, v: p.github.docker ? `${p.armor}/${SHIELD.length}` : none, tone: p.github.docker ? (p.armor === SHIELD.length ? 'text-brand' : 'text-warning') : 'text-fg-faint' },
+  { k: text.burst.balance, v: balance || none, tone: balance ? 'text-fg' : 'text-fg-faint' },
+]
+---
+
+<li class="flex relative data-[off]:hidden group/card" data-project={p.slug} data-tags={p.tags.join(' ')} data-search={[p.name, p.slug, ...p.technologies, ...p.tags].join(' ').toLowerCase()}>
+  <article class="w-full
+    flex flex-col overflow-hidden
+    bg-surface-1 rounded-panel border border-line
+    transition-colors duration-150
+    group-hover/card:border-line-strong group-focus-within/card:border-brand/40">
+    <div class="px-6 pt-8 pb-6 grid place-items-center relative dot-grid">
+      <TechGlyph project={p} class="w-full max-w-52" />
+    </div>
+    <div class="p-6 flex flex-1 flex-col gap-2 bg-surface-2 border-t border-line-subtle">
+      <h3 class="heading-card">
+        <a href={p.href} data-title class={`after:absolute after:inset-0 after:rounded-panel ${focusRing}`}>
+          <span class="sr-only">{text.home.open}: </span>
+          {p.title}
+        </a>
+      </h3>
+      {p.subtitle && <p class="text-sm font-medium text-fg-muted">{p.subtitle}</p>}
+      <p class="body-md">{p.description}</p>
+      <dl class="my-2
+        grid grid-cols-3
+        bg-surface-1 divide-x divide-line-subtle rounded-control border border-line-subtle">
+        {
+          read.map((r) => (
+            <div class="min-w-0 px-3 py-2 flex flex-col gap-0.5">
+              <dt class="truncate text-[10px] uppercase text-fg-subtle">{r.k}</dt>
+              <dd class:list={['truncate font-mono text-sm tabular-nums', r.tone]}>{r.v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <ul class="flex flex-wrap gap-1.5" aria-label={text.home.stack}>
+        {
+          p.technologies.map((x) => (
+            <li class="px-1.5 py-0.5
+              inline-flex items-center gap-1.5
+              font-mono text-[11px] bg-surface-1 text-fg-muted rounded-badge border border-line">
+              <TechIcon name={x} />
+              {x}
+            </li>
+          ))
+        }
+      </ul>
+      <ul class="mt-auto pt-2
+        flex flex-wrap gap-x-3 gap-y-1
+        font-mono text-xs text-fg-subtle">
+        {p.tags.map((x) => <li class="data-[on]:text-brand" data-chip={x}>#{x}</li>)}
+      </ul>
+    </div>
+  </article>
+</li>

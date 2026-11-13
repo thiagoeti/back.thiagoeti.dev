@@ -1,0 +1,36 @@
+---
+/**
+ * Badge (THEME.md › Badge): só com estado real. `dot` prefixa o ponto; `mono` para valor técnico.
+ * Classes por extenso: o Tailwind só gera o que encontra escrito.
+ */
+interface Props {
+  tone?: 'success' | 'warning' | 'danger' | 'info' | 'neutral' | 'brand'
+  dot?: boolean
+  mono?: boolean
+  class?: string
+}
+
+const { tone = 'neutral', dot = false, mono = false, class: className } = Astro.props
+const TONE = {
+  success: 'bg-success/10 text-success',
+  warning: 'bg-warning/10 text-warning',
+  danger: 'bg-danger/10 text-danger',
+  info: 'bg-info/10 text-info',
+  neutral: 'bg-surface-3 text-fg-muted border border-line',
+  brand: 'text-brand border border-brand/40',
+} as const
+---
+
+<span
+  class:list={[
+    `px-2 py-0.5
+      inline-flex shrink-0 items-center gap-1.5
+      text-[11px] whitespace-nowrap rounded-badge`,
+    TONE[tone],
+    mono ? 'font-mono font-medium' : 'font-semibold uppercase tracking-wider',
+    className,
+  ]}
+>
+  {dot && <span class="size-1.5 bg-current rounded-full" aria-hidden="true" />}
+  <slot />
+</span>

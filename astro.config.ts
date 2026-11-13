@@ -53,7 +53,8 @@ export default defineConfig({
 	site: 'https://back.thiagoeti.dev',
 	output: 'static',
 	trailingSlash: 'never',
-	build: { format: 'directory', inlineStylesheets: 'always' },
+	build: { format: 'directory', inlineStylesheets: 'never' },
 	integrations: [llms, cdn],
-	vite: { plugins: [tailwindcss()] },
+	// assetsInlineLimit 0: script e CSS sempre em arquivo, nada embutido no HTML (web-html-semantic)
+	vite: { plugins: [tailwindcss()], build: { assetsInlineLimit: 0 } },
 })

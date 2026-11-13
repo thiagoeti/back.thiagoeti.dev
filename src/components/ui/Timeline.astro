@@ -1,0 +1,32 @@
+---
+import { inline } from '@/lib/markdown'
+import { INLINE_CODE } from '@/lib/site'
+
+/**
+ * Event Timeline (THEME.md › Event Timeline): os passos de `## Como funciona`, em ordem — o número é
+ * o passo, porque o conteúdo é uma sequência.
+ */
+interface Props {
+  /** Sem título: a seção da página já nomeia o bloco. */
+  title?: string
+  steps: string[]
+}
+
+const { title, steps } = Astro.props
+---
+
+<div class="h-full p-6 flex flex-col bg-surface-1 rounded-card border border-line">
+  {title && <h2 class="mb-6 eyebrow">{title}</h2>}
+  <ol class="pl-5
+    flex flex-col gap-5 relative
+    before:w-px before:absolute before:top-1.5 before:bottom-1.5 before:left-1 before:bg-line">
+    {
+      steps.map((step, i) => (
+        <li class={`flex flex-col gap-1 relative`}>
+          <span class:list={['size-1.5 absolute top-1.5 -left-[19px] rounded-full', i === steps.length - 1 ? 'bg-brand' : 'bg-info']} aria-hidden="true" />
+          <span class={`text-sm leading-relaxed text-fg ${INLINE_CODE}`} set:html={inline(step)} />
+        </li>
+      ))
+    }
+  </ol>
+</div>

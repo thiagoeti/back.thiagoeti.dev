@@ -1,0 +1,108 @@
+---
+import LinkCard from '@/components/ui/LinkCard.astro'
+import { contacts, ecosystem, host, linkHref, titles } from '@/lib/content'
+import { SITE } from '@/lib/site'
+import { fill, text } from '@/lib/text'
+
+/**
+ * Rodapé do ecossistema: o mesmo código dos outros sites (classes `wrap`, `link-row`, `focus-ring`, `dot-live`).
+ * `data.json › ecosystem` em 3/4, contatos em 1/4 e a assinatura com `llms.txt` e o ano. Única diferença entre
+ * sites: o card aceso é o site atual; a largura (`wrap`) acompanha a deste site (.specs/WIDTH.md).
+ * Só desktop e impressão: no mobile o ecossistema e os contatos moram no botão Rede do cabeçalho (LAYOUT.md).
+ */
+const linkedin = SITE.linkedin
+/** `linkedin.com/in/thiagoeti` vira `in/thiagoeti`. */
+const linkedinShort = linkedin ? new URL(linkedin).pathname.replace(/^\/|\/$/g, '') : ''
+const email = contacts.find((c) => c.value?.includes('@'))
+---
+
+<footer class="mt-16 hidden bg-surface-sunken/40 border-t border-line lg:block print:block">
+  <div class="wrap py-12 grid gap-10 lg:grid-cols-4 lg:gap-x-20">
+    <nav id="ecossistema" aria-labelledby="rodape-ecossistema" class="scroll-mt-14 lg:col-span-3">
+      <h2 id="rodape-ecossistema" class="mb-4 eyebrow">{titles.ecosystem}</h2>
+      <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {
+          ecosystem.map((l) => (
+            <li class="xl:nth-[3n+1]:last:col-span-3">
+              <LinkCard item={l} />
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <section id="contato" aria-labelledby="rodape-contatos" class="scroll-mt-14">
+      <h2 id="rodape-contatos" class="mb-4 eyebrow">{titles.contacts}</h2>
+      <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
+        {
+          contacts.map((l) => (
+            <li>
+              <LinkCard item={l} />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+
+  <div class="border-t border-line-subtle">
+    <div class="wrap py-3
+      flex flex-wrap items-center justify-center gap-x-6
+      font-mono text-[11px] text-fg-subtle
+      lg:justify-between">
+      <p class="flex flex-wrap items-center justify-center gap-x-3">
+        <a href={SITE.home} target="_blank" rel="noopener" class="min-h-11
+          hidden items-center gap-2
+          text-fg-muted rounded-badge
+          transition-colors
+          lg:inline-flex
+          focus-ring hover:text-brand">
+          <img src="https://cdn.thiagoeti.dev/system/logo.svg" alt="" width="14" height="14" class="size-3.5" />
+          {host(SITE.home)}
+        </a>
+        <span class="hidden text-fg-faint lg:inline" aria-hidden="true">·</span>
+        <a href={SITE.github} target="_blank" rel="noopener" class="min-h-11
+          inline-flex items-center
+          rounded-badge
+          transition-colors
+          focus-ring hover:text-brand">{SITE.brand}</a>
+        {
+          linkedin && (
+            <>
+              <span class="text-fg-faint" aria-hidden="true">·</span>
+              <a href={linkedin} target="_blank" rel="noopener" class="min-h-11
+                inline-flex items-center
+                rounded-badge
+                transition-colors
+                focus-ring hover:text-brand">
+                {linkedinShort}
+              </a>
+            </>
+          )
+        }
+        {
+          email && (
+            <>
+              <span class="text-fg-faint" aria-hidden="true">·</span>
+              <a href={linkHref(email)} class="min-h-11
+                inline-flex items-center
+                rounded-badge
+                transition-colors
+                focus-ring hover:text-brand">
+                {email.value}
+              </a>
+            </>
+          )
+        }
+      </p>
+      <p class="flex items-center justify-center gap-x-4">
+        <a href="/llms.txt" class="min-h-11
+          inline-flex items-center
+          rounded-badge
+          transition-colors
+          focus-ring hover:text-brand print:hidden">{text.footer.llms}</a>
+        <span>{fill(text.footer.copyright, { year: new Date().getFullYear(), name: SITE.author })}</span>
+      </p>
+    </div>
+  </div>
+</footer>

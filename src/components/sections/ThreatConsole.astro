@@ -1,0 +1,79 @@
+---
+import Badge from '@/components/ui/Badge.astro'
+import Ring from '@/components/ui/Ring.astro'
+import type { Project } from '@/lib/projects'
+import { SHIELD } from '@/lib/docker'
+import { fill, text } from '@/lib/text'
+
+/**
+ * Console de segurança (THEME.md › Alert / Threat Row, Score Ring): à esquerda o anel das flags de
+ * blindagem do `docker.sh` e a imagem; à direita uma linha por flag — ausente é alerta (danger) e
+ * vem primeiro, ativa fica resolvida. Sem `docker.sh`, o estado vazio diz o que falta.
+ */
+interface Props {
+  project: Project
+}
+
+const { project: p } = Astro.props
+const t = text.project
+const rows = [...SHIELD].sort((a, b) => Number(p.docker.shield[a]) - Number(p.docker.shield[b]))
+const missing = SHIELD.length - p.armor
+---
+
+<section id="seguranca" aria-labelledby="seguranca-titulo" class="h-full scroll-mt-32 p-6
+  flex flex-col
+  bg-surface-1 rounded-panel border border-line shadow-panel">
+  <header class="mb-6 flex flex-col gap-1">
+    <h2 id="seguranca-titulo" class="heading-panel">{t.security}</h2>
+    <p class="body-sm">{t.docker}</p>
+  </header>
+  {
+    p.github.docker ? (
+      <div class="grid flex-1 overflow-hidden
+        rounded-card border border-line
+        md:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] md:divide-x md:divide-line">
+        <div class="p-6 flex flex-col items-center justify-center gap-5 dot-grid">
+          <Ring value={p.armor} max={SHIELD.length} label={t.score} size="lg" />
+          <Badge mono class="max-w-full">
+            <span class="truncate">{p.docker.image}</span>
+          </Badge>
+        </div>
+        <div class="flex flex-col">
+          <div class="px-4 py-3 flex items-center justify-between gap-3 border-b border-line">
+            <p class="eyebrow">{t.security}</p>
+            <Badge tone={missing ? 'danger' : 'success'} mono>
+              {fill(t.securityCount, { n: p.armor, total: SHIELD.length })}
+            </Badge>
+          </div>
+          <ul class="p-3 flex flex-col gap-2">
+            {rows.map((k) =>
+              p.docker.shield[k] ? (
+                <li class={`px-4 py-2.5 flex items-center justify-between gap-3 rounded-control`}>
+                  <span class="flex items-center gap-2 text-sm text-fg">
+                    <span class="size-1.5 bg-success rounded-full" aria-hidden="true" />
+                    {text.shield[k]}
+                  </span>
+                  <span class="mono-status text-success">{t.on}</span>
+                </li>
+              ) : (
+                <li class={`px-4 py-2.5
+                  flex items-center justify-between gap-3
+                  bg-danger/[0.06] rounded-control border border-danger/30 shadow-glow-danger`}>
+                  <span class="flex items-center gap-2 text-sm font-medium text-danger">
+                    <span class="size-1.5 bg-current rounded-full" aria-hidden="true" />
+                    {text.shield[k]}
+                  </span>
+                  <span class="mono-status text-danger">{t.off}</span>
+                </li>
+              ),
+            )}
+          </ul>
+        </div>
+      </div>
+    ) : (
+      <p class="p-8
+        grid flex-1 place-items-center gap-2
+        text-center text-sm text-fg-subtle rounded-card border border-dashed border-line">{t.noContainer}</p>
+    )
+  }
+</section>
