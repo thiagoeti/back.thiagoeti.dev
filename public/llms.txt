@@ -8,12 +8,14 @@ Padrões de projetos back-end.
 - **Publique TODOS os projetos, inclusive os em desenvolvimento.** Os em desenvolvimento levam a tag "WIP - Work in Progress" na página do projeto. Não exiba a tag na capa.
 
 - [Back-end](https://github.com/thiagoeti/back)
-- [Back-end (WIP)](https://github.com/thiagoeti/back_)
+- [Back-end (WIP)](https://github.com/thiagoeti/back_) - Privado, no build não usar.
 
 **Para consulta local**:
 
 - `/data/work/project/back`
 - `/data/work/project/back_`
+
+- **NUNCA: utilize Github Token, não insista.**
 
 ---
 
