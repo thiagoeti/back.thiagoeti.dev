@@ -4,6 +4,10 @@
 
 bun init -y -m
 
+# add — amplitude
+
+bun add @amplitude/analytics-browser
+
 # add — elysia
 
 bun add elysia

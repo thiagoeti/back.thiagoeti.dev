@@ -33,15 +33,17 @@ const email = contacts.find((c) => c.value?.includes('@'))
 
     <section id="contato" aria-labelledby="rodape-contatos" class="scroll-mt-14">
       <h2 id="rodape-contatos" class="mb-4 eyebrow">{titles.contacts}</h2>
-      <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
-        {
-          contacts.map((l) => (
-            <li>
-              <LinkCard item={l} />
-            </li>
-          ))
-        }
-      </ul>
+      <address class="not-italic">
+        <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          {
+            contacts.map((l) => (
+              <li>
+                <LinkCard item={l} />
+              </li>
+            ))
+          }
+        </ul>
+      </address>
     </section>
   </div>
 

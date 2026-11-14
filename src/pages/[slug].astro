@@ -129,8 +129,10 @@ const H2 = 'flex items-center gap-3 heading-panel'
           </span>
           {p.wip && <Badge tone="warning" dot>{t.wip}</Badge>}
         </p>
-        <h1 id="titulo" class="display-xl [view-transition-name:project] lg:text-7xl">{p.title}</h1>
-        {p.subtitle && <p class="text-xl leading-snug text-fg-muted">{p.subtitle}</p>}
+        <hgroup class="contents">
+          <h1 id="titulo" class="display-xl [view-transition-name:project] lg:text-7xl">{p.title}</h1>
+          {p.subtitle && <p class="text-xl leading-snug text-fg-muted">{p.subtitle}</p>}
+        </hgroup>
         <p class="max-w-2xl text-base leading-relaxed text-fg">{p.description}</p>
         {p.doc.intro && <p class={`max-w-2xl body-md ${INLINE_CODE}`} set:html={inline(p.doc.intro)} />}
         <dl class="max-w-xl mt-2
@@ -175,7 +177,7 @@ const H2 = 'flex items-center gap-3 heading-panel'
         <div class="p-4 flex flex-col gap-2 bg-surface-sunken rounded-control border border-line">
           <p class="eyebrow">{t.output}</p>
           <p class={`font-mono text-sm leading-relaxed text-fg-muted [&_code]:text-success
-            ${INLINE_CODE}`} set:html={p.doc.output ? inline(p.doc.output) : dash} />
+            ${INLINE_CODE}`}><samp set:html={p.doc.output ? inline(p.doc.output) : dash} /></p>
         </div>
       </div>
       {
@@ -368,7 +370,7 @@ const H2 = 'flex items-center gap-3 heading-panel'
       </ul>
     </section>
 
-    <nav aria-label={text.nav.label} class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <nav aria-label={`${t.prev} / ${t.next}`} class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
       {
         [
           { p: prev, label: t.prev, icon: 'arrow-left' as const },

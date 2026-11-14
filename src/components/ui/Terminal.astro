@@ -36,7 +36,7 @@ const lines = run.split('\n')
         [&_code]:text-success
         ${INLINE_CODE}`}>
         <span class="text-success">[{text.project.output}] </span>
-        <span set:html={inline(output)} />
+        <samp set:html={inline(output)} />
       </p>
     )
   }

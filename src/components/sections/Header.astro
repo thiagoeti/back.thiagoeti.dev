@@ -112,8 +112,8 @@ const { path } = Astro.props
           lg:hidden
           focus-ring hover:bg-white/5 hover:text-fg motion-reduce:transition-none print:hidden"
       >
-        <span class="flex group-has-[#painel-ecossistema:popover-open]/page:hidden"><Icon name="menu" class="size-5" /></span>
-        <span class="hidden group-has-[#painel-ecossistema:popover-open]/page:flex"><Icon name="close" class="size-5" /></span>
+        <span class="flex group-has-[:popover-open]/page:hidden"><Icon name="menu" class="size-5" /></span>
+        <span class="hidden group-has-[:popover-open]/page:flex"><Icon name="close" class="size-5" /></span>
       </button>
       <a
         href="#ecossistema"
@@ -156,9 +156,11 @@ const { path } = Astro.props
 
     <section aria-labelledby="painel-contatos">
       <h2 id="painel-contatos" class="mb-4 eyebrow">{titles.contacts}</h2>
-      <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        {contacts.map((l) => <li><LinkCard item={l} /></li>)}
-      </ul>
+      <address class="not-italic">
+        <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {contacts.map((l) => <li><LinkCard item={l} /></li>)}
+        </ul>
+      </address>
     </section>
 
     <nav aria-labelledby="painel-ecossistema-titulo">
