@@ -40,9 +40,13 @@ export function parseBurst(output: string): Burst | null {
 	}
 }
 
-/** Saldo final citado: `saldo … R$ 10,00` na `Saída` ou, sem ele, no `Cenário`. */
+/** Saldo final citado: `saldo … R$ 10,00` ou `saldo \`1234567\` centavos` na `Saída` ou, sem ele, no `Cenário`. */
 export function finalBalance(output: string, scenario: string): string {
-	const find = (s: string) => [...s.matchAll(/[Ss]aldo[^R]{0,24}R\$\s?([\d.]+,\d{2})/g)].at(-1)?.[1] ?? ''
-	const value = find(output) || find(scenario)
+	const reais = (s: string) => [...s.matchAll(/[Ss]aldo[^R]{0,24}R\$\s?([\d.]+,\d{2})/g)].at(-1)?.[1] ?? ''
+	const cents = (s: string) => {
+		const n = [...s.matchAll(/[Ss]aldo\s+`?(\d+)`?\s+centavos/g)].at(-1)?.[1]
+		return n ? (Number(n) / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''
+	}
+	const value = reais(output) || cents(output) || reais(scenario) || cents(scenario)
 	return value ? `R$ ${value}` : ''
 }

@@ -79,7 +79,7 @@ const rest = scene.legend.filter((l) => l.kind !== 'node')
                 <li class="px-3 py-2.5 grid grid-cols-[1.75rem_auto_minmax(0,1fr)] items-baseline gap-3">
                   <span class="font-mono text-xs tabular-nums text-fg-faint">{String(m.n ?? '').padStart(2, '0')}</span>
                   <span class:list={['font-mono text-xs whitespace-nowrap', m.dashed ? 'text-info' : 'text-brand']}>
-                    {m.from} {m.dashed ? '⇠' : '→'} {m.to}
+                    {m.from} {m.dashed ? '⇢' : '→'} {m.to}
                   </span>
                   <span class={`text-sm text-fg-muted ${INLINE_CODE}`} set:html={inline(m.label)} />
                 </li>

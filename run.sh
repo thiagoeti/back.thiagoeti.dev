@@ -18,7 +18,7 @@ rm -rfv .playwright-mcp
 rm -rfv .astro
 rm -rfv dist
 
-bun run --bun build || exit 1
+bunx --bun astro build || exit 1
 
 # public
 

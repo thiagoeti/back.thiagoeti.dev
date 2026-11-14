@@ -7,8 +7,8 @@ export const SITE = {
 	host: new URL(meta.canonical).host,
 	brand: '@thiagoeti',
 	author: meta.author.name,
-	/** Papéis da marca (BRAND.md › Nome da marca): as palavras-chave em caixa alta, na ordem do `meta.json`. */
-	role: meta.keywords.filter((k) => /[A-Z]/.test(k) && k === k.toUpperCase()).join(' - '),
+	/** Papéis da marca (BRAND.md › Nome da marca): as palavras-chave que começam por sigla (`AI …`, `FDE - …`), na ordem do `meta.json`. */
+	role: meta.keywords.filter((k) => /^[A-Z]{2,}\b/.test(k)).join(' - '),
 	home: meta.author.url,
 	github: meta.author.same_as.find((u) => u.includes('github.com')) ?? 'https://github.com/thiagoeti',
 	linkedin: meta.author.same_as.find((u) => u.includes('linkedin.com')) ?? '',
@@ -59,10 +59,10 @@ export const INLINE_BUTTON = `min-h-11 px-2.5
 export const CARD = 'bg-surface-1 rounded-card border border-line'
 export const PANEL = 'bg-surface-1 rounded-panel border border-line shadow-panel'
 
-/** Corpo de markdown renderizado (README): texto em Inter, código em JetBrains Mono, tabela no tema. */
+/** Corpo de markdown renderizado (README): texto em Inter, código em JetBrains Mono, tabela no tema; link e bloco de código (`tabindex` do Shiki) com o anel de foco global. */
 export const PROSE =
 	`text-sm leading-relaxed text-fg-muted
-		hover:[&_a]:decoration-brand [&_p]:my-3 [&_strong]:font-semibold [&_strong]:text-fg [&_a]:underline [&_a]:decoration-brand/40 [&_a]:underline-offset-4 [&_a]:text-brand [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.88em] [&_code]:bg-surface-3 [&_code]:text-fg [&_code]:rounded-badge [&_pre]:my-4 [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-xs [&_pre]:leading-relaxed [&_pre]:bg-surface-sunken [&_pre]:border [&_pre]:border-line [&_pre_code]:p-0 [&_pre_code]:bg-transparent [&_ol]:my-3 [&_ol]:pl-5 [&_ol]:list-decimal [&_ul]:my-3 [&_ul]:pl-5 [&_ul]:list-disc [&_li]:my-1 [&_table]:w-full [&_table]:my-4 [&_table]:text-xs [&_table]:border-collapse [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-medium [&_th]:text-fg-subtle [&_th]:border-b [&_th]:border-line [&_td]:px-3 [&_td]:py-2 [&_td]:align-top [&_td]:border-b [&_td]:border-line-subtle [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-fg`
+		hover:[&_a]:decoration-brand [&_p]:my-3 [&_strong]:font-semibold [&_strong]:text-fg [&_a]:underline [&_a]:decoration-brand/40 [&_a]:underline-offset-4 [&_a]:text-brand [&_a]:focus-visible:outline-none [&_a]:focus-visible:ring-2 [&_a]:focus-visible:ring-brand/40 [&_a]:focus-visible:ring-offset-2 [&_a]:focus-visible:ring-offset-surface-0 [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.88em] [&_code]:bg-surface-3 [&_code]:text-fg [&_code]:rounded-badge [&_pre]:my-4 [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-xs [&_pre]:leading-relaxed [&_pre]:bg-surface-sunken [&_pre]:border [&_pre]:border-line [&_pre]:focus-visible:outline-none [&_pre]:focus-visible:ring-2 [&_pre]:focus-visible:ring-brand/40 [&_pre]:focus-visible:ring-offset-2 [&_pre]:focus-visible:ring-offset-surface-0 [&_pre_code]:p-0 [&_pre_code]:bg-transparent [&_ol]:my-3 [&_ol]:pl-5 [&_ol]:list-decimal [&_ul]:my-3 [&_ul]:pl-5 [&_ul]:list-disc [&_li]:my-1 [&_table]:w-full [&_table]:my-4 [&_table]:text-xs [&_table]:border-collapse [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-medium [&_th]:text-fg-subtle [&_th]:border-b [&_th]:border-line [&_td]:px-3 [&_td]:py-2 [&_td]:align-top [&_td]:border-b [&_td]:border-line-subtle [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-fg`
 
-/** Código inline em trecho curto (passo, célula, legenda). */
-export const INLINE_CODE = '[&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em] [&_code]:bg-surface-3 [&_code]:text-fg [&_code]:rounded-badge'
+/** Código e link inline em trecho curto (passo, célula, legenda); link com o anel de foco global. */
+export const INLINE_CODE = '[&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.88em] [&_code]:bg-surface-3 [&_code]:text-fg [&_code]:rounded-badge [&_a]:focus-visible:outline-none [&_a]:focus-visible:ring-2 [&_a]:focus-visible:ring-brand/40 [&_a]:focus-visible:ring-offset-2 [&_a]:focus-visible:ring-offset-surface-0'
