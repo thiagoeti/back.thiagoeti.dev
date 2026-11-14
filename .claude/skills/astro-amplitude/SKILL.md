@@ -27,6 +27,13 @@ Uma variável para todos os modos (a key do Amplitude é pública):
 PUBLIC_AMPLITUDE_API_KEY=sua_chave
 ```
 
+## Ambientes
+
+Amplitude só no build (`astro build`). No `astro dev`, nada é renderizado nem inicializado.
+
+- Condicione por `import.meta.env.PROD` e pela chave: `PROD` é `false` no `astro dev` e `true` no build.
+- Nunca chave falsa nem `undefined` na URL: `cdn.amplitude.com/script/undefined.js` dá 404 e erro no console.
+
 ## Client-side
 
 Antes de `</body>`, geralmente no layout base (ex.: `src/layouts/Layout.astro`). Funciona em páginas estáticas e SSR:
@@ -34,7 +41,8 @@ Antes de `</body>`, geralmente no layout base (ex.: `src/layouts/Layout.astro`).
 ```astro
 <script>
   import * as amplitude from '@amplitude/analytics-browser';
-  amplitude.init(import.meta.env.PUBLIC_AMPLITUDE_API_KEY, { autocapture: true });
+  const key = import.meta.env.PUBLIC_AMPLITUDE_API_KEY;
+  if (import.meta.env.PROD && key) amplitude.init(key, { autocapture: true });
 </script>
 ```
 
@@ -47,26 +55,30 @@ Snippet do quickstart do Amplitude (Unified Script): carrega SDK + Session Repla
 
 ```astro
 ---
-const apiKey = import.meta.env.PUBLIC_AMPLITUDE_API_KEY;
+const apiKey = import.meta.env.PROD && import.meta.env.PUBLIC_AMPLITUDE_API_KEY;
 ---
-<script is:inline src={`https://cdn.amplitude.com/script/${apiKey}.js`}></script>
-<script is:inline define:vars={{ apiKey }}>
-  window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
-  window.amplitude.init(apiKey, {
-    fetchRemoteConfig: true,
-    autocapture: {
-      attribution: true,
-      fileDownloads: true,
-      formInteractions: true,
-      pageViews: true,
-      sessions: true,
-      elementInteractions: true,
-      networkTracking: true,
-      webVitals: true,
-      frustrationInteractions: true,
-    },
-  });
-</script>
+{apiKey && (
+  <>
+    <script is:inline src={`https://cdn.amplitude.com/script/${apiKey}.js`}></script>
+    <script is:inline define:vars={{ apiKey }}>
+      window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+      window.amplitude.init(apiKey, {
+        fetchRemoteConfig: true,
+        autocapture: {
+          attribution: true,
+          fileDownloads: true,
+          formInteractions: true,
+          pageViews: true,
+          sessions: true,
+          elementInteractions: true,
+          networkTracking: true,
+          webVitals: true,
+          frustrationInteractions: true,
+        },
+      });
+    </script>
+  </>
+)}
 ```
 
 - `sampleRate`: fração das sessões gravadas (0 a 1). `1` grava todas, só para teste; reduza em produção. Padrão do SDK: `0` (não grava nada).
@@ -74,13 +86,14 @@ const apiKey = import.meta.env.PUBLIC_AMPLITUDE_API_KEY;
 - `fetchRemoteConfig: true`: as configurações de autocapture em *Data > Settings > Autocapture* sobrescrevem as locais, por recurso.
 - Não misture com `@amplitude/analytics-browser` ou `@amplitude/unified` via npm: inicializar duas vezes gera instâncias duplicadas e IDs de device/sessão divergentes.
 - Session Replay mascara `<input>` por padrão. Use `.amp-mask` (texto), `.amp-block` (elemento) e `.amp-unmask`.
-- CSP: `script-src https://cdn.amplitude.com`; `connect-src https://api2.amplitude.com https://api-sr.amplitude.com https://sr-client-cfg.amplitude.com` (EU: domínios `.eu.` e `serverZone: 'EU'`).
+- CSP: `script-src https://cdn.amplitude.com`; `connect-src https://api2.amplitude.com https://api-sr.amplitude.com https://sr-client-cfg.amplitude.com`.
 
 ## Server-side
 
 Para eventos que acontecem no servidor. A rota precisa de `prerender = false` (ou `output: 'server'`).
 
 - Chame `init()` uma vez num módulo compartilhado (ex.: `src/lib/amplitude.server.ts`) e reexporte `track`, `identify` e `flush`.
+- Fora do build ou sem chave, não chame `init()`: `track`, `identify` e `flush` viram no-op.
 - `track(evento, props, { user_id })`: todo evento exige `user_id` ou `device_id` com 5+ caracteres.
 - Em serverless/edge, `await flush().promise` antes de responder. Sem isso os eventos se perdem (o envio é em lote a cada 10 s).
 
