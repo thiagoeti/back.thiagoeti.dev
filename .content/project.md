@@ -9,6 +9,8 @@
 
 ---
 
+## Sobre
+
 - Projetos e padrões de desenvolvimento web.
 
 ---
@@ -35,8 +37,7 @@
 
 ## Layout e Arquitetura
 
-- Barra de tags parte superior, já no mobile na parte inferior também fixo.
-- Ao clicar nas tags filtra os projetos.
+- Hero extremamente criativa com glifos.
 
 ---
 
@@ -44,6 +45,7 @@
 
 - Sem paginação: todos os projetos e padrões de uma vez.
 - Navegação grade com todos projetos e padrões.
+- Duas sessões: Publicados e Em desenvolvimento.
 
 ---
 
@@ -58,13 +60,7 @@
 
 - Todo projeto ou padrão terá uma página dedicada `/<slug>`.
 - A página terá todas as informações do projeto de forma bem visível.
-
-| Rota | Mostra |
-|---|---|
-| `/` | Todos projetos |
-| `/?tag=%tag` | A tag faz filtro na lista |
-| `/%project` | Apresente todos dados do repositório do projeto |
-
-> Não use categorias ou outro tipo de agrupamento, apenas tag.
+- Hero da página, com informações do projeto e um grande glifo.
+- Não use categorias ou outro tipo de agrupamento.
 
 ---
