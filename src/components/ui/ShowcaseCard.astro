@@ -10,7 +10,7 @@ import { text } from '@/lib/text'
 /**
  * Peça da vitrine (THEME.md › Feature Card): o glifo de tecnologia do projeto grande sobre o fundo
  * pontilhado; embaixo, nome, o que entrega, números medidos (respostas, blindagem, saldo), stack (ícone de
- * cada tecnologia, TechIcon.astro) e tags. O nome é o link e cobre a peça; filtro e busca leem `data-tags` e `data-search`.
+ * cada tecnologia, TechIcon.astro) e tags. WIP leva a tag de status acima do glifo (mesmo estilo do front). O nome é o link e cobre a peça; filtro e busca leem `data-tags` e `data-search`.
  */
 interface Props {
   project: Project
@@ -33,7 +33,17 @@ const read = [
     bg-surface-1 rounded-panel border border-line
     transition-colors duration-150
     group-hover/card:border-line-strong group-focus-within/card:border-brand/40">
-    <div class="px-6 pt-8 pb-6 grid place-items-center relative dot-grid">
+    <div class="px-6 pt-8 pb-6 grid place-items-center gap-4 relative dot-grid">
+      {p.wip && (
+        <span title={text.project.wip} class:list={[
+          'px-2 py-0.5',
+          'inline-flex items-center gap-1.5 justify-self-start',
+          'text-[11px] font-semibold uppercase tracking-wider bg-warning/10 text-warning rounded-badge',
+        ]}>
+          <span class="size-1.5 bg-current rounded-full motion-safe:animate-pulse-dot" />
+          {text.project.tag}<span class="font-medium text-warning/70">· {text.project.building}</span>
+        </span>
+      )}
       <TechGlyph project={p} class="w-full max-w-52" />
     </div>
     <div class="p-6 flex flex-1 flex-col gap-2 bg-surface-2 border-t border-line-subtle">
