@@ -108,6 +108,8 @@
 		},
 		"project": {
 			"wip": "WIP - Work in Progress",
+			"tag": "WIP",
+			"building": "Em desenvolvimento",
 			"sheet": "Ficha",
 			"container": "Container",
 			"noContainer": "Sem docker.sh nesta pasta.",
