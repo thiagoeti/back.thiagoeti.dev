@@ -257,7 +257,15 @@ if [ "$MODE" != "main" ]; then
 
   echo ""
   echo "🔄 Pulling latest (rebase)..."
-  if ! git pull --rebase --no-edit; then
+  # Origin already contained → skip rebase (it would flatten local merges).
+  git fetch origin "$BRANCH" >/dev/null 2>&1 || {
+    echo ""
+    echo "⚠️ Could not fetch origin/$BRANCH — working with local state."
+  }
+  if git merge-base --is-ancestor "@{u}" HEAD 2>/dev/null; then
+    echo ""
+    echo "✅ Already up to date with origin/$BRANCH — no rebase needed."
+  elif ! git pull --rebase --no-edit; then
     git rebase --abort >/dev/null 2>&1
     die "🚫 Pull failed — rebase aborted. Local commits are safe on '$BRANCH'. Fix divergence manually and re-run."
   fi
