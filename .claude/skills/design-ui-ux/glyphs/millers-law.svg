@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Sete espaços cheios e dois vazios: 7 ± 2</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#FBBF24"/></filter></defs>
+<text x="80" y="22" text-anchor="middle" fill="#F3F4F6" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" font-weight="600">7 ± 2</text>
+<rect x="8" y="34" width="13" height="22" rx="3" fill="#FBBF24" stroke="none"/><rect x="24.5" y="34" width="13" height="22" rx="3" fill="#FBBF24" stroke="none"/><rect x="41" y="34" width="13" height="22" rx="3" fill="#FBBF24" stroke="none"/><rect x="57.5" y="34" width="13" height="22" rx="3" fill="#FBBF24" stroke="none"/><rect x="74" y="34" width="13" height="22" rx="3" fill="#FBBF24" stroke="none"/><rect x="90.5" y="34" width="13" height="22" rx="3" fill="#FBBF24" stroke="none"/><rect x="107" y="34" width="13" height="22" rx="3" fill="#FBBF24" stroke="none" filter="url(#glow)"/>
+<rect x="123.5" y="34" width="13" height="22" rx="3" stroke="#4B5563" stroke-dasharray="3 3"/><rect x="140" y="34" width="13" height="22" rx="3" stroke="#4B5563" stroke-dasharray="3 3"/>
+<path d="M74 64v6M153 64v6M74 67h79" stroke="#9CA3AF"/>
+<text x="74" y="80" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">5</text><text x="153" y="80" text-anchor="end" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">9</text>
+<text x="8" y="80" fill="#FBBF24" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">BUFFER</text>
+<text x="8" y="92" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">AGRUPE, NÃO LIMITE</text>
+</svg>

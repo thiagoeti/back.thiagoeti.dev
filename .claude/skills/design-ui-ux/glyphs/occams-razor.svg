@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Trajeto com 5 suposições contra linha reta de 1 hipótese</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#22D3EE"/></filter></defs>
+<path d="M16 76C4 50 36 70 34 46S56 72 66 46S50 20 82 36S96 64 110 40S126 12 144 22" stroke="#4B5563" stroke-dasharray="3 3"/>
+<circle cx="34" cy="46" r="2.5" fill="#4B5563" stroke="none"/><circle cx="66" cy="46" r="2.5" fill="#4B5563" stroke="none"/><circle cx="82" cy="36" r="2.5" fill="#4B5563" stroke="none"/><circle cx="110" cy="40" r="2.5" fill="#4B5563" stroke="none"/><circle cx="58" cy="30" r="2.5" fill="#4B5563" stroke="none"/>
+<text x="40" y="92" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">5 SUPOSIÇÕES</text>
+<path d="M16 76L144 22" stroke="#22D3EE" stroke-width="3" filter="url(#glow)"/>
+<circle cx="16" cy="76" r="4" fill="#F3F4F6" stroke="none"/><circle cx="144" cy="22" r="4" fill="#F3F4F6" stroke="none"/>
+<text x="10" y="90" fill="#F3F4F6" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">A</text><text x="148" y="14" fill="#F3F4F6" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">B</text>
+<text x="96" y="62" fill="#22D3EE" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">1 HIPÓTESE</text>
+</svg>

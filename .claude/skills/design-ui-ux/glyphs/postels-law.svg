@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Três formatos de data normalizados em um só</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#F97316"/></filter></defs>
+<text x="8" y="12" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">12/03/25</text><text x="58" y="12" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">2025-3-12</text><text x="112" y="12" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">12 mar 25</text>
+<path d="M24 16L60 32M80 16v14M128 16L100 32" stroke="#4B5563" stroke-dasharray="3 3"/>
+<path d="M30 34h100L94 58v14H66V58z" fill="#111827" stroke="#9CA3AF"/>
+<text x="80" y="48" text-anchor="middle" fill="#9CA3AF" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">NORMALIZA</text>
+<path d="M80 72v6" stroke="#F97316"/>
+<rect x="46" y="78" width="68" height="14" rx="3" fill="#F97316" fill-opacity="0.15" stroke="#F97316" filter="url(#glow)"/>
+<text x="80" y="88" text-anchor="middle" fill="#F97316" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6" font-weight="600">2025-03-12</text>
+<text x="8" y="60" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">N ENTRADAS</text><text x="152" y="60" text-anchor="end" fill="#F97316" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">1 SAÍDA</text>
+</svg>

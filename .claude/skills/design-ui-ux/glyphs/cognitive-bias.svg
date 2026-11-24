@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Âncora de R$ 999 faz R$ 499 parecer barato</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#F97316"/></filter></defs>
+<rect x="8" y="14" width="64" height="30" rx="4" fill="#1F2937" stroke="#4B5563"/>
+<text x="40" y="33" text-anchor="middle" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9">R$ 999</text><path d="M16 29h48" stroke="#9CA3AF" stroke-width="2"/>
+<text x="8" y="10" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">ÂNCORA</text>
+<path d="M76 29h14m-5-5 5 5-5 5" stroke="#9CA3AF"/>
+<rect x="94" y="10" width="58" height="38" rx="5" fill="#F97316" fill-opacity="0.15" stroke="#F97316" filter="url(#glow)"/>
+<text x="123" y="35" text-anchor="middle" fill="#F97316" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" font-weight="600">R$ 499</text>
+<text x="94" y="58" fill="#F97316" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">PARECE BARATO</text>
+<path d="M8 70h144" stroke="#4B5563" stroke-dasharray="3 3"/>
+<text x="8" y="82" fill="#F3F4F6" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">VALOR REAL</text><text x="152" y="82" text-anchor="end" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">= O MESMO</text>
+<text x="8" y="92" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">JULGAMENTO ≠ FATO</text>
+</svg>

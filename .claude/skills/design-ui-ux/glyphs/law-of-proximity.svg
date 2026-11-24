@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Dois aglomerados com 8 px dentro e 40 px entre eles</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#34D399"/></filter></defs>
+<text x="45" y="14" text-anchor="middle" fill="#34D399" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">INTRA ≤ 8</text><text x="115" y="14" text-anchor="middle" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">INTRA ≤ 8</text>
+<circle cx="45" cy="44" r="20" fill="#34D399" fill-opacity="0.15" stroke="#34D399"/><circle cx="115" cy="44" r="20" stroke="#4B5563" stroke-dasharray="3 3"/>
+<circle cx="37" cy="36" r="2.8" fill="#34D399" stroke="none"/><circle cx="45" cy="36" r="2.8" fill="#34D399" stroke="none"/><circle cx="53" cy="36" r="2.8" fill="#34D399" stroke="none"/>
+<circle cx="37" cy="44" r="2.8" fill="#34D399" stroke="none"/><circle cx="45" cy="44" r="2.8" fill="#34D399" stroke="none"/><circle cx="53" cy="44" r="2.8" fill="#34D399" stroke="none"/>
+<circle cx="37" cy="52" r="2.8" fill="#34D399" stroke="none"/><circle cx="45" cy="52" r="2.8" fill="#34D399" stroke="none"/><circle cx="53" cy="52" r="2.8" fill="#34D399" stroke="none"/>
+<circle cx="107" cy="36" r="2.8" fill="#F3F4F6" stroke="none"/><circle cx="115" cy="36" r="2.8" fill="#F3F4F6" stroke="none"/><circle cx="123" cy="36" r="2.8" fill="#F3F4F6" stroke="none"/>
+<circle cx="107" cy="44" r="2.8" fill="#F3F4F6" stroke="none"/><circle cx="115" cy="44" r="2.8" fill="#F3F4F6" stroke="none"/><circle cx="123" cy="44" r="2.8" fill="#F3F4F6" stroke="none"/>
+<circle cx="107" cy="52" r="2.8" fill="#F3F4F6" stroke="none"/><circle cx="115" cy="52" r="2.8" fill="#F3F4F6" stroke="none"/><circle cx="123" cy="52" r="2.8" fill="#F3F4F6" stroke="none"/>
+<path d="M65 78h30M65 75v6M95 75v6" stroke="#9CA3AF"/>
+<text x="80" y="90" text-anchor="middle" fill="#F3F4F6" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">INTER ≥ 40</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Árvore de decisão e curva logarítmica do tempo de reação</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#22D3EE"/></filter></defs>
+<path d="M14 48L40 30M14 48L40 66M40 30L66 20M40 30L66 40M40 66L66 56M40 66L66 76" stroke="#4B5563"/>
+<path d="M66 20L88 14M66 20L88 24M66 40L88 34M66 40L88 44M66 56L88 54M66 56L88 64M66 76L88 74M66 76L88 84" stroke="#4B5563"/>
+<path d="M14 48L40 66L66 56L88 54" stroke="#22D3EE" stroke-width="2" filter="url(#glow)"/>
+<circle cx="14" cy="48" r="3.5" fill="#F3F4F6" stroke="none"/><circle cx="40" cy="30" r="2.5" fill="#4B5563" stroke="none"/><circle cx="40" cy="66" r="3" fill="#22D3EE" stroke="none"/>
+<circle cx="66" cy="20" r="2" fill="#4B5563" stroke="none"/><circle cx="66" cy="40" r="2" fill="#4B5563" stroke="none"/><circle cx="66" cy="56" r="3" fill="#22D3EE" stroke="none"/><circle cx="66" cy="76" r="2" fill="#4B5563" stroke="none"/>
+<circle cx="88" cy="14" r="1.6" fill="#4B5563" stroke="none"/><circle cx="88" cy="24" r="1.6" fill="#4B5563" stroke="none"/><circle cx="88" cy="34" r="1.6" fill="#4B5563" stroke="none"/><circle cx="88" cy="44" r="1.6" fill="#4B5563" stroke="none"/><circle cx="88" cy="54" r="3.5" fill="#22D3EE" stroke="none" filter="url(#glow)"/><circle cx="88" cy="64" r="1.6" fill="#4B5563" stroke="none"/><circle cx="88" cy="74" r="1.6" fill="#4B5563" stroke="none"/><circle cx="88" cy="84" r="1.6" fill="#4B5563" stroke="none"/>
+<path d="M106 16v64h48" stroke="#9CA3AF"/>
+<path d="M108 78C114 50 124 40 152 30" stroke="#22D3EE" stroke-width="2"/>
+<text x="110" y="12" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">RT</text><text x="150" y="90" text-anchor="end" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">n opções</text>
+<text x="118" y="72" fill="#22D3EE" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">log₂(n+1)</text>
+</svg>

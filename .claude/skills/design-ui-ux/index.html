@@ -1,0 +1,1451 @@
+<!doctype html>
+<html lang="pt-BR" class="scheme-dark scroll-smooth bg-gray-950 motion-reduce:scroll-auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="Leis de UX aplicadas ao front-end, com glifo SVG próprio e regra prática para cada uma. Por @thiagoeti, a partir de Laws of UX." />
+    <title>@thiagoeti — UI/UX</title>
+    <script defer src="https://unpkg.com/@tailwindcss/browser@4.3.5/dist/index.global.js" integrity="sha384-t+qLIxS5zM/KF99/doWY+dxTsavdvgayaZt8A9ntLsUjEkiXzYl5M3Ij8zVFPL9j" crossorigin="anonymous"></script>
+  </head>
+  <body id="top" class="min-h-screen bg-gray-950 font-sans text-gray-100 antialiased selection:bg-emerald-400/30">
+    <a class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-emerald-400 focus:px-4 focus:py-2 focus:text-gray-950" href="#conteudo">Pular para o conteúdo</a>
+
+
+    <main id="conteudo">
+      <div class="mx-auto w-full max-w-7xl px-6 lg:px-8">
+        <header class="py-12 lg:py-16">
+          <h1 class="text-5xl font-normal leading-none tracking-tight text-gray-100 md:text-6xl">Leis de UX aplicadas ao front-end</h1>
+        <div class="mt-10 grid divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-gray-900 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
+          <article class="flex flex-col gap-5 p-6 lg:col-span-2 lg:p-8">
+            <div>
+              <h2 class="text-3xl font-semibold tracking-tight text-gray-100"><a class="rounded-sm text-gray-100 hover:underline hover:underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://thiagoeti.dev/" target="_blank" rel="noopener noreferrer">@thiagoeti<span class="sr-only">(abre em nova aba)</span></a></h2>
+              <ul class="mt-3 flex flex-wrap gap-2" aria-label="Posicionamento"><li class="rounded-sm border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">AI Enabler</li><li class="rounded-sm border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">AI Engineer</li><li class="rounded-sm border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Product AI Engineer</li><li class="rounded-sm border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Software AI Engineer</li><li class="rounded-sm border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">FDE · Forward Deployed Engineer</li></ul>
+            </div>
+            <blockquote class="border-l-2 border-emerald-400 pl-4 text-base leading-relaxed text-gray-300">Coloco IA em produção dentro de operações com sistemas legados e dados bagunçados.</blockquote>
+            <ul class="mt-auto flex flex-wrap gap-x-6 gap-y-2 border-t border-white/5 pt-4">
+              <li><a class="inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://thiagoeti.dev/" target="_blank" rel="noopener noreferrer">thiagoeti.dev<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a></li>
+              <li><a class="inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://github.com/thiagoeti" target="_blank" rel="noopener noreferrer">github.com/thiagoeti<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a></li>
+            </ul>
+          </article>
+          <article class="flex flex-col gap-5 bg-gray-800/30 p-6 lg:p-8">
+            <div>
+              <h2 class="text-3xl font-semibold tracking-tight text-gray-100">Laws of UX</h2>
+            </div>
+            <ul class="flex flex-col gap-2 text-sm text-gray-400">
+              <li class="flex items-center gap-2"><span class="size-1.5 shrink-0 rounded-full bg-cyan-400"></span>Psicologia aplicada ao design de interface</li>
+              <li class="flex items-center gap-2"><span class="size-1.5 shrink-0 rounded-full bg-cyan-400"></span>Cada lei com origem e referências</li>
+              <li class="flex items-center gap-2"><span class="size-1.5 shrink-0 rounded-full bg-cyan-400"></span>Linguagem comum entre design e engenharia</li>
+            </ul>
+            <ul class="mt-auto flex flex-wrap gap-x-6 gap-y-2 border-t border-white/5 pt-4">
+              <li><a class="inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/" target="_blank" rel="noopener noreferrer">lawsofux.com<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a></li>
+            </ul>
+          </article>
+        </div>
+        </header>
+
+      <section id="gestalt" class="border-t border-white/10 py-8 lg:py-10" aria-labelledby="gestalt-t">
+        <div class="mb-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <h2 id="gestalt-t" class="flex items-center gap-4 text-4xl font-normal leading-tight tracking-tight text-gray-100"><span class="h-9 w-1 rounded-full bg-emerald-400"></span>Gestalt</h2>
+          <span class="hidden h-px flex-1 bg-linear-to-r from-emerald-400/60 via-white/10 to-transparent sm:block" aria-hidden="true"></span>
+          <p class="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400"><span class="text-gray-600" aria-hidden="true">//</span>Como o olho agrupa elementos</p>
+        </div>
+        <ul class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">BORDA = GRUPO</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/law-of-common-region.svg" width="160" height="96" alt="Pontos equidistantes divididos em dois grupos só pela borda" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei da Região Comum</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Law of Common Region</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Mesma borda, mesmo grupo.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">No front</dt>
+                    <dd class="text-gray-100">Card ou fundo agrupa campos.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/law-of-common-region/" target="_blank" rel="noopener noreferrer">lawsofux.com/law-of-common-region<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">8 / 40 PX</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/law-of-proximity.svg" width="160" height="96" alt="Dois aglomerados com 8 px dentro e 40 px entre eles" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei da Proximidade</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Law of Proximity</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Elementos próximos formam grupo.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">No front</dt>
+                    <dd class="text-gray-100">Espaço curto dentro, largo entre grupos.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/law-of-proximity/" target="_blank" rel="noopener noreferrer">lawsofux.com/law-of-proximity<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">FORMA MÍNIMA</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/law-of-pragnanz.svg" width="160" height="96" alt="Três círculos recortados lidos como um único triângulo" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Prägnanz</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Law of Prägnanz</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Lemos a forma mais simples.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">No front</dt>
+                    <dd class="text-gray-100">Ícone e layout com formas simples.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/law-of-pragnanz/" target="_blank" rel="noopener noreferrer">lawsofux.com/law-of-pragnanz<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">MESMO ESTILO</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/law-of-similarity.svg" width="160" height="96" alt="Colunas de quadrados agrupadas entre colunas de círculos" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei da Similaridade</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Law of Similarity</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Parecidos são vistos como grupo.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">No front</dt>
+                    <dd class="text-gray-100">Mesmo estilo para mesma função.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/law-of-similarity/" target="_blank" rel="noopener noreferrer">lawsofux.com/law-of-similarity<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">LINHA = VÍNCULO</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/law-of-uniform-connectedness.svg" width="160" height="96" alt="Pontos equidistantes agrupados por traços de ligação" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei da Conexão Uniforme</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Law of Uniform Connectedness</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Conectados parecem relacionados.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">No front</dt>
+                    <dd class="text-gray-100">Linha ou cor liga etapas.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/law-of-uniform-connectedness/" target="_blank" rel="noopener noreferrer">lawsofux.com/law-of-uniform-connectedness<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </section>
+      <section id="decisao" class="py-8 lg:py-10" aria-labelledby="decisao-t">
+        <div class="mb-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <h2 id="decisao-t" class="flex items-center gap-4 text-4xl font-normal leading-tight tracking-tight text-gray-100"><span class="h-9 w-1 rounded-full bg-cyan-400"></span>Decisão e esforço</h2>
+          <span class="hidden h-px flex-1 bg-linear-to-r from-cyan-400/60 via-white/10 to-transparent sm:block" aria-hidden="true"></span>
+          <p class="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-cyan-400"><span class="text-gray-600" aria-hidden="true">//</span>Quanto custa escolher e agir</p>
+        </div>
+        <ul class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">≥ 44 PX</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/fittss-law.svg" width="160" height="96" alt="Cursor, distância D e alvo de largura mínima de 44 px" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Fitts</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Fitts's Law</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Tempo depende de distância e tamanho.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-cyan-400">No front</dt>
+                    <dd class="text-gray-100">Alvo grande, perto da ação.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/fittss-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/fittss-law<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">LOG₂(N+1)</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/hicks-law.svg" width="160" height="96" alt="Árvore de decisão e curva logarítmica do tempo de reação" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Hick</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Hick's Law</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Mais opções, decisão mais lenta.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-cyan-400">No front</dt>
+                    <dd class="text-gray-100">Menos opções; destaque a recomendada.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/hicks-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/hicks-law<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">6 &gt; 24</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/choice-overload.svg" width="160" height="96" alt="Grade de 24 opções e conversão de 30% contra 3%" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Sobrecarga de Escolha</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Choice Overload</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Opções demais travam a decisão.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-cyan-400">No front</dt>
+                    <dd class="text-gray-100">Filtro, busca e comparação lado a lado.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/choice-overload/" target="_blank" rel="noopener noreferrer">lawsofux.com/choice-overload<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">MENOS = MAIS</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/cognitive-load.svg" width="160" height="96" alt="Tela poluída com carga de 92% contra tela limpa com 34%" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Carga Cognitiva</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Cognitive Load</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Esforço mental para usar a interface.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-cyan-400">No front</dt>
+                    <dd class="text-gray-100">Remova o que não ajuda a tarefa.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/cognitive-load/" target="_blank" rel="noopener noreferrer">lawsofux.com/cognitive-load<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">Σ CONSTANTE</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/teslers-law.svg" width="160" height="96" alt="Complexidade presa no sistema; usuário com uma linha simples" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Tesler</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Tesler's Law</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Complexidade não some, muda de lugar.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-cyan-400">No front</dt>
+                    <dd class="text-gray-100">O sistema absorve, não o usuário.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/teslers-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/teslers-law<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">MENOS SUPOSIÇÕES</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/occams-razor.svg" width="160" height="96" alt="Trajeto com 5 suposições contra linha reta de 1 hipótese" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Navalha de Occam</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Occam's Razor</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Prefira a solução mais simples.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-cyan-400">No front</dt>
+                    <dd class="text-gray-100">Corte tudo que não faz falta.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/occams-razor/" target="_blank" rel="noopener noreferrer">lawsofux.com/occams-razor<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">80 / 20</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/pareto-principle.svg" width="160" height="96" alt="20% das causas ligadas a 80% dos efeitos" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Princípio de Pareto</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Pareto Principle</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">80% do efeito vem de 20%.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-cyan-400">No front</dt>
+                    <dd class="text-gray-100">Priorize os fluxos mais usados.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/pareto-principle/" target="_blank" rel="noopener noreferrer">lawsofux.com/pareto-principle<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">&lt; 400 MS</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/doherty-threshold.svg" width="160" height="96" alt="Histograma de respostas com limiar em 400 ms" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Limiar de Doherty</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Doherty Threshold</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Resposta abaixo de 400 ms engaja.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-cyan-400">No front</dt>
+                    <dd class="text-gray-100">Feedback imediato, skeleton, UI otimista.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/doherty-threshold/" target="_blank" rel="noopener noreferrer">lawsofux.com/doherty-threshold<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </section>
+      <section id="memoria" class="py-8 lg:py-10" aria-labelledby="memoria-t">
+        <div class="mb-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <h2 id="memoria-t" class="flex items-center gap-4 text-4xl font-normal leading-tight tracking-tight text-gray-100"><span class="h-9 w-1 rounded-full bg-amber-400"></span>Memória e atenção</h2>
+          <span class="hidden h-px flex-1 bg-linear-to-r from-amber-400/60 via-white/10 to-transparent sm:block" aria-hidden="true"></span>
+          <p class="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-amber-400"><span class="text-gray-600" aria-hidden="true">//</span>O que fica e o que some</p>
+        </div>
+        <ul class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">7 ± 2</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/millers-law.svg" width="160" height="96" alt="Sete espaços cheios e dois vazios: 7 ± 2" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Miller</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Miller's Law</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Memória curta guarda 7 ± 2 itens.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-amber-400">No front</dt>
+                    <dd class="text-gray-100">Agrupe informação; não use como limite.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/millers-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/millers-law<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">BUFFER CURTO</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/working-memory.svg" width="160" height="96" alt="Buffer de 4 espaços com itens antigos decaindo" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Memória de Trabalho</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Working Memory</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Guarda os dados da tarefa atual.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-amber-400">No front</dt>
+                    <dd class="text-gray-100">Mostre o dado, não peça memória.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/working-memory/" target="_blank" rel="noopener noreferrer">lawsofux.com/working-memory<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">3 BLOCOS</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/chunking.svg" width="160" height="96" alt="Telefone de 11 dígitos agrupado em 3 blocos" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Agrupamento</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Chunking</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Blocos são mais fáceis de reter.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-amber-400">No front</dt>
+                    <dd class="text-gray-100">Telefone, CPF e cartão em grupos.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/chunking/" target="_blank" rel="noopener noreferrer">lawsofux.com/chunking<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">1º + ÚLTIMO</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/serial-position-effect.svg" width="160" height="96" alt="Curva em U: primeiros e últimos itens mais lembrados" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Efeito de Posição Serial</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Serial Position Effect</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Primeiro e último são mais lembrados.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-amber-400">No front</dt>
+                    <dd class="text-gray-100">Ação principal no início ou fim.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/serial-position-effect/" target="_blank" rel="noopener noreferrer">lawsofux.com/serial-position-effect<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">1 DESTAQUE</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/von-restorff-effect.svg" width="160" height="96" alt="Oito botões iguais e um destaque lembrado" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Efeito Von Restorff</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Von Restorff Effect</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">O diferente é o mais lembrado.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-amber-400">No front</dt>
+                    <dd class="text-gray-100">Um único destaque por tela.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/von-restorff-effect/" target="_blank" rel="noopener noreferrer">lawsofux.com/von-restorff-effect<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">FOCO NA META</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/selective-attention.svg" width="160" height="96" alt="Anúncio ignorado e foco no botão da meta" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Atenção Seletiva</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Selective Attention</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Atenção vai só ao relevante.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-amber-400">No front</dt>
+                    <dd class="text-gray-100">Essencial fora da área de anúncio.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/selective-attention/" target="_blank" rel="noopener noreferrer">lawsofux.com/selective-attention<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">3 / 4</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/zeigarnik-effect.svg" width="160" height="96" alt="Checklist com uma tarefa pendente e anel em 3 de 4" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Efeito Zeigarnik</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Zeigarnik Effect</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Tarefa incompleta é mais lembrada.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-amber-400">No front</dt>
+                    <dd class="text-gray-100">Barra de progresso e checklist.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/zeigarnik-effect/" target="_blank" rel="noopener noreferrer">lawsofux.com/zeigarnik-effect<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </section>
+      <section id="comportamento" class="py-8 lg:py-10" aria-labelledby="comportamento-t">
+        <div class="mb-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <h2 id="comportamento-t" class="flex items-center gap-4 text-4xl font-normal leading-tight tracking-tight text-gray-100"><span class="h-9 w-1 rounded-full bg-orange-500"></span>Comportamento</h2>
+          <span class="hidden h-px flex-1 bg-linear-to-r from-orange-500/60 via-white/10 to-transparent sm:block" aria-hidden="true"></span>
+          <p class="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-orange-500"><span class="text-gray-600" aria-hidden="true">//</span>Como o usuário age de fato</p>
+        </div>
+        <ul class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">PADRÃO CONHECIDO</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/jakobs-law.svg" width="160" height="96" alt="Três sites com o mesmo layout e o carrinho no mesmo lugar" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Jakob</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Jakob's Law</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Usuário espera o que já conhece.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-orange-500">No front</dt>
+                    <dd class="text-gray-100">Siga padrões de navegação e formulário.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/jakobs-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/jakobs-law<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">ESPERADO ≈ REAL</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/mental-model.svg" width="160" height="96" alt="Layout esperado no balão igual à tela real" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Modelo Mental</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Mental Model</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Usuário age pelo que imagina.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-orange-500">No front</dt>
+                    <dd class="text-gray-100">Nomes e fluxos na língua do usuário.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/mental-model/" target="_blank" rel="noopener noreferrer">lawsofux.com/mental-model<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">0 MANUAIS</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/paradox-of-the-active-user.svg" width="160" height="96" alt="Manual dormindo e clique imediato em Começar" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Paradoxo do Usuário Ativo</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Paradox of the Active User</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Ninguém lê manual; começa usando.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-orange-500">No front</dt>
+                    <dd class="text-gray-100">Ajuda contextual: tooltip e estado vazio.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/paradox-of-the-active-user/" target="_blank" rel="noopener noreferrer">lawsofux.com/paradox-of-the-active-user<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">N → 1</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/postels-law.svg" width="160" height="96" alt="Três formatos de data normalizados em um só" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Postel</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Postel's Law</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Aceite variado, entregue padronizado.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-orange-500">No front</dt>
+                    <dd class="text-gray-100">Aceite máscara, espaço e formatos variados.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/postels-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/postels-law<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">80% → 100%</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/goal-gradient-effect.svg" width="160" height="96" alt="Cartão com 8 de 10 selos e ritmo crescente" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Efeito Gradiente de Meta</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Goal-Gradient Effect</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Motivação cresce perto da meta.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-orange-500">No front</dt>
+                    <dd class="text-gray-100">Mostre quanto falta para concluir.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/goal-gradient-effect/" target="_blank" rel="noopener noreferrer">lawsofux.com/goal-gradient-effect<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">PICO + FIM</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/peak-end-rule.svg" width="160" height="96" alt="Curva de experiência com pico e fim acima da média" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Regra do Pico-Fim</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Peak-End Rule</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Lembramos o pico e o fim.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-orange-500">No front</dt>
+                    <dd class="text-gray-100">Capriche no sucesso e na tela final.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/peak-end-rule/" target="_blank" rel="noopener noreferrer">lawsofux.com/peak-end-rule<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">BELO = FÁCIL</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/aesthetic-usability-effect.svg" width="160" height="96" alt="Tela crua com 40% contra tela cuidada com 85%" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Efeito Estética-Usabilidade</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Aesthetic-Usability Effect</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Bonito parece mais fácil de usar.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-orange-500">No front</dt>
+                    <dd class="text-gray-100">Visual cuidado, sem mascarar problema.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/aesthetic-usability-effect/" target="_blank" rel="noopener noreferrer">lawsofux.com/aesthetic-usability-effect<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">2D → 5D</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/parkinsons-law.svg" width="160" height="96" alt="Tarefa estimada em 2 dias que ocupa o prazo de 5" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Parkinson</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Parkinson's Law</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Tarefa ocupa todo o prazo.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-orange-500">No front</dt>
+                    <dd class="text-gray-100">Autopreenchimento e menos passos.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/parkinsons-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/parkinsons-law<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">DESAFIO = HABILIDADE</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/flow.svg" width="160" height="96" alt="Trajetória no canal entre ansiedade e tédio" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Fluxo</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Flow</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Imersão quando desafio equilibra habilidade.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-orange-500">No front</dt>
+                    <dd class="text-gray-100">Sem interrupção no meio da tarefa.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/flow/" target="_blank" rel="noopener noreferrer">lawsofux.com/flow<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="flex flex-col gap-4 p-5">
+                <div class="flex items-center justify-end gap-3">
+                  <span class="rounded-sm border border-white/10 bg-gray-800 px-2 py-0.5 font-mono text-xs text-gray-400">ANCORAGEM</span>
+                </div>
+                <figure class="rounded-md border border-white/5 bg-gray-950 p-3">
+                  <img class="block h-auto w-full" src="glyphs/cognitive-bias.svg" width="160" height="96" alt="Âncora de R$ 999 faz R$ 499 parecer barato" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-4 border-t border-white/5 bg-gray-800/40 p-6">
+                <div>
+                  <h3 class="text-xl font-semibold leading-snug text-gray-100">Viés Cognitivo</h3>
+                  <p class="mt-1 font-mono text-xs text-gray-500" lang="en">Cognitive Bias</p>
+                </div>
+                <dl class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-gray-500">Lei</dt>
+                    <dd class="text-gray-400">Erros sistemáticos de julgamento.</dd>
+                  </div>
+                  <div class="flex items-baseline gap-3">
+                    <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-orange-500">No front</dt>
+                    <dd class="text-gray-100">Teste com usuário real, não suposição.</dd>
+                  </div>
+                </dl>
+                <a class="mt-auto self-start inline-flex items-center gap-1.5 rounded-sm font-mono text-xs text-gray-400 transition-colors duration-150 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950" href="https://lawsofux.com/cognitive-bias/" target="_blank" rel="noopener noreferrer">lawsofux.com/cognitive-bias<span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </section>
+
+
+
+
+
+      <section id="exemplos" class="py-8 lg:py-10" aria-labelledby="exemplos-t">
+        <div class="mb-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <h2 id="exemplos-t" class="flex items-center gap-4 text-4xl font-normal leading-tight tracking-tight text-gray-100"><span class="h-9 w-1 rounded-full bg-emerald-400"></span>Exemplos</h2>
+          <span class="hidden h-px flex-1 bg-linear-to-r from-emerald-400/60 via-white/10 to-transparent sm:block" aria-hidden="true"></span>
+          <p class="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400"><span class="text-gray-600" aria-hidden="true">//</span>Antes e depois na UI</p>
+        </div>
+        <ul class="grid gap-6 md:grid-cols-2">
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/law-of-common-region.svg" width="320" height="160" alt="Lei da Região Comum: antes, lista corrida; depois, caixas por assunto" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei da Região Comum</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Caixas: Entrega e Pagamento</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/law-of-proximity.svg" width="320" height="160" alt="Lei da Proximidade: antes, espaços iguais; depois, colado e agrupado" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei da Proximidade</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Label colado; grupos afastados</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/law-of-pragnanz.svg" width="320" height="160" alt="Lei de Prägnanz: antes, enfeite compete; depois, só o dado" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Prägnanz</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Só rótulo, número e variação</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/law-of-similarity.svg" width="320" height="160" alt="Lei da Similaridade: antes, tag parece botão; depois, cada função, um visual" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei da Similaridade</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Tag neutra; só ação vira botão</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/law-of-uniform-connectedness.svg" width="320" height="160" alt="Lei da Conexão Uniforme: antes, etapas soltas; depois, linha liga as etapas" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei da Conexão Uniforme</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Linha conecta as etapas</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/fittss-law.svg" width="320" height="160" alt="Lei de Fitts: antes, alvos pequenos e colados; depois, alvo grande, perigo longe" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Fitts</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Finalizar largo; Remover longe</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/hicks-law.svg" width="320" height="160" alt="Lei de Hick: antes, 7 fretes; depois, 1 recomendado" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Hick</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">1 recomendado; resto em Ver mais</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/choice-overload.svg" width="320" height="160" alt="Sobrecarga de Escolha: antes, 8 planos; depois, 3 planos" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Sobrecarga de Escolha</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">3 planos; o do meio destacado</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/cognitive-load.svg" width="320" height="160" alt="Carga Cognitiva: antes, tudo disputa atenção; depois, só o essencial" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Carga Cognitiva</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Sem banner, popup e selos extras</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/teslers-law.svg" width="320" height="160" alt="Lei de Tesler: antes, 5 campos à mão; depois, só o CEP" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Tesler</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Só o CEP; sistema preenche</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/occams-razor.svg" width="320" height="160" alt="Navalha de Occam: antes, 4 níveis; depois, 1 nível" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Navalha de Occam</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Pausar e Trocar no próprio card</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/pareto-principle.svg" width="320" height="160" alt="Princípio de Pareto: antes, 8 ações iguais; depois, 2 em destaque" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Princípio de Pareto</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">2 ações à vista; 6 em Mais</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/doherty-threshold.svg" width="320" height="160" alt="Limiar de Doherty: antes, silêncio; depois, feedback imediato" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Limiar de Doherty</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Aplicando… e barra no clique</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/millers-law.svg" width="320" height="160" alt="Lei de Miller: antes, 9 campos soltos; depois, 3 grupos de 3" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Miller</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Campos agrupados em 3 blocos</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/working-memory.svg" width="320" height="160" alt="Memória de Trabalho: antes, pede de novo; depois, mostra o dado" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Memória de Trabalho</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Mostrar o CEP, não pedir</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/chunking.svg" width="320" height="160" alt="Agrupamento: antes, 16 dígitos; depois, 4 blocos" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Agrupamento</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Cartão em 4 blocos de 4</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/serial-position-effect.svg" width="320" height="160" alt="Efeito de Posição Serial: antes, chave perdida no meio; depois, chave nas pontas" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Efeito de Posição Serial</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Início primeiro, Carrinho por último</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/von-restorff-effect.svg" width="320" height="160" alt="Efeito Von Restorff: antes, 3 destaques; depois, 1 destaque" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Efeito Von Restorff</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Um único selo de destaque</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/selective-attention.svg" width="320" height="160" alt="Atenção Seletiva: antes, parece promoção; depois, alerta no campo" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Atenção Seletiva</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Erro colado ao campo</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/zeigarnik-effect.svg" width="320" height="160" alt="Efeito Zeigarnik: antes, lista sem progresso; depois, marque os passos" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Efeito Zeigarnik</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Barra 1 de 4, passo feito</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/jakobs-law.svg" width="320" height="160" alt="Lei de Jakob: antes, cabeçalho inventado; depois, o que todos fazem" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Jakob</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Logo à esquerda, carrinho à direita</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/mental-model.svg" width="320" height="160" alt="Modelo Mental: antes, fala do ERP; depois, fala do cliente" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Modelo Mental</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Nome do café e status claro</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/paradox-of-the-active-user.svg" width="320" height="160" alt="Paradoxo do Usuário Ativo: antes, tour de 9 passos; depois, ajuda no campo" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Paradoxo do Usuário Ativo</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Sem tour; ajuda no campo</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/postels-law.svg" width="320" height="160" alt="Lei de Postel: antes, só 00000-000; depois, aceita e normaliza" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Postel</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Aceita espaço e ponto; formata</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/goal-gradient-effect.svg" width="320" height="160" alt="Efeito Gradiente de Meta: antes, começa do zero; depois, começa com bônus" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Efeito Gradiente de Meta</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Cartão começa com 2 selos</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/peak-end-rule.svg" width="320" height="160" alt="Regra do Pico-Fim: antes, susto e fim seco; depois, fim que encerra bem" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Regra do Pico-Fim</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Confirmação, prazo e rastreio no fim</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/aesthetic-usability-effect.svg" width="320" height="160" alt="Efeito Estética-Usabilidade: antes, só “gostou?”; depois, tempo, erro e nota" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Efeito Estética-Usabilidade</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Medir tempo e erro, não só nota</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/parkinsons-law.svg" width="320" height="160" alt="Lei de Parkinson: antes, sem fim à vista; depois, duração clara" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Lei de Parkinson</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Duração visível antes de começar</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/flow.svg" width="320" height="160" alt="Fluxo: antes, popup no meio; depois, foco até o fim" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Fluxo</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Nenhum popup durante o pagamento</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gray-900 transition-colors duration-200 hover:border-white/20 motion-reduce:transition-none">
+              <div class="p-3 sm:p-5">
+                <figure>
+                  <img class="block h-auto w-full" src="examples/cognitive-bias.svg" width="320" height="160" alt="Viés Cognitivo: antes, default contra a pessoa; depois, escolha honesta" loading="lazy" decoding="async" />
+                </figure>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 border-t border-white/5 bg-gray-800/40 p-6">
+                <h3 class="text-xl font-semibold leading-snug text-gray-100">Viés Cognitivo</h3>
+                <dl class="flex items-baseline gap-3 text-sm">
+                  <dt class="w-18 shrink-0 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">Mudança</dt>
+                  <dd class="text-gray-100">Desmarcado, separado, recusa neutra</dd>
+                </dl>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </section>
+      </div>
+    </main>
+
+  </body>
+</html>
