@@ -1,5 +1,5 @@
 ---
-name: icon
+name: design-icon
 description: Use para criar, desenhar, redesenhar ou vetorizar ícones, menus, tooltips, toolbars, tab bars, popovers, drop downs, botões, imagens e SVGs.
 license: Unlicense
 metadata:
