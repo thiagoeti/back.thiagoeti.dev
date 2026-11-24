@@ -1,5 +1,5 @@
 ---
-name: glyph
+name: design-glyph
 description: Use para criar, desenhar, redesenhar ou ilustrar glifos, ilustrar interfaces, símbolos, marcas, logos, monogramas, emblemas, selos, pictogramas, avatares, mascotes, ilustrações, desenhos, imagens e SVGs.
 license: Unlicense
 metadata:
