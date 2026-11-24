@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Tela crua com 40% contra tela cuidada com 85%</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#F97316"/></filter></defs>
+<rect x="8" y="12" width="64" height="44" rx="2" stroke="#4B5563"/><path d="M14 22h30M14 30h50M14 38h40" stroke="#4B5563"/><rect x="14" y="44" width="22" height="8" stroke="#4B5563"/>
+<rect x="88" y="12" width="64" height="44" rx="8" fill="#111827" stroke="#9CA3AF"/><path d="M96 24h30" stroke="#F3F4F6" stroke-width="2"/><path d="M96 32h44" stroke="#9CA3AF"/><rect x="96" y="40" width="30" height="10" rx="5" fill="#F97316" stroke="none" filter="url(#glow)"/>
+<path d="M146 8l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z" fill="#F97316" stroke="none"/>
+<rect x="8" y="66" width="64" height="5" rx="2.5" fill="#1F2937" stroke="none"/><rect x="8" y="66" width="26" height="5" rx="2.5" fill="#9CA3AF" stroke="none"/>
+<rect x="88" y="66" width="64" height="5" rx="2.5" fill="#1F2937" stroke="none"/><rect x="88" y="66" width="54" height="5" rx="2.5" fill="#F97316" stroke="none"/>
+<text x="8" y="86" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">FÁCIL? 40%</text><text x="88" y="86" fill="#F97316" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">FÁCIL? 85%</text>
+</svg>

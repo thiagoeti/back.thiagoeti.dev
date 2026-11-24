@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Trajetória no canal entre ansiedade e tédio</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#F97316"/></filter></defs>
+<path d="M14 6v76h140" stroke="#9CA3AF"/>
+<path d="M14 62L94 6H154V14L34 82H14z" fill="#F97316" fill-opacity="0.15" stroke="none"/>
+<path d="M14 62L94 6M34 82L154 14" stroke="#F97316" stroke-dasharray="3 3"/>
+<path d="M22 76Q40 68 46 58T70 40T96 30T130 18" stroke="#F3F4F6" stroke-width="2"/><circle cx="130" cy="18" r="4" fill="#F97316" stroke="none" filter="url(#glow)"/>
+<text x="20" y="18" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">ANSIEDADE</text><text x="152" y="70" text-anchor="end" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">TÉDIO</text>
+<text x="96" y="20" fill="#F97316" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6" font-weight="600">FLOW</text>
+<text x="4" y="10" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">↑</text><text x="152" y="92" text-anchor="end" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">HABILIDADE →</text><text x="20" y="92" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">DESAFIO ↑</text>
+</svg>

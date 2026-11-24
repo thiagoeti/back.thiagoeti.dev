@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Colunas de quadrados agrupadas entre colunas de círculos</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#34D399"/></filter></defs>
+<circle cx="18" cy="18" r="5" stroke="#9CA3AF"/><rect x="35" y="13" width="10" height="10" rx="2" fill="#34D399" stroke="none"/><circle cx="64" cy="18" r="5" stroke="#9CA3AF"/><rect x="81" y="13" width="10" height="10" rx="2" fill="#34D399" stroke="none"/>
+<circle cx="18" cy="38" r="5" stroke="#9CA3AF"/><rect x="35" y="33" width="10" height="10" rx="2" fill="#34D399" stroke="none"/><circle cx="64" cy="38" r="5" stroke="#9CA3AF"/><rect x="81" y="33" width="10" height="10" rx="2" fill="#34D399" stroke="none"/>
+<circle cx="18" cy="58" r="5" stroke="#9CA3AF"/><rect x="35" y="53" width="10" height="10" rx="2" fill="#34D399" stroke="none"/><circle cx="64" cy="58" r="5" stroke="#9CA3AF"/><rect x="81" y="53" width="10" height="10" rx="2" fill="#34D399" stroke="none"/>
+<circle cx="18" cy="78" r="5" stroke="#9CA3AF"/><rect x="35" y="73" width="10" height="10" rx="2" fill="#34D399" stroke="none"/><circle cx="64" cy="78" r="5" stroke="#9CA3AF"/><rect x="81" y="73" width="10" height="10" rx="2" fill="#34D399" stroke="none"/>
+<rect x="31" y="8" width="18" height="80" rx="5" stroke="#34D399" stroke-dasharray="3 3"/><rect x="77" y="8" width="18" height="80" rx="5" stroke="#34D399" stroke-dasharray="3 3"/>
+<path d="M104 8v80" stroke="#4B5563"/>
+<rect x="114" y="18" width="8" height="8" rx="2" fill="#34D399" stroke="none"/><text x="126" y="25" fill="#34D399" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">GRUPO</text>
+<circle cx="118" cy="40" r="4" stroke="#9CA3AF"/><text x="126" y="42" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">GRUPO</text>
+<text x="114" y="62" fill="#F3F4F6" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9">2</text><text x="122" y="62" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">GRUPOS</text>
+<text x="114" y="76" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">0 BORDAS</text>
+</svg>

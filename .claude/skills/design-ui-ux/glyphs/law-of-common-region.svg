@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Pontos equidistantes divididos em dois grupos só pela borda</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#34D399"/></filter></defs>
+<text x="12" y="14" fill="#34D399" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">REGION_A</text><text x="86" y="14" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">REGION_B</text>
+<rect x="8" y="20" width="70" height="52" rx="8" fill="#34D399" fill-opacity="0.15" stroke="#34D399"/>
+<rect x="82" y="20" width="70" height="52" rx="8" stroke="#4B5563" stroke-dasharray="3 3"/>
+<circle cx="20" cy="38" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="37" cy="38" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="54" cy="38" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="71" cy="38" r="3.2" fill="#F3F4F6" stroke="none"/>
+<circle cx="89" cy="38" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="106" cy="38" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="123" cy="38" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="140" cy="38" r="3.2" fill="#F3F4F6" stroke="none"/>
+<circle cx="20" cy="56" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="37" cy="56" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="54" cy="56" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="71" cy="56" r="3.2" fill="#F3F4F6" stroke="none"/>
+<circle cx="89" cy="56" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="106" cy="56" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="123" cy="56" r="3.2" fill="#F3F4F6" stroke="none"/><circle cx="140" cy="56" r="3.2" fill="#F3F4F6" stroke="none"/>
+<path d="M71 78v8M89 78v8M71 82h18" stroke="#9CA3AF"/><path d="M54 78v8M54 82h17" stroke="#4B5563"/>
+<text x="80" y="94" text-anchor="middle" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">Δ17 = Δ17 · BORDA DECIDE</text>
+</svg>

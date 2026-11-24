@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 96" width="160" height="96" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="t">
+<title id="t">Complexidade presa no sistema; usuário com uma linha simples</title>
+<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#22D3EE"/></filter></defs>
+<rect x="8" y="16" width="78" height="62" rx="6" fill="#22D3EE" fill-opacity="0.15" stroke="#22D3EE"/>
+<text x="14" y="12" fill="#22D3EE" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">SISTEMA</text>
+<path d="M16 54C16 26 46 24 42 42S20 64 28 48S60 30 58 52S34 70 40 58S74 36 76 50" stroke="#22D3EE" stroke-width="2"/>
+<circle cx="24" cy="30" r="2" fill="#22D3EE" stroke="none"/><circle cx="70" cy="66" r="2" fill="#22D3EE" stroke="none"/><circle cx="62" cy="28" r="2" fill="#22D3EE" stroke="none"/>
+<path d="M92 47h18m-5-5 5 5-5 5" stroke="#9CA3AF"/>
+<rect x="116" y="16" width="38" height="62" rx="6" stroke="#4B5563"/>
+<text x="120" y="12" fill="#6B7280" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">USUÁRIO</text>
+<path d="M124 47h22" stroke="#F3F4F6" stroke-width="2"/><circle cx="135" cy="34" r="5" stroke="#9CA3AF"/>
+<text x="80" y="92" text-anchor="middle" fill="#F3F4F6" stroke="none" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6">Σ COMPLEXIDADE = CONSTANTE</text>
+</svg>
