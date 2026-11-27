@@ -1,0 +1,101 @@
+---
+import Icon from '@/components/ui/Icon.astro'
+import { inline } from '@/lib/markdown'
+import type { Project } from '@/lib/projects'
+import { INLINE_CODE, focusRing, motion } from '@/lib/site'
+import { skillsOf, skillsRepo } from '@/lib/skills'
+import { text } from '@/lib/text'
+
+/**
+ * Skills do projeto, no padrão do front: o repositório de skills no título da seção; cada skill num card com a família,
+ * o comando como o agente invoca (`/php-hyperf`), o botão do `SKILL.md` e a regra de quando usar (a descrição do
+ * frontmatter, inteira). Ficha sem skills: vale a tabela ou lista da seção Skills do README.
+ */
+interface Props {
+  project: Project
+  title: string
+}
+
+const { project: p, title } = Astro.props
+const t = text.project
+const skills = await skillsOf(p.skills)
+const repo = skillsRepo(p.skills)
+const repoName = repo.replace(/^https:\/\/github\.com\//, '')
+const rows = skills.length ? [] : p.doc.skills.rows
+/** Família pela cor semântica do tema; sem cor própria, neutro. Sempre com o nome ao lado. */
+const TONE: Record<string, string> = { php: 'bg-info', bun: 'bg-brand', python: 'bg-warning', docker: 'bg-load', html: 'bg-danger', scraping: 'bg-danger' }
+const BTN = `h-11 px-3
+  inline-flex shrink-0 items-center gap-2
+  font-mono text-xs text-fg bg-surface-2 rounded-control border border-line
+  lg:h-9
+  hover:border-line-strong hover:text-brand
+  ${motion}
+  ${focusRing}`
+---
+
+{
+  (skills.length > 0 || rows.length > 0) && (
+    <section aria-labelledby="skills-titulo" class="flex flex-col gap-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <h2 id="skills-titulo" class="heading-panel">{title}</h2>
+        {repo && (
+          <a href={repo} target="_blank" rel="noopener" class={BTN}>
+            <Icon name="tech-github" class="size-4" />
+            {repoName}
+          </a>
+        )}
+      </div>
+
+      {skills.length > 0 ? (
+        <ul class="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
+          {skills.map((sk) => (
+            <li>
+              <article class="h-full flex flex-col bg-surface-1 rounded-panel border border-line">
+                <header class="p-5 flex items-start justify-between gap-4 sm:p-6">
+                  <div class="min-w-0 flex flex-col gap-2">
+                    <p class="flex items-center gap-2 font-mono text-xs text-fg-subtle">
+                      <span class:list={['size-2 rounded-full', TONE[sk.family] ?? 'bg-fg-subtle']} />
+                      {sk.family}
+                    </p>
+                    <h3 class="font-mono text-xl font-medium wrap-anywhere text-fg">
+                      <span class="text-brand">/</span>{sk.name}
+                    </h3>
+                  </div>
+                  <a href={sk.href} target="_blank" rel="noopener" class={BTN}>
+                    <Icon name="tech-github" class="size-4" />
+                    {t.skillFile}
+                  </a>
+                </header>
+                {sk.description && (
+                  <div class="mx-5 mb-5 pl-4 border-l border-line-strong sm:mx-6 sm:mb-6">
+                    <p class="mb-1 text-xs text-fg-subtle">{t.when}</p>
+                    <p class={`text-sm leading-relaxed text-fg-muted ${INLINE_CODE}`} set:html={inline(sk.description)} />
+                  </div>
+                )}
+              </article>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {rows.map((row) => (
+            <li class="p-4 flex flex-col gap-3 bg-surface-1 rounded-card border border-line">
+              <span class="flex items-center gap-3">
+                <span class="size-9
+                  grid shrink-0 place-items-center
+                  bg-surface-2 text-fg-muted rounded-control border border-line">
+                  <Icon name="layers" class="size-4" />
+                </span>
+                <span class="text-sm font-semibold text-fg">{row[0]}</span>
+              </span>
+              <span class={`pt-3
+                font-mono text-[11px] text-fg-muted border-t border-line-subtle
+                [&_a]:underline [&_a]:underline-offset-4 [&_a]:text-brand
+                ${INLINE_CODE}`} set:html={inline(row[1] ?? '')} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  )
+}

@@ -30,12 +30,14 @@ const flag = (src: string, name: string) => src.match(new RegExp(`(?:^|\\s)${nam
 
 const opt = (src: string, name: string) => src.match(new RegExp(`--log-opt[ =]${name}=([^\\s\\\\]+)`))?.[1] ?? ''
 
-export function parseDocker(src: string): Docker {
+export function parseDocker(script: string): Docker {
+	/** Depois do `exit 0` são comandos de referência (entrar, rodar interativo), não o container que sobe. */
+	const src = script.split(/^exit 0\s*$/m)[0] ?? ''
 	const user = flag(src, '--user')
 	const size = opt(src, 'max-size')
 	const files = opt(src, 'max-file')
 	return {
-		image: src.match(/^\s+([a-z0-9][\w./-]*:[\w.-]+)\s*\\?\s*$/m)?.[1] ?? '',
+		image: src.match(/^\s+([a-z0-9][\w./-]*:[\w.-]+)\s*\\?\s*$/m)?.[1] ?? src.match(/\s-\w*d\w*\s+"?([a-z0-9][\w./-]*:[\w.-]+)"?/)?.[1] ?? '',
 		cpus: flag(src, '--cpus'),
 		memory: flag(src, '-m') || flag(src, '--memory'),
 		swap: flag(src, '--memory-swap'),

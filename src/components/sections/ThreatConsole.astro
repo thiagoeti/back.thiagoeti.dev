@@ -25,7 +25,7 @@ const missing = SHIELD.length - p.armor
   bg-surface-1 rounded-panel border border-line shadow-panel">
   <header class="mb-6 flex flex-col gap-1">
     <h2 id="seguranca-titulo" class="heading-panel">{t.security}</h2>
-    <p class="body-sm">{t.docker}</p>
+    <p class="body-sm">{p.script || t.docker}</p>
   </header>
   {
     p.github.docker ? (

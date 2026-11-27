@@ -29,3 +29,14 @@ document.addEventListener('keydown', (e) => {
 	const to = e.key === 'ArrowLeft' ? prev : e.key === 'ArrowRight' ? next : undefined
 	if (to) location.assign(to.href)
 })
+
+/** Botão `[data-copy]` (o `git clone` da vitrine): copia o comando e confirma por um instante. */
+document.addEventListener('click', (e) => {
+	const button = e.target instanceof Element ? e.target.closest<HTMLButtonElement>('[data-copy]') : null
+	if (!button) return
+	const label = button.textContent
+	void navigator.clipboard?.writeText(button.dataset.copy ?? '').then(() => {
+		button.textContent = button.dataset.done ?? label
+		setTimeout(() => (button.textContent = label), 1600)
+	})
+})
