@@ -11,6 +11,7 @@ import { fill, text } from '@/lib/text'
  * Desktop: o menu traz "Todos" e cada projeto com o ponto de estado (com container ou sem) e a ação
  * Ecossistema, que desce até o rodapé. Tablet pra baixo: o menu desce para a base (BottomNav.astro) e o ☰
  * abre o painel do ecossistema e dos contatos, sem script (`popover`); o próprio ☰ vira ✕ e fecha.
+ * Menu maior que o espaço: a marca não encolhe, o menu rola na horizontal e o item ativo entra na vista.
  */
 interface Props {
   path: string
@@ -26,7 +27,7 @@ const { path } = Astro.props
   <div class="wrap h-full
     flex items-center justify-between gap-3
     xs:gap-6 lg:gap-4 xl:gap-6">
-    <div class="min-w-0 flex items-center gap-2 2xs:gap-3">
+    <div class="min-w-0 flex items-center gap-2 2xs:gap-3 lg:shrink-0">
       <a
         href="/"
         aria-label={text.brand.home}
@@ -67,7 +68,7 @@ const { path } = Astro.props
       </span>
     </div>
 
-    <nav aria-label={text.nav.label} class="hidden items-center lg:flex xl:gap-1 print:hidden">
+    <nav aria-label={text.nav.label} class="min-w-0 hidden items-center overflow-x-auto [scrollbar-width:none] lg:flex xl:gap-1 print:hidden">
       {
         NAV.map((n) => (
           <a
@@ -171,3 +172,14 @@ const { path } = Astro.props
     </nav>
   </div>
 </aside>
+
+<script>
+  /** Item ativo do menu do topo sempre visível, mesmo quando o menu rola na horizontal. */
+  const active = document.querySelector<HTMLElement>('header nav[aria-label] [aria-current=page]')
+  const nav = active?.closest('nav')
+  if (active && nav && nav.scrollWidth > nav.clientWidth) {
+    const a = active.getBoundingClientRect()
+    const n = nav.getBoundingClientRect()
+    nav.scrollLeft += a.left - n.left - (n.width - a.width) / 2
+  }
+</script>

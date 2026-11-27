@@ -1,0 +1,143 @@
+---
+import Badge from '@/components/ui/Badge.astro'
+import Icon from '@/components/ui/Icon.astro'
+import TechGlyph from '@/components/ui/TechGlyph.astro'
+import TechIcon from '@/components/ui/TechIcon.astro'
+import { relatedOf, type Project } from '@/lib/projects'
+import { BUTTON, focusRing, motion } from '@/lib/site'
+import { text } from '@/lib/text'
+
+/**
+ * Vitrine da página do projeto, no padrão do front (Anatomy + Relations). Esquerda: janela de navegador — a barra de
+ * endereço é a pasta no GitHub, com a ação Abrir no GitHub; o viewport é o glifo de tecnologia vivo; o console do rodapé
+ * traz o `git clone` com copiar. Direita: os relacionados da ficha, ligados por curvas que saem do centro da janela, na
+ * cor do estado (verde com container, ciano sem). Sem relacionado, a janela ocupa a largura. Celular: as curvas saem e
+ * a lista desce abaixo da janela.
+ */
+interface Props {
+  project: Project
+}
+
+const { project: p } = Astro.props
+const t = text.project
+const related = relatedOf(p)
+const n = related.length
+const address = p.github.folder.replace(/^https?:\/\//, '')
+const repo = p.github.folder.split('/tree/')[0] ?? ''
+const clone = repo ? `${t.clone} ${repo}` : ''
+const tone = (r: Project) => (r.github.docker ? 'stroke-brand/60' : 'stroke-info/60')
+const dot = (r: Project) => (r.github.docker ? 'bg-brand' : 'bg-info')
+---
+
+<div class:list={[
+  'grid gap-8',
+  n > 0 && `lg:grid-cols-[minmax(0,1fr)_4rem_minmax(0,24rem)] lg:gap-x-0
+    xl:grid-cols-[minmax(0,1fr)_6rem_minmax(0,28rem)]
+    2xl:grid-cols-[minmax(0,56rem)_minmax(6rem,1fr)_minmax(0,32rem)]`,
+]}>
+  <figure class="overflow-hidden self-center bg-surface-1 rounded-panel border border-line shadow-panel lg:col-start-1 lg:row-start-1">
+    <div class="p-3
+      flex flex-wrap items-center gap-3
+      bg-surface-2 border-b border-line
+      sm:flex-nowrap">
+      <span class="hidden items-center gap-1.5 pl-1 sm:flex" aria-hidden="true">
+        <span class="size-2.5 bg-fg-faint rounded-full"></span>
+        <span class="size-2.5 bg-fg-faint rounded-full"></span>
+        <span class="size-2.5 bg-fg-faint rounded-full"></span>
+      </span>
+      <a href={p.github.folder} target="_blank" rel="noopener" class={`min-w-0 min-h-11 px-3
+        flex flex-1 basis-full items-center gap-2.5
+        font-mono text-[11px] text-fg bg-surface-sunken rounded-control border border-line
+        xs:text-xs sm:basis-auto sm:text-sm
+        hover:border-line-strong hover:text-brand
+        ${motion}
+        ${focusRing}`}>
+        <Icon name="tech-github" class="size-4 shrink-0 text-fg-muted" />
+        <span class="min-w-0 wrap-anywhere">{address}</span>
+      </a>
+      <a href={p.github.folder} target="_blank" rel="noopener" class={`w-full sm:w-auto ${BUTTON}`}>
+        <Icon name="tech-github" class="size-4" />
+        {t.open}
+      </a>
+    </div>
+
+    <div class="p-8
+      flex flex-col items-center gap-6
+      dot-grid
+      sm:p-12">
+      <TechGlyph project={p} class="w-full max-w-[20rem]" live />
+      <ul class="flex flex-wrap justify-center gap-1.5" aria-label={text.unit.technologies}>
+        {p.technologies.map((x) => <li><Badge mono><TechIcon name={x} />{x}</Badge></li>)}
+      </ul>
+    </div>
+
+    {
+      clone && (
+        <figcaption class="pl-4 flex items-center gap-3 bg-surface-sunken border-t border-line">
+          <code class="min-w-0 py-3 flex-1 font-mono text-[11px] wrap-break-word text-fg-muted sm:text-xs">
+            <span class="text-brand" aria-hidden="true">❯ </span>{clone}
+          </code>
+          <button type="button" data-copy={clone} data-done={t.copied} class={`h-12 px-4
+            inline-flex shrink-0 items-center self-stretch
+            text-xs font-semibold uppercase tracking-wider text-fg-muted border-l border-line cursor-pointer
+            hover:bg-white/5 hover:text-fg
+            ${motion}
+            ${focusRing}`}>
+            {t.copy}
+          </button>
+        </figcaption>
+      )
+    }
+  </figure>
+
+  {
+    n > 0 && (
+      <div class="flex flex-col gap-4
+        lg:col-span-2 lg:col-start-2 lg:row-start-1 lg:self-center lg:grid lg:grid-cols-subgrid lg:grid-rows-[2.75rem_auto_2.75rem] lg:gap-y-0">
+        <h2 id="relacionados-titulo" class="flex items-center gap-2.5
+          text-sm font-medium text-fg-muted
+          lg:col-start-2 lg:row-start-1 lg:self-start">
+          <span class="size-2 bg-brand rounded-full" />
+          {t.related}
+        </h2>
+        <div aria-hidden="true" class="hidden self-stretch relative lg:col-start-1 lg:row-start-2 lg:block">
+          <svg viewBox={`0 0 56 ${n * 100}`} preserveAspectRatio="none" class="size-full absolute inset-0">
+            {related.map((r, i) => {
+              const y = i * 100 + 50
+              const mid = (n * 100) / 2
+              return <path d={`M0 ${mid} C28 ${mid} 28 ${y} 56 ${y}`} vector-effect="non-scaling-stroke" class:list={['fill-none stroke-[1.5]', tone(r)]} />
+            })}
+          </svg>
+        </div>
+        <ul aria-labelledby="relacionados-titulo" class="pl-4
+          grid auto-rows-fr gap-3
+          border-l border-line
+          lg:pl-0 lg:col-start-2 lg:row-start-2 lg:border-l-0">
+          {related.map((r) => (
+            <li class="min-h-0">
+              <a href={r.href} class={`h-full p-2 pr-4
+                flex items-center gap-4
+                bg-surface-1 rounded-card border border-line
+                hover:border-line-strong group/card
+                ${motion}
+                ${focusRing}`}>
+                <span class="size-16 p-1.5
+                  grid shrink-0 place-items-center
+                  dot-grid rounded-control border border-line-subtle">
+                  <TechGlyph project={r} class="size-full" />
+                </span>
+                <span class="min-w-0 flex flex-col gap-1">
+                  <span class="flex items-center gap-2 text-sm font-medium text-fg group-hover/card:text-brand">
+                    <span class:list={['size-2 shrink-0 rounded-full', dot(r)]} />
+                    <span class="truncate">{r.title}</span>
+                  </span>
+                  <span class="line-clamp-2 text-xs leading-snug text-fg-subtle">{r.description}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</div>

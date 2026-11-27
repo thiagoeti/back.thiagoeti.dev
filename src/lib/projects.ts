@@ -21,7 +21,7 @@ export type Project = Omit<RepoProject, 'docker'> & {
 	short: string
 	wip: boolean
 	repo: SourceRepo
-	/** Endereços no GitHub; `docker` vazio quando a pasta não tem `docker.sh`. */
+	/** Endereços no GitHub, pela pasta publicada da ficha (`project`); `docker` vazio quando a pasta não tem script de container. */
 	github: { folder: string; readme: string; docker: string }
 	doc: Readme
 	docker: Docker
@@ -45,7 +45,8 @@ export const projects: Project[] = flat.map(({ repo, p }, index) => {
 	const [title = p.name, ...rest] = p.name.split(/\s+—\s+/)
 	const lines = p.files.reduce((s, f) => s + f.lines, 0)
 	const docker = parseDocker(p.docker)
-	const blob = `${repo.url}/blob/HEAD/${p.dir}`
+	const folder = p.refs.project || `${repo.url}/tree/HEAD/${p.dir}`
+	const blob = folder.replace('/tree/', '/blob/')
 	return {
 		...p,
 		slug: p.dir,
@@ -57,7 +58,7 @@ export const projects: Project[] = flat.map(({ repo, p }, index) => {
 		short: title.split(/[\s+]+/).filter(Boolean).at(-1) ?? title,
 		wip: repo.wip,
 		repo,
-		github: { folder: `${repo.url}/tree/HEAD/${p.dir}`, readme: `${blob}/README.md`, docker: p.docker ? `${blob}/docker.sh` : '' },
+		github: { folder, readme: `${blob}/README.md`, docker: p.script ? `${blob}/${p.script}` : '' },
 		doc: parseReadme(p.readme),
 		docker,
 		armor: SHIELD.filter((k) => docker.shield[k]).length,
@@ -68,6 +69,9 @@ export const projects: Project[] = flat.map(({ repo, p }, index) => {
 })
 
 export const bySlug = (slug: string) => projects.find((p) => p.slug === slug)
+
+/** Projetos relacionados da ficha (`related`), na ordem citada; pasta sem projeto publicado fica fora. */
+export const relatedOf = (p: Project): Project[] => p.related.map(bySlug).filter((x): x is Project => !!x && x.slug !== p.slug)
 
 export type Tag = { name: string; count: number; projects: string[] }
 

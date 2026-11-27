@@ -1,0 +1,115 @@
+---
+import Badge from '@/components/ui/Badge.astro'
+import TechIcon from '@/components/ui/TechIcon.astro'
+import { tagOf, type Project } from '@/lib/projects'
+import { SITE, focusRing, motion } from '@/lib/site'
+import { text } from '@/lib/text'
+
+/**
+ * Ficha do projeto em terminal, no padrão do front: `❯` com os campos (estado, pasta, repositório, GitHub, perfil,
+ * segmento, medição, script) e `❯ tree` com a árvore dos arquivos da pasta (README incluso). Depois, tecnologias e tags.
+ */
+interface Props {
+  project: Project
+}
+
+const { project: p } = Astro.props
+const t = text.project
+const u = text.unit
+const repo = p.github.folder.split('/tree/')[0] ?? ''
+const profile = p.refs.github || SITE.github
+const host = (url: string) => url.replace(/^https?:\/\//, '')
+const fields: { k: string; v: string; href?: string; tone?: string }[] = [
+  { k: t.status, v: p.wip ? t.wip : t.stable, tone: p.wip ? 'text-warning' : 'text-success' },
+  { k: t.path, v: p.path },
+  { k: t.repository, v: host(repo).replace(/^github\.com\//, ''), href: repo },
+  { k: t.github, v: host(p.github.folder), href: p.github.folder },
+  { k: t.profile, v: host(profile), href: profile },
+  { k: t.segment, v: p.repo.segment },
+  { k: text.repos.measured, v: p.repo.measured },
+  { k: t.script, v: p.script },
+].filter((f) => f.v)
+
+/** Árvore da pasta: cada arquivo com o ramo (`├─`, `└─`) e o recuo das pastas acima. */
+type Node = { name: string; children: Map<string, Node> }
+const root: Node = { name: '', children: new Map() }
+for (const path of [...(p.readme ? ['README.md'] : []), ...p.sources.map((f) => f.path)]) {
+  let node = root
+  for (const part of path.split('/')) {
+    if (!node.children.has(part)) node.children.set(part, { name: part, children: new Map() })
+    node = node.children.get(part)!
+  }
+}
+const lines: { prefix: string; name: string; dir: boolean }[] = []
+const walk = (node: Node, indent: string) => {
+  const list = [...node.children.values()].sort((a, b) => Number(b.children.size > 0) - Number(a.children.size > 0) || a.name.localeCompare(b.name))
+  list.forEach((c, i) => {
+    const last = i === list.length - 1
+    lines.push({ prefix: `${indent}${last ? '└─ ' : '├─ '}`, name: c.name, dir: c.children.size > 0 })
+    walk(c, `${indent}${last ? '   ' : '│  '}`)
+  })
+}
+walk(root, '')
+---
+
+<section aria-labelledby="ficha-titulo" class="flex flex-col gap-4">
+  <h2 id="ficha-titulo" class="heading-panel">{t.sheet}</h2>
+  <div class="flex flex-col overflow-hidden bg-surface-sunken rounded-card border border-line">
+    <header class="px-5 py-3 flex items-center justify-between gap-3 border-b border-line">
+      <span class="flex gap-1.5" aria-hidden="true"><span class="size-2 bg-surface-3 rounded-full" /><span class="size-2 bg-surface-3 rounded-full" /><span class="size-2 bg-brand rounded-full" /></span>
+      <span class="font-mono text-[11px] text-fg-subtle">{t.tty} {p.slug}</span>
+    </header>
+    <div class="px-5 py-4 flex flex-col gap-4 font-mono text-xs leading-relaxed">
+      <dl class="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1">
+        {fields.map((f, i) => (
+          <>
+            <dt class="text-fg-subtle"><span class="text-brand select-none" aria-hidden="true">{i === 0 ? '❯ ' : '  '}</span>{f.k}</dt>
+            <dd class:list={['min-w-0 wrap-anywhere', f.tone ?? 'text-fg']}>
+              {f.href ? (
+                <a href={f.href} target="_blank" rel="noopener" class={`underline decoration-line-strong underline-offset-4 hover:text-brand hover:decoration-brand ${motion} ${focusRing}`}>{f.v}</a>
+              ) : (
+                f.v
+              )}
+            </dd>
+          </>
+        ))}
+      </dl>
+      {
+        lines.length > 0 && (
+          <div class="flex flex-col">
+            <p class="text-fg-subtle"><span class="text-brand select-none" aria-hidden="true">❯ </span>{t.tree} {p.path}</p>
+            <pre class="overflow-x-auto text-fg"><code>{lines.map((l) => (
+              <span class="block whitespace-pre"><span class="text-fg-faint select-none">{l.prefix}</span><span class:list={[l.dir ? 'text-info' : 'text-fg']}>{l.name}{l.dir ? '/' : ''}</span></span>
+            ))}</code></pre>
+          </div>
+        )
+      }
+      <span class="w-2 h-4 bg-fg-muted motion-safe:animate-pulse" aria-hidden="true" />
+    </div>
+    <div class="px-5 py-4 flex flex-col gap-2 border-t border-line">
+      <p class="eyebrow">{u.technologies}</p>
+      <ul class="flex flex-wrap gap-1.5">
+        {p.technologies.map((x) => <li><Badge mono><TechIcon name={x} />{x}</Badge></li>)}
+      </ul>
+    </div>
+    <div class="px-5 py-4 flex flex-col gap-2 border-t border-line">
+      <p class="eyebrow">{u.tags}</p>
+      <ul class="flex flex-wrap gap-2">
+        {p.tags.map((x) => (
+          <li>
+            <a href={`/?tag=${encodeURIComponent(x)}`} class={`min-h-11 px-2.5
+              flex items-center gap-2
+              font-mono text-xs text-fg-muted rounded-badge border border-line
+              lg:min-h-8
+              hover:text-fg hover:border-line-strong
+              ${motion}
+              ${focusRing}`}>
+              #{x}
+              <span class="tabular-nums text-fg-subtle">{tagOf(x)?.count}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
